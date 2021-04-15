@@ -1,0 +1,3 @@
+[submodule "build/ping-protocol"]
+	path = build/ping-protocol
+	url = github:bluerobotics/ping-protocol
