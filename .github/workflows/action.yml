@@ -1,0 +1,36 @@
+name: Test all targets
+
+on: [push, pull_request]
+
+jobs:
+  quick-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions-rs/toolchain@v1.0.1
+      with:
+        toolchain: stable
+        override: true
+    - name: Check Type
+      run: cargo fmt -- --check
+    - name: Run internal tests
+      run: cargo test --verbose -- --nocapture
+    - name: Build
+      run: cargo build
+
+  build:
+    needs: quick-tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions-rs/toolchain@v1.0.1
+      with:
+        toolchain: stable
+        override: true
+    - name: Build docs
+      run: cargo doc
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./target/doc
