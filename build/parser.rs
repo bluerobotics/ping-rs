@@ -17,6 +17,12 @@ macro_rules! ident {
 }
 
 #[derive(Debug)]
+struct VectorType {
+    size_type: Option<PayloadType>,
+    data_type: PayloadType,
+}
+
+#[derive(Debug)]
 enum PayloadType {
     CHAR,
     U8,
@@ -26,56 +32,54 @@ enum PayloadType {
     I16,
     I32,
     F32,
-    VECTOR(Box<PayloadType>, Option<u64>),
+    VECTOR(Box<VectorType>),
 }
 
 impl PayloadType {
-    pub fn from_json(value: &serde_json::Value) -> Self {
-        // Hack to have a recursive lambda function
-        struct Recursive<'a> {
-            pub get_type: &'a dyn Fn(Recursive, &str) -> PayloadType,
+    pub fn from_string(name: &str) -> Self {
+        match name {
+            "char" => PayloadType::CHAR,
+            "u8" | "uint8_t" => PayloadType::U8,
+            "u16" | "uint16_t" => PayloadType::U16,
+            "u32" | "uint32_t" => PayloadType::U32,
+            "i8" | "int8_t" => PayloadType::I8,
+            "i16" | "int16_t" => PayloadType::I16,
+            "i32" | "int32_t" => PayloadType::I32,
+            "float" => PayloadType::F32,
+            "vector" => panic!("Can't convert vector with from_string."),
+            something => panic!("No available type: {:#?}", something),
         }
-
-        let fun = Recursive {
-            get_type: &|r, name: &str| match name {
-                "char" => PayloadType::CHAR,
-                "u8" | "uint8_t" => PayloadType::U8,
-                "u16" | "uint16_t" => PayloadType::U16,
-                "u32" | "uint32_t" => PayloadType::U32,
-                "i8" | "int8_t" => PayloadType::I8,
-                "i16" | "int16_t" => PayloadType::I16,
-                "i32" | "int32_t" => PayloadType::I32,
-                "float" => PayloadType::F32,
-                "vector" => PayloadType::VECTOR(
-                    Box::new((r.get_type)(
-                        r,
-                        value.pointer("/vector/datatype").unwrap().as_str().unwrap(),
-                    )),
-                    None,
-                ),
-                something => panic!("No available type: {:#?}", something),
-            },
-        };
-
-        return (fun.get_type)(fun, value.get("type").unwrap().as_str().unwrap());
     }
 
-    pub fn to_rust(&self) -> Ident {
-        let typ = match self {
-            PayloadType::CHAR => "char",
-            PayloadType::U8 => "u8",
-            PayloadType::U16 => "u16",
-            PayloadType::U32 => "u32",
-            PayloadType::I8 => "i8",
-            PayloadType::I16 => "i16",
-            PayloadType::I32 => "i32",
-            PayloadType::F32 => "f32",
-            PayloadType::VECTOR(payload_typ, size) => {
-                "u8" //quote::format_ident!("{}_length: {}", payload.name, payload_typ.to_rust(payload))
-            }
-        };
+    pub fn from_json(value: &serde_json::Value) -> Self {
+        let typ = value.get("type").unwrap().as_str().unwrap();
+        if typ.contains("vector") {
+            return PayloadType::VECTOR(Box::new(VectorType {
+                data_type: PayloadType::from_string(
+                    value.pointer("/vector/datatype").unwrap().as_str().unwrap(),
+                ),
+                size_type: match value.pointer("/vector/sizetype") {
+                    Some(value) => Some(PayloadType::from_string(value.as_str().unwrap())),
+                    None => None,
+                },
+            }));
+        }
 
-        return quote::format_ident!("{}", typ);
+        return PayloadType::from_string(&typ);
+    }
+
+    pub fn to_rust(&self) -> TokenStream {
+        match self {
+            PayloadType::CHAR => quote! {char},
+            PayloadType::U8 => quote! {u8},
+            PayloadType::U16 => quote! {u16},
+            PayloadType::U32 => quote! {u32},
+            PayloadType::I8 => quote! {i8},
+            PayloadType::I16 => quote! {i16},
+            PayloadType::I32 => quote! {i32},
+            PayloadType::F32 => quote! {f32},
+            PayloadType::VECTOR(vector) => panic!("Can't convert vector to rust."),
+        }
     }
 }
 
@@ -99,6 +103,30 @@ impl Payload {
             description: unwrap_string("description"),
             typ: PayloadType::from_json(value),
             units: unwrap_string("units"),
+        }
+    }
+    pub fn emit_struct_variable(&self) -> TokenStream {
+        let name = ident!(self.name);
+
+        if let PayloadType::VECTOR(vector) = &self.typ {
+            let data_type = vector.data_type.to_rust();
+            if let Some(size_type) = &vector.size_type {
+                let length_name = quote::format_ident!("{}_length", self.name);
+                let length_type = size_type.to_rust();
+                return quote! {
+                    pub #length_name: #length_type,
+                    pub #name: Vec<#data_type>,
+                };
+            }
+
+            return quote! {
+                #name: Vec<#data_type>,
+            };
+        }
+
+        let typ = self.typ.to_rust();
+        quote! {
+            pub #name: #typ,
         }
     }
 }
@@ -140,11 +168,11 @@ impl MessageDefinition {
                     .clone()
                     .unwrap_or("Not documented".to_string());
                 let comment = comment.trim();
-                let name = ident!(&variable.name);
-                let typ = ident!(variable.typ.to_rust());
+                //let name = ident!(&variable.name);
+                let variable = variable.emit_struct_variable();
                 quote! {
                     #[doc = #comment]
-                    pub #name: #typ,
+                    #variable
                 }
             })
             .collect();
