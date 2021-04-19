@@ -113,13 +113,22 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Messages</span> {
-    <span class="ident">Ack</span>(<span class="ident">AckStruct</span>),
     <span class="ident">AsciiText</span>(<span class="ident">AsciiTextStruct</span>),
+    <span class="ident">Ack</span>(<span class="ident">AckStruct</span>),
+    <span class="ident">SetDeviceId</span>(<span class="ident">SetDeviceIdStruct</span>),
     <span class="ident">GeneralRequest</span>(<span class="ident">GeneralRequestStruct</span>),
     <span class="ident">Nack</span>(<span class="ident">NackStruct</span>),
-    <span class="ident">DeviceInformation</span>(<span class="ident">DeviceInformationStruct</span>),
     <span class="ident">ProtocolVersion</span>(<span class="ident">ProtocolVersionStruct</span>),
-    <span class="ident">SetDeviceId</span>(<span class="ident">SetDeviceIdStruct</span>),
+    <span class="ident">DeviceInformation</span>(<span class="ident">DeviceInformationStruct</span>),
+}
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;A message for transmitting text data.&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AsciiTextStruct</span> {
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;ASCII text message. (not necessarily NULL terminated)&quot;</span>]</span>
+    <span class="ident">ascii_message</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>,
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
@@ -132,12 +141,12 @@
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;A message for transmitting text data.&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AsciiTextStruct</span> {
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Set the device ID.&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetDeviceIdStruct</span> {
     <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
     <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;ASCII text message. (not necessarily NULL terminated)&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">ascii_message</span>: <span class="ident">u8</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Device ID (1-254). 0 is unknown and 255 is reserved for broadcast messages.&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">device_id</span>: <span class="ident">u8</span>,
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
@@ -157,7 +166,22 @@
     <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;The message ID that is Not ACKnowledged.&quot;</span>]</span>
     <span class="kw">pub</span> <span class="ident">nacked_id</span>: <span class="ident">u16</span>,
     <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;ASCII text message indicating NACK condition. (not necessarily NULL terminated)&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">nack_message</span>: <span class="ident">u8</span>,
+    <span class="ident">nack_message</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span>,
+}
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;The protocol version&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ProtocolVersionStruct</span> {
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Protocol version major number.&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">version_major</span>: <span class="ident">u8</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Protocol version minor number.&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">version_minor</span>: <span class="ident">u8</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Protocol version patch number.&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">version_patch</span>: <span class="ident">u8</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;reserved&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">reserved</span>: <span class="ident">u8</span>,
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
@@ -177,30 +201,6 @@
     <span class="kw">pub</span> <span class="ident">firmware_version_patch</span>: <span class="ident">u8</span>,
     <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;reserved&quot;</span>]</span>
     <span class="kw">pub</span> <span class="ident">reserved</span>: <span class="ident">u8</span>,
-}
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;The protocol version&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ProtocolVersionStruct</span> {
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Protocol version major number.&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">version_major</span>: <span class="ident">u8</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Protocol version minor number.&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">version_minor</span>: <span class="ident">u8</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Protocol version patch number.&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">version_patch</span>: <span class="ident">u8</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;reserved&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">reserved</span>: <span class="ident">u8</span>,
-}
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Set the device ID.&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetDeviceIdStruct</span> {
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Device ID (1-254). 0 is unknown and 255 is reserved for broadcast messages.&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">device_id</span>: <span class="ident">u8</span>,
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../../../../../../../../../../" data-current-crate="ping_rs"></div>

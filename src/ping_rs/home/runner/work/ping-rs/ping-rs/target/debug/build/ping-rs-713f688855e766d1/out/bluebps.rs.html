@@ -223,6 +223,7 @@
 <span id="220">220</span>
 <span id="221">221</span>
 <span id="222">222</span>
+<span id="223">223</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserialize</span>, <span class="ident">Serialize</span>};
@@ -235,80 +236,42 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Messages</span> {
-    <span class="ident">CellVoltageMin</span>(<span class="ident">CellVoltageMinStruct</span>),
-    <span class="ident">Reboot</span>(<span class="ident">RebootStruct</span>),
-    <span class="ident">SetLpfSampleFrequency</span>(<span class="ident">SetLpfSampleFrequencyStruct</span>),
-    <span class="ident">CurrentMax</span>(<span class="ident">CurrentMaxStruct</span>),
-    <span class="ident">SetTemperatureMax</span>(<span class="ident">SetTemperatureMaxStruct</span>),
-    <span class="ident">TemperatureMax</span>(<span class="ident">TemperatureMaxStruct</span>),
+    <span class="ident">SetTemperatureTimeout</span>(<span class="ident">SetTemperatureTimeoutStruct</span>),
+    <span class="ident">ResetDefaults</span>(<span class="ident">ResetDefaultsStruct</span>),
     <span class="ident">SetStreamRate</span>(<span class="ident">SetStreamRateStruct</span>),
     <span class="ident">State</span>(<span class="ident">StateStruct</span>),
-    <span class="ident">CellTimeout</span>(<span class="ident">CellTimeoutStruct</span>),
+    <span class="ident">TemperatureMax</span>(<span class="ident">TemperatureMaxStruct</span>),
     <span class="ident">Events</span>(<span class="ident">EventsStruct</span>),
-    <span class="ident">SetLpfSetting</span>(<span class="ident">SetLpfSettingStruct</span>),
-    <span class="ident">SetCellVoltageTimeout</span>(<span class="ident">SetCellVoltageTimeoutStruct</span>),
-    <span class="ident">SetCellVoltageMinimum</span>(<span class="ident">SetCellVoltageMinimumStruct</span>),
+    <span class="ident">TemperatureTimeout</span>(<span class="ident">TemperatureTimeoutStruct</span>),
     <span class="ident">CurrentTimeout</span>(<span class="ident">CurrentTimeoutStruct</span>),
     <span class="ident">SetCurrentTimeout</span>(<span class="ident">SetCurrentTimeoutStruct</span>),
-    <span class="ident">ResetDefaults</span>(<span class="ident">ResetDefaultsStruct</span>),
-    <span class="ident">EraseFlash</span>(<span class="ident">EraseFlashStruct</span>),
+    <span class="ident">Reboot</span>(<span class="ident">RebootStruct</span>),
+    <span class="ident">CurrentMax</span>(<span class="ident">CurrentMaxStruct</span>),
+    <span class="ident">CellTimeout</span>(<span class="ident">CellTimeoutStruct</span>),
+    <span class="ident">SetCellVoltageMinimum</span>(<span class="ident">SetCellVoltageMinimumStruct</span>),
+    <span class="ident">SetCellVoltageTimeout</span>(<span class="ident">SetCellVoltageTimeoutStruct</span>),
+    <span class="ident">SetLpfSampleFrequency</span>(<span class="ident">SetLpfSampleFrequencyStruct</span>),
     <span class="ident">SetCurrentMax</span>(<span class="ident">SetCurrentMaxStruct</span>),
-    <span class="ident">SetTemperatureTimeout</span>(<span class="ident">SetTemperatureTimeoutStruct</span>),
-    <span class="ident">TemperatureTimeout</span>(<span class="ident">TemperatureTimeoutStruct</span>),
+    <span class="ident">EraseFlash</span>(<span class="ident">EraseFlashStruct</span>),
+    <span class="ident">SetTemperatureMax</span>(<span class="ident">SetTemperatureMaxStruct</span>),
+    <span class="ident">SetLpfSetting</span>(<span class="ident">SetLpfSettingStruct</span>),
+    <span class="ident">CellVoltageMin</span>(<span class="ident">CellVoltageMinStruct</span>),
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Get the minimum allowed cell voltage&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CellVoltageMinStruct</span> {
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Set the over-temperature timeout&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetTemperatureTimeoutStruct</span> {
     <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
     <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;The minimum voltage allowed for any individual cell. 0~5000: 0~5V&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">limit</span>: <span class="ident">u16</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;If the battery temperature exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">timeout</span>: <span class="ident">u16</span>,
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;reboot the system&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RebootStruct</span> {
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Reset parameter configuration to default values.&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ResetDefaultsStruct</span> {
     <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
     <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;0 = normal reboot, run main application after reboot 1 = hold the device in bootloader after reboot&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">goto_bootloader</span>: <span class="ident">u8</span>,
-}
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;the frequency to take adc samples and run the filter.&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetLpfSampleFrequencyStruct</span> {
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;sample frequency in Hz. 1~100000&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">sample_frequency</span>: <span class="ident">u32</span>,
-}
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;get the maximum allowed battery current&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CurrentMaxStruct</span> {
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;The maximum allowed battery current 0~20000 = 0~200A&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">limit</span>: <span class="ident">u16</span>,
-}
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Set the maximum allowed battery temperature&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetTemperatureMaxStruct</span> {
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;The maximum temperature allowed at the thermistor probe installed on the battery. 0~5000: 0~5V&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">limit</span>: <span class="ident">u16</span>,
-}
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Get the maximum allowed battery temperature&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TemperatureMaxStruct</span> {
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;The minimum voltage allowed for any individual cell. 0~5000: 0~5V&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">limit</span>: <span class="ident">u16</span>,
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
@@ -336,16 +299,17 @@
     <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;flags indicating if any of the configured limits are currently exceeded&quot;</span>]</span>
     <span class="kw">pub</span> <span class="ident">flags</span>: <span class="ident">u8</span>,
     <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Array containing cell voltages&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">cell_voltages</span>: <span class="ident">u8</span>,
+    <span class="kw">pub</span> <span class="ident">cell_voltages_length</span>: <span class="ident">u8</span>,
+    <span class="kw">pub</span> <span class="ident">cell_voltages</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>,
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Get the undervoltage timeout&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CellTimeoutStruct</span> {
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Get the maximum allowed battery temperature&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TemperatureMaxStruct</span> {
     <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
     <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;If an individual cell exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">timeout</span>: <span class="ident">u16</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;The minimum voltage allowed for any individual cell. 0~5000: 0~5V&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">limit</span>: <span class="ident">u16</span>,
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
@@ -362,30 +326,12 @@
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Low pass filter setting. This value represents x in the equation `value = value * x + sample * (1-x)`. 0.0 = no filtering, 0.99 = heavy filtering.&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetLpfSettingStruct</span> {
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Get the over-temperature timeout&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TemperatureTimeoutStruct</span> {
     <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
     <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;0~999: x = 0~0.999&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">setting</span>: <span class="ident">u16</span>,
-}
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Set the under-voltage timeout&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetCellVoltageTimeoutStruct</span> {
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;If an individual cell exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]</span>
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;If the battery temperature exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]</span>
     <span class="kw">pub</span> <span class="ident">timeout</span>: <span class="ident">u16</span>,
-}
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Set the minimum allowed cell voltage&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetCellVoltageMinimumStruct</span> {
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;The minimum voltage allowed for any individual cell. 0~5000: 0~5V&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">limit</span>: <span class="ident">u16</span>,
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
@@ -407,17 +353,57 @@
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Reset parameter configuration to default values.&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ResetDefaultsStruct</span> {
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;reboot the system&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RebootStruct</span> {
     <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
     <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;0 = normal reboot, run main application after reboot 1 = hold the device in bootloader after reboot&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">goto_bootloader</span>: <span class="ident">u8</span>,
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Erase flash, including parameter configuration and event counters. The mcu has a limited number of write/erase cycles (1k)!&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EraseFlashStruct</span> {
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;get the maximum allowed battery current&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CurrentMaxStruct</span> {
     <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
     <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;The maximum allowed battery current 0~20000 = 0~200A&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">limit</span>: <span class="ident">u16</span>,
+}
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Get the undervoltage timeout&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CellTimeoutStruct</span> {
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;If an individual cell exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">timeout</span>: <span class="ident">u16</span>,
+}
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Set the minimum allowed cell voltage&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetCellVoltageMinimumStruct</span> {
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;The minimum voltage allowed for any individual cell. 0~5000: 0~5V&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">limit</span>: <span class="ident">u16</span>,
+}
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Set the under-voltage timeout&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetCellVoltageTimeoutStruct</span> {
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;If an individual cell exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">timeout</span>: <span class="ident">u16</span>,
+}
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;the frequency to take adc samples and run the filter.&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetLpfSampleFrequencyStruct</span> {
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;sample frequency in Hz. 1~100000&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">sample_frequency</span>: <span class="ident">u32</span>,
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
@@ -430,21 +416,37 @@
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Set the over-temperature timeout&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetTemperatureTimeoutStruct</span> {
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Erase flash, including parameter configuration and event counters. The mcu has a limited number of write/erase cycles (1k)!&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EraseFlashStruct</span> {
     <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
     <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;If the battery temperature exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">timeout</span>: <span class="ident">u16</span>,
 }
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Get the over-temperature timeout&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TemperatureTimeoutStruct</span> {
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Set the maximum allowed battery temperature&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetTemperatureMaxStruct</span> {
     <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
     <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
-    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;If the battery temperature exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="ident">timeout</span>: <span class="ident">u16</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;The maximum temperature allowed at the thermistor probe installed on the battery. 0~5000: 0~5V&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">limit</span>: <span class="ident">u16</span>,
+}
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Low pass filter setting. This value represents x in the equation `value = value * x + sample * (1-x)`. 0.0 = no filtering, 0.99 = heavy filtering.&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SetLpfSettingStruct</span> {
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;0~999: x = 0~0.999&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">setting</span>: <span class="ident">u16</span>,
+}
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Default</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
+<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Get the minimum allowed cell voltage&quot;</span>]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CellVoltageMinStruct</span> {
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;Information about message destiny and source&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">header</span>: <span class="ident">PingProtocolHead</span>,
+    <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;The minimum voltage allowed for any individual cell. 0~5000: 0~5V&quot;</span>]</span>
+    <span class="kw">pub</span> <span class="ident">limit</span>: <span class="ident">u16</span>,
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../../../../../../../../../../" data-current-crate="ping_rs"></div>
