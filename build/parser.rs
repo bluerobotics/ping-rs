@@ -195,8 +195,8 @@ pub fn emit_protocol_wrapper() -> TokenStream {
         #[derive(Debug, Clone, PartialEq, Default)]
         #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
         pub struct PingProtocolHead {
-            source_device_id: u8,
-            destiny_device_id: u8,
+            pub source_device_id: u8,
+            pub destiny_device_id: u8,
         }
     }
 }
