@@ -6,6 +6,7 @@ mod binder;
 mod parser;
 
 use std::env;
+use std::ffi::OsStr;
 use std::fs::{read_dir, File};
 use std::path::{Path, PathBuf};
 use std::process::Command;
@@ -60,18 +61,8 @@ pub fn main() {
         let dest_path = Path::new(&out_dir).join(definition_rs);
         let mut out_file = File::create(&dest_path).unwrap();
 
-        // generate code
         parser::generate(&mut in_file, &mut out_file);
-
-        // format code
-        match Command::new("rustfmt")
-            .arg(dest_path.as_os_str())
-            .current_dir(&out_dir)
-            .status()
-        {
-            Ok(_) => (),
-            Err(error) => eprintln!("{}", error),
-        }
+        format_code(&out_dir, &dest_path);
 
         // Re-run build if definition file changes
         println!("cargo:rerun-if-changed={}", entry.path().to_string_lossy());
@@ -80,19 +71,21 @@ pub fn main() {
     // output mod.rs
     {
         let dest_path = Path::new(&out_dir).join("mod.rs");
-        let mut outf = File::create(&dest_path).unwrap();
+        let mut out_file = File::create(&dest_path).unwrap();
 
-        // generate code
-        binder::generate(modules, &mut outf);
+        binder::generate(modules, &mut out_file);
+        format_code(&out_dir, &dest_path);
+    }
+}
 
-        // format code
-        match Command::new("rustfmt")
-            .arg(dest_path.as_os_str())
-            .current_dir(&out_dir)
-            .status()
-        {
-            Ok(_) => (),
-            Err(error) => eprintln!("{}", error),
-        }
+fn format_code(cwd: impl AsRef<Path>, path: impl AsRef<OsStr>) {
+    if let Err(error) = Command::new("rustfmt")
+        .arg("--edition")
+        .arg("2021")
+        .arg(path)
+        .current_dir(cwd)
+        .status()
+    {
+        eprintln!("{}", error);
     }
 }
