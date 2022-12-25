@@ -307,6 +307,16 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
     })
     .collect::<Vec<TokenStream>>();
 
+    let message_enums_serialize = messages
+        .iter()
+        .map(|(name, message)| {
+            let pascal_message_name = ident!(name.to_case(Case::Pascal));
+            let id = message.id;
+            let id = quote!(#id);
+            quote!(Messages::#pascal_message_name(content) => content.serialize(buffer),)
+        })
+        .collect::<Vec<TokenStream>>();
+
     quote! {
         impl PingMessage for Messages {
             fn message_name(&self) -> &'static str {
@@ -325,6 +335,12 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
                 match name {
                     #(#message_enums_name_id)*
                     _ => Err("Invalid message name."),
+                }
+            }
+
+            fn serialize(self, buffer: &mut [u8]) -> usize {
+                match self {
+                    #(#message_enums_serialize)*
                 }
             }
         }
