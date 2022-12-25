@@ -201,6 +201,58 @@ pub fn emit_protocol_wrapper() -> TokenStream {
     }
 }
 
+fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStream {
+    let message_enums_name = messages
+        .iter()
+        .map(|(name, _message)| {
+            let pascal_message_name = ident!(name.to_case(Case::Pascal));
+            quote!(Messages::#pascal_message_name(..) => #name,)
+        })
+        .collect::<Vec<TokenStream>>();
+
+    let message_enums_id = messages
+        .iter()
+        .map(|(name, message)| {
+            let pascal_message_name = ident!(name.to_case(Case::Pascal));
+            let id = message.id;
+            let id = quote!(#id);
+            quote!(Messages::#pascal_message_name(..) => #id,)
+        })
+        .collect::<Vec<TokenStream>>();
+
+    let message_enums_name_id = messages
+    .iter()
+    .map(|(name, message)| {
+        let id = message.id;
+        let id = quote!(#id);
+        quote!(#name  => Ok(#id),)
+    })
+    .collect::<Vec<TokenStream>>();
+
+    quote! {
+        impl PingMessage for Messages {
+            fn message_name(&self) -> &'static str {
+                match self {
+                    #(#message_enums_name)*
+                }
+            }
+
+            fn message_id(&self) -> u16 {
+                match self {
+                    #(#message_enums_id)*
+                }
+            }
+
+            fn message_id_from_name(name: &str) -> Result<u16, &'static str> {
+                match name {
+                    #(#message_enums_name_id)*
+                    _ => Err("Invalid message name."),
+                }
+            }
+        }
+    }
+}
+
 /// Generate rust representation of ping-protocol message set with appropriate conversion methods
 pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
     let messages = parse_description(input);
@@ -233,7 +285,11 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
 
     let protocol_wrapper = emit_protocol_wrapper();
 
+    let ping_message = emit_ping_message(messages);
+
     let code = quote! {
+        use crate::serialize::PingMessage;
+
         #[cfg(feature = "serde")]
         use serde::{Deserialize, Serialize};
 
@@ -242,6 +298,8 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
         #message_enums
 
         #(#message_tokens)*
+
+        #ping_message
     };
 
     // rust file
