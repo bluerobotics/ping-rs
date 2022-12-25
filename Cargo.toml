@@ -6,10 +6,10 @@ edition = "2018"
 build = "build/main.rs"
 
 [dependencies]
+crc-any = { version = "2.3.5", default-features = false }
 
 [build-dependencies]
 convert_case = "0.4.0"
-crc-any = "2.3.0"
 quote = "1.0"
 proc-macro2 = "1.0.24"
 serde = { version = "1.0", features = ["derive"] }
