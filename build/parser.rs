@@ -81,6 +81,20 @@ impl PayloadType {
             PayloadType::VECTOR(vector) => panic!("Can't convert vector to rust."),
         }
     }
+
+    pub fn to_size(&self) -> usize {
+        match self {
+            PayloadType::CHAR |
+            PayloadType::U8 |
+            PayloadType::I8 => 1,
+            PayloadType::U16 |
+            PayloadType::I16 => 2,
+            PayloadType::U32 |
+            PayloadType::I32 |
+            PayloadType::F32 => 4,
+            PayloadType::VECTOR(_) => 0,
+        }
+    }
 }
 
 #[derive(Debug)]
@@ -176,6 +190,50 @@ impl MessageDefinition {
                 }
             })
             .collect();
+
+        let mut sum_quote = None;
+        let mut variables_serialized: Vec<TokenStream> = vec![];
+        let mut sum = 0;
+        for pay in &self.payload {
+            let size = pay.typ.to_size();
+            let name =  quote::format_ident!("{}", pay.name);
+
+            if let PayloadType::VECTOR(vector) = &pay.typ {
+                let data_type = vector.data_type.to_rust();
+                if let Some(size_type) = &vector.size_type {
+                    let length_name = quote::format_ident!("{}_length", name);
+                    let content_size = size_type.to_size();
+                    
+                    let final_size = sum + content_size;
+                    variables_serialized.push(quote! {
+                        buffer[#sum..#final_size].copy_from_slice(&self.#length_name.to_le_bytes());
+                    });
+                    sum = final_size;
+
+                    variables_serialized.push(quote! {
+                        for (index, value) in self.#name.iter().enumerate() {
+                            buffer[(#sum + index * #content_size)..(#sum + (1 + index) * #content_size)].copy_from_slice(&value.to_le_bytes());
+                        }
+                    });
+
+                    sum_quote = Some(quote! {
+                        #sum + (self.#length_name as usize * self.#name.len()) as usize
+                    })
+
+                }
+                // Vector should be the last element, we should not care about sum
+                continue
+            }
+
+            let final_size = sum + size;
+            variables_serialized.push(quote! {
+                buffer[#sum..#final_size].copy_from_slice(&self.#name.to_le_bytes());
+            });
+            sum = final_size;
+        }
+
+        let sum_quote = sum_quote.or_else(||Some(quote!{ #sum }));
+
         quote! {
             #[derive(Debug, Clone, PartialEq, Default)]
             #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -186,6 +244,12 @@ impl MessageDefinition {
                 #(#variables)*
             }
 
+            impl Serialize for #struct_name {
+                fn serialize(self, buffer: &mut [u8]) -> usize {
+                    #(#variables_serialized)*
+                    #sum_quote
+                }
+            }
         }
     }
 }
@@ -289,6 +353,8 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
 
     let code = quote! {
         use crate::serialize::PingMessage;
+        use crate::serialize::Serialize;
+        use bytes::BufMut;
 
         #[cfg(feature = "serde")]
         use serde::{Deserialize, Serialize};

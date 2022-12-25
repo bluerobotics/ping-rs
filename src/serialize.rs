@@ -7,3 +7,7 @@ where
 
     fn message_id_from_name(name: &str) -> Result<u16, &'static str>;
 }
+
+pub trait Serialize {
+    fn serialize(self, buffer: &mut [u8]) -> usize;
+}
