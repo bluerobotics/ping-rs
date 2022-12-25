@@ -84,14 +84,9 @@ impl PayloadType {
 
     pub fn to_size(&self) -> usize {
         match self {
-            PayloadType::CHAR |
-            PayloadType::U8 |
-            PayloadType::I8 => 1,
-            PayloadType::U16 |
-            PayloadType::I16 => 2,
-            PayloadType::U32 |
-            PayloadType::I32 |
-            PayloadType::F32 => 4,
+            PayloadType::CHAR | PayloadType::U8 | PayloadType::I8 => 1,
+            PayloadType::U16 | PayloadType::I16 => 2,
+            PayloadType::U32 | PayloadType::I32 | PayloadType::F32 => 4,
             PayloadType::VECTOR(_) => 0,
         }
     }
@@ -197,14 +192,14 @@ impl MessageDefinition {
         let mut sum = 0;
         for pay in &self.payload {
             let size = pay.typ.to_size();
-            let name =  quote::format_ident!("{}", pay.name);
+            let name = quote::format_ident!("{}", pay.name);
 
             if let PayloadType::VECTOR(vector) = &pay.typ {
                 let data_type = vector.data_type.to_rust();
                 if let Some(size_type) = &vector.size_type {
                     let length_name = quote::format_ident!("{}_length", name);
                     let content_size = size_type.to_size();
-                    
+
                     let final_size = sum + content_size;
                     variables_serialized.push(quote! {
                         buffer[#sum..#final_size].copy_from_slice(&self.#length_name.to_le_bytes());
@@ -220,7 +215,6 @@ impl MessageDefinition {
                     sum_quote = Some(quote! {
                         #sum + (self.#length_name as usize * self.#name.len()) as usize
                     })
-
                 } else {
                     // We are probably dealing with a string since size_type is empty
                     variables_serialized.push(quote! {
@@ -236,7 +230,7 @@ impl MessageDefinition {
                 }
 
                 // Vector should be the last element, we should not care about sum
-                continue
+                continue;
             }
 
             let final_size = sum + size;
@@ -246,7 +240,7 @@ impl MessageDefinition {
             sum = final_size;
         }
 
-        let sum_quote = sum_quote.or_else(||Some(quote!{ #sum }));
+        let sum_quote = sum_quote.or_else(|| Some(quote! { #sum }));
 
         quote! {
             #[derive(Debug, Clone, PartialEq, Default)]
@@ -299,13 +293,13 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
         .collect::<Vec<TokenStream>>();
 
     let message_enums_name_id = messages
-    .iter()
-    .map(|(name, message)| {
-        let id = message.id;
-        let id = quote!(#id);
-        quote!(#name  => Ok(#id),)
-    })
-    .collect::<Vec<TokenStream>>();
+        .iter()
+        .map(|(name, message)| {
+            let id = message.id;
+            let id = quote!(#id);
+            quote!(#name  => Ok(#id),)
+        })
+        .collect::<Vec<TokenStream>>();
 
     let message_enums_serialize = messages
         .iter()

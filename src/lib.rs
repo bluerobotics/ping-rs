@@ -23,9 +23,9 @@ impl Default for PingMessagePack {
 impl PingMessagePack {
     /**
      * Message Format
-     * 
+     *
      * Each message consists of a header, optional payload, and checksum. The binary format is specified as follows:
-     * 
+     *
      * | Byte        | Type | Name           | Description                                                                                               |
      * |-------------|------|----------------|-----------------------------------------------------------------------------------------------------------|
      * | 0           | u8   | start1         | Start frame identifier, ASCII 'B'                                                                         |
@@ -53,7 +53,6 @@ impl PingMessagePack {
         left[2..=3].copy_from_slice(&length.to_le_bytes());
 
         new
-
     }
 
     #[inline]
@@ -86,7 +85,7 @@ impl PingMessagePack {
         let index_start_checksum = 1 + Self::HEADER_SIZE + payload_length;
         u16::from_le_bytes([
             self.0[index_start_checksum],
-            self.0[index_start_checksum+1]
+            self.0[index_start_checksum + 1],
         ])
     }
 
