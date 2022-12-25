@@ -113,11 +113,47 @@
 <span id="113">113</span>
 <span id="114">114</span>
 <span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
 </pre><pre class="rust"><code><span class="macro">include!</span>(<span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">&quot;OUT_DIR&quot;</span>), <span class="string">&quot;/mod.rs&quot;</span>));
 
 <span class="kw">use </span><span class="kw">crate</span>::serialize::PingMessage;
 
 <span class="kw">const </span>PAYLOAD_SIZE: usize = <span class="number">255</span>;
+
+<span class="kw">use </span>std::io::Write;
 
 <span class="kw">use </span>crc_any::CRCu16;
 
@@ -160,14 +196,23 @@
     }
 
     <span class="kw">pub fn </span>from(message: <span class="kw">impl </span>PingMessage) -&gt; <span class="self">Self </span>{
-        <span class="kw">let </span><span class="kw-2">mut </span>new = <span class="self">Self</span>::new();
-        <span class="kw">let </span>(left, right) = new.<span class="number">0</span>.split_at_mut(<span class="self">Self</span>::HEADER_SIZE);
+        <span class="kw">let </span><span class="kw-2">mut </span>new: <span class="self">Self </span>= Default::default();
+        new.set_message(message);
+        new
+    }
+
+    <span class="kw">pub fn </span>set_message(<span class="kw-2">&amp;mut </span><span class="self">self</span>, message: <span class="kw">impl </span>PingMessage) {
+        <span class="kw">let </span>message_id = message.message_id();
+        <span class="kw">let </span>(left, right) = <span class="self">self</span>.<span class="number">0</span>.split_at_mut(<span class="self">Self</span>::HEADER_SIZE);
         <span class="kw">let </span>length = message.serialize(right) <span class="kw">as </span>u16;
 
         <span class="comment">// Set payload_length
         </span>left[<span class="number">2</span>..=<span class="number">3</span>].copy_from_slice(<span class="kw-2">&amp;</span>length.to_le_bytes());
 
-        new
+        <span class="comment">// Set message_id
+        </span>left[<span class="number">4</span>..=<span class="number">5</span>].copy_from_slice(<span class="kw-2">&amp;</span>message_id.to_le_bytes());
+
+        <span class="self">self</span>.update_checksum();
     }
 
     <span class="attribute">#[inline]
@@ -186,8 +231,18 @@
     }
 
     <span class="attribute">#[inline]
+    </span><span class="kw">pub fn </span>set_src_device_id(<span class="kw-2">&amp;mut </span><span class="self">self</span>, src_device_id: u8) {
+        <span class="self">self</span>.<span class="number">0</span>[<span class="number">6</span>] = src_device_id;
+    }
+
+    <span class="attribute">#[inline]
     </span><span class="kw">pub fn </span>dst_device_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u8 {
         <span class="self">self</span>.<span class="number">0</span>[<span class="number">7</span>]
+    }
+
+    <span class="attribute">#[inline]
+    </span><span class="kw">pub fn </span>set_dst_device_id(<span class="kw-2">&amp;mut </span><span class="self">self</span>, dst_device_id: u8) {
+        <span class="self">self</span>.<span class="number">0</span>[<span class="number">7</span>] = dst_device_id;
     }
 
     <span class="kw">pub fn </span>payload(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[u8] {
@@ -204,9 +259,12 @@
         ])
     }
 
-    <span class="kw">fn </span>mut_payload_and_checksum(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;mut </span>[u8] {
+    <span class="kw">pub fn </span>update_checksum(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="kw">let </span>payload_length: usize = <span class="self">self</span>.payload_length().into();
-        <span class="kw-2">&amp;mut </span><span class="self">self</span>.<span class="number">0</span>[(<span class="number">1 </span>+ <span class="self">Self</span>::HEADER_SIZE)..(<span class="number">1 </span>+ <span class="self">Self</span>::HEADER_SIZE + payload_length + <span class="number">2</span>)]
+        <span class="kw">let </span>index_start_checksum = <span class="number">1 </span>+ <span class="self">Self</span>::HEADER_SIZE + payload_length;
+        <span class="kw">let </span>checksum = <span class="self">self</span>.calculate_crc();
+        <span class="self">self</span>.<span class="number">0</span>[index_start_checksum..=(index_start_checksum + <span class="number">1</span>)]
+            .copy_from_slice(<span class="kw-2">&amp;</span>checksum.to_le_bytes());
     }
 
     <span class="kw">pub fn </span>calculate_crc(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
@@ -218,6 +276,16 @@
 
     <span class="kw">pub fn </span>has_valid_crc(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
         <span class="self">self</span>.checksum() == <span class="self">self</span>.calculate_crc()
+    }
+
+    <span class="kw">pub fn </span>length(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
+        <span class="self">Self</span>::HEADER_SIZE + <span class="self">self</span>.payload_length() <span class="kw">as </span>usize + <span class="number">2
+    </span>}
+
+    <span class="kw">pub fn </span>write(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span>Write) -&gt; std::io::Result&lt;usize&gt; {
+        <span class="kw">let </span>length = <span class="self">self</span>.length();
+        writer.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>[..length])<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(length)
     }
 }
 

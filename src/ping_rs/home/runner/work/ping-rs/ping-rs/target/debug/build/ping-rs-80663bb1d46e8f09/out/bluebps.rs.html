@@ -467,25 +467,25 @@
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>Messages {
     ResetDefaults(ResetDefaultsStruct),
-    CellVoltageMin(CellVoltageMinStruct),
-    CellTimeout(CellTimeoutStruct),
-    SetStreamRate(SetStreamRateStruct),
-    SetLpfSampleFrequency(SetLpfSampleFrequencyStruct),
-    TemperatureTimeout(TemperatureTimeoutStruct),
-    SetTemperatureTimeout(SetTemperatureTimeoutStruct),
-    TemperatureMax(TemperatureMaxStruct),
-    SetCellVoltageMinimum(SetCellVoltageMinimumStruct),
     Reboot(RebootStruct),
-    SetCellVoltageTimeout(SetCellVoltageTimeoutStruct),
-    SetTemperatureMax(SetTemperatureMaxStruct),
-    Events(EventsStruct),
-    SetCurrentMax(SetCurrentMaxStruct),
-    SetCurrentTimeout(SetCurrentTimeoutStruct),
-    EraseFlash(EraseFlashStruct),
     CurrentTimeout(CurrentTimeoutStruct),
+    SetLpfSampleFrequency(SetLpfSampleFrequencyStruct),
+    SetCellVoltageTimeout(SetCellVoltageTimeoutStruct),
+    SetStreamRate(SetStreamRateStruct),
     CurrentMax(CurrentMaxStruct),
+    SetCellVoltageMinimum(SetCellVoltageMinimumStruct),
+    SetTemperatureMax(SetTemperatureMaxStruct),
+    TemperatureTimeout(TemperatureTimeoutStruct),
+    CellVoltageMin(CellVoltageMinStruct),
+    SetCurrentTimeout(SetCurrentTimeoutStruct),
+    SetCurrentMax(SetCurrentMaxStruct),
+    SetTemperatureTimeout(SetTemperatureTimeoutStruct),
+    EraseFlash(EraseFlashStruct),
+    TemperatureMax(TemperatureMaxStruct),
     SetLpfSetting(SetLpfSettingStruct),
+    Events(EventsStruct),
     State(StateStruct),
+    CellTimeout(CellTimeoutStruct),
 }
 <span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
@@ -501,29 +501,59 @@
 }
 <span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Get the minimum allowed cell voltage&quot;</span>]
-</span><span class="kw">pub struct </span>CellVoltageMinStruct {
+#[doc = <span class="string">&quot;reboot the system&quot;</span>]
+</span><span class="kw">pub struct </span>RebootStruct {
     <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
     </span><span class="kw">pub </span>header: PingProtocolHead,
-    <span class="attribute">#[doc = <span class="string">&quot;The minimum voltage allowed for any individual cell. 0~5000: 0~5V&quot;</span>]
-    </span><span class="kw">pub </span>limit: u16,
+    <span class="attribute">#[doc = <span class="string">&quot;0 = normal reboot, run main application after reboot 1 = hold the device in bootloader after reboot&quot;</span>]
+    </span><span class="kw">pub </span>goto_bootloader: u8,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>CellVoltageMinStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>RebootStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.limit.to_le_bytes());
+        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.goto_bootloader.to_le_bytes());
+        <span class="number">1usize
+    </span>}
+}
+<span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;Get the over-current timeout&quot;</span>]
+</span><span class="kw">pub struct </span>CurrentTimeoutStruct {
+    <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
+    </span><span class="kw">pub </span>header: PingProtocolHead,
+    <span class="attribute">#[doc = <span class="string">&quot;If the battery current exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]
+    </span><span class="kw">pub </span>timeout: u16,
+}
+<span class="kw">impl </span>Serialize <span class="kw">for </span>CurrentTimeoutStruct {
+    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
+        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.timeout.to_le_bytes());
         <span class="number">2usize
     </span>}
 }
 <span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Get the undervoltage timeout&quot;</span>]
-</span><span class="kw">pub struct </span>CellTimeoutStruct {
+#[doc = <span class="string">&quot;the frequency to take adc samples and run the filter.&quot;</span>]
+</span><span class="kw">pub struct </span>SetLpfSampleFrequencyStruct {
+    <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
+    </span><span class="kw">pub </span>header: PingProtocolHead,
+    <span class="attribute">#[doc = <span class="string">&quot;sample frequency in Hz. 1~100000&quot;</span>]
+    </span><span class="kw">pub </span>sample_frequency: u32,
+}
+<span class="kw">impl </span>Serialize <span class="kw">for </span>SetLpfSampleFrequencyStruct {
+    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
+        buffer[<span class="number">0usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.sample_frequency.to_le_bytes());
+        <span class="number">4usize
+    </span>}
+}
+<span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;Set the under-voltage timeout&quot;</span>]
+</span><span class="kw">pub struct </span>SetCellVoltageTimeoutStruct {
     <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
     </span><span class="kw">pub </span>header: PingProtocolHead,
     <span class="attribute">#[doc = <span class="string">&quot;If an individual cell exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]
     </span><span class="kw">pub </span>timeout: u16,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>CellTimeoutStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>SetCellVoltageTimeoutStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
         buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.timeout.to_le_bytes());
         <span class="number">2usize
@@ -546,59 +576,14 @@
 }
 <span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;the frequency to take adc samples and run the filter.&quot;</span>]
-</span><span class="kw">pub struct </span>SetLpfSampleFrequencyStruct {
+#[doc = <span class="string">&quot;get the maximum allowed battery current&quot;</span>]
+</span><span class="kw">pub struct </span>CurrentMaxStruct {
     <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
     </span><span class="kw">pub </span>header: PingProtocolHead,
-    <span class="attribute">#[doc = <span class="string">&quot;sample frequency in Hz. 1~100000&quot;</span>]
-    </span><span class="kw">pub </span>sample_frequency: u32,
-}
-<span class="kw">impl </span>Serialize <span class="kw">for </span>SetLpfSampleFrequencyStruct {
-    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.sample_frequency.to_le_bytes());
-        <span class="number">4usize
-    </span>}
-}
-<span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Get the over-temperature timeout&quot;</span>]
-</span><span class="kw">pub struct </span>TemperatureTimeoutStruct {
-    <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
-    </span><span class="kw">pub </span>header: PingProtocolHead,
-    <span class="attribute">#[doc = <span class="string">&quot;If the battery temperature exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]
-    </span><span class="kw">pub </span>timeout: u16,
-}
-<span class="kw">impl </span>Serialize <span class="kw">for </span>TemperatureTimeoutStruct {
-    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.timeout.to_le_bytes());
-        <span class="number">2usize
-    </span>}
-}
-<span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Set the over-temperature timeout&quot;</span>]
-</span><span class="kw">pub struct </span>SetTemperatureTimeoutStruct {
-    <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
-    </span><span class="kw">pub </span>header: PingProtocolHead,
-    <span class="attribute">#[doc = <span class="string">&quot;If the battery temperature exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]
-    </span><span class="kw">pub </span>timeout: u16,
-}
-<span class="kw">impl </span>Serialize <span class="kw">for </span>SetTemperatureTimeoutStruct {
-    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.timeout.to_le_bytes());
-        <span class="number">2usize
-    </span>}
-}
-<span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Get the maximum allowed battery temperature&quot;</span>]
-</span><span class="kw">pub struct </span>TemperatureMaxStruct {
-    <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
-    </span><span class="kw">pub </span>header: PingProtocolHead,
-    <span class="attribute">#[doc = <span class="string">&quot;The minimum voltage allowed for any individual cell. 0~5000: 0~5V&quot;</span>]
+    <span class="attribute">#[doc = <span class="string">&quot;The maximum allowed battery current 0~20000 = 0~200A&quot;</span>]
     </span><span class="kw">pub </span>limit: u16,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>TemperatureMaxStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>CurrentMaxStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
         buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.limit.to_le_bytes());
         <span class="number">2usize
@@ -621,36 +606,6 @@
 }
 <span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;reboot the system&quot;</span>]
-</span><span class="kw">pub struct </span>RebootStruct {
-    <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
-    </span><span class="kw">pub </span>header: PingProtocolHead,
-    <span class="attribute">#[doc = <span class="string">&quot;0 = normal reboot, run main application after reboot 1 = hold the device in bootloader after reboot&quot;</span>]
-    </span><span class="kw">pub </span>goto_bootloader: u8,
-}
-<span class="kw">impl </span>Serialize <span class="kw">for </span>RebootStruct {
-    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.goto_bootloader.to_le_bytes());
-        <span class="number">1usize
-    </span>}
-}
-<span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Set the under-voltage timeout&quot;</span>]
-</span><span class="kw">pub struct </span>SetCellVoltageTimeoutStruct {
-    <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
-    </span><span class="kw">pub </span>header: PingProtocolHead,
-    <span class="attribute">#[doc = <span class="string">&quot;If an individual cell exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]
-    </span><span class="kw">pub </span>timeout: u16,
-}
-<span class="kw">impl </span>Serialize <span class="kw">for </span>SetCellVoltageTimeoutStruct {
-    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.timeout.to_le_bytes());
-        <span class="number">2usize
-    </span>}
-}
-<span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
 #[doc = <span class="string">&quot;Set the maximum allowed battery temperature&quot;</span>]
 </span><span class="kw">pub struct </span>SetTemperatureMaxStruct {
     <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
@@ -666,35 +621,29 @@
 }
 <span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;A record of events causing a power lock-out. These numbers are non-volatile and reset only with the erase_flash control message.&quot;</span>]
-</span><span class="kw">pub struct </span>EventsStruct {
+#[doc = <span class="string">&quot;Get the over-temperature timeout&quot;</span>]
+</span><span class="kw">pub struct </span>TemperatureTimeoutStruct {
     <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
     </span><span class="kw">pub </span>header: PingProtocolHead,
-    <span class="attribute">#[doc = <span class="string">&quot;The number of under-voltage events&quot;</span>]
-    </span><span class="kw">pub </span>voltage: u16,
-    <span class="attribute">#[doc = <span class="string">&quot;The number of over-current events&quot;</span>]
-    </span><span class="kw">pub </span>current: u16,
-    <span class="attribute">#[doc = <span class="string">&quot;The number of over-temperature events&quot;</span>]
-    </span><span class="kw">pub </span>temperature: u16,
+    <span class="attribute">#[doc = <span class="string">&quot;If the battery temperature exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]
+    </span><span class="kw">pub </span>timeout: u16,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>EventsStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>TemperatureTimeoutStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.voltage.to_le_bytes());
-        buffer[<span class="number">2usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.current.to_le_bytes());
-        buffer[<span class="number">4usize</span>..<span class="number">6usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.temperature.to_le_bytes());
-        <span class="number">6usize
+        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.timeout.to_le_bytes());
+        <span class="number">2usize
     </span>}
 }
 <span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Set the maximum allowed battery current&quot;</span>]
-</span><span class="kw">pub struct </span>SetCurrentMaxStruct {
+#[doc = <span class="string">&quot;Get the minimum allowed cell voltage&quot;</span>]
+</span><span class="kw">pub struct </span>CellVoltageMinStruct {
     <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
     </span><span class="kw">pub </span>header: PingProtocolHead,
-    <span class="attribute">#[doc = <span class="string">&quot;The maximum allowed battery current 0~20000 = 0~200A&quot;</span>]
+    <span class="attribute">#[doc = <span class="string">&quot;The minimum voltage allowed for any individual cell. 0~5000: 0~5V&quot;</span>]
     </span><span class="kw">pub </span>limit: u16,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>SetCurrentMaxStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>CellVoltageMinStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
         buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.limit.to_le_bytes());
         <span class="number">2usize
@@ -717,6 +666,36 @@
 }
 <span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;Set the maximum allowed battery current&quot;</span>]
+</span><span class="kw">pub struct </span>SetCurrentMaxStruct {
+    <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
+    </span><span class="kw">pub </span>header: PingProtocolHead,
+    <span class="attribute">#[doc = <span class="string">&quot;The maximum allowed battery current 0~20000 = 0~200A&quot;</span>]
+    </span><span class="kw">pub </span>limit: u16,
+}
+<span class="kw">impl </span>Serialize <span class="kw">for </span>SetCurrentMaxStruct {
+    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
+        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.limit.to_le_bytes());
+        <span class="number">2usize
+    </span>}
+}
+<span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;Set the over-temperature timeout&quot;</span>]
+</span><span class="kw">pub struct </span>SetTemperatureTimeoutStruct {
+    <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
+    </span><span class="kw">pub </span>header: PingProtocolHead,
+    <span class="attribute">#[doc = <span class="string">&quot;If the battery temperature exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]
+    </span><span class="kw">pub </span>timeout: u16,
+}
+<span class="kw">impl </span>Serialize <span class="kw">for </span>SetTemperatureTimeoutStruct {
+    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
+        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.timeout.to_le_bytes());
+        <span class="number">2usize
+    </span>}
+}
+<span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
 #[doc = <span class="string">&quot;Erase flash, including parameter configuration and event counters. The mcu has a limited number of write/erase cycles (1k)!&quot;</span>]
 </span><span class="kw">pub struct </span>EraseFlashStruct {
     <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
@@ -729,29 +708,14 @@
 }
 <span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Get the over-current timeout&quot;</span>]
-</span><span class="kw">pub struct </span>CurrentTimeoutStruct {
+#[doc = <span class="string">&quot;Get the maximum allowed battery temperature&quot;</span>]
+</span><span class="kw">pub struct </span>TemperatureMaxStruct {
     <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
     </span><span class="kw">pub </span>header: PingProtocolHead,
-    <span class="attribute">#[doc = <span class="string">&quot;If the battery current exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]
-    </span><span class="kw">pub </span>timeout: u16,
-}
-<span class="kw">impl </span>Serialize <span class="kw">for </span>CurrentTimeoutStruct {
-    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.timeout.to_le_bytes());
-        <span class="number">2usize
-    </span>}
-}
-<span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;get the maximum allowed battery current&quot;</span>]
-</span><span class="kw">pub struct </span>CurrentMaxStruct {
-    <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
-    </span><span class="kw">pub </span>header: PingProtocolHead,
-    <span class="attribute">#[doc = <span class="string">&quot;The maximum allowed battery current 0~20000 = 0~200A&quot;</span>]
+    <span class="attribute">#[doc = <span class="string">&quot;The minimum voltage allowed for any individual cell. 0~5000: 0~5V&quot;</span>]
     </span><span class="kw">pub </span>limit: u16,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>CurrentMaxStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>TemperatureMaxStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
         buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.limit.to_le_bytes());
         <span class="number">2usize
@@ -770,6 +734,27 @@
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
         buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.setting.to_le_bytes());
         <span class="number">2usize
+    </span>}
+}
+<span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;A record of events causing a power lock-out. These numbers are non-volatile and reset only with the erase_flash control message.&quot;</span>]
+</span><span class="kw">pub struct </span>EventsStruct {
+    <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
+    </span><span class="kw">pub </span>header: PingProtocolHead,
+    <span class="attribute">#[doc = <span class="string">&quot;The number of under-voltage events&quot;</span>]
+    </span><span class="kw">pub </span>voltage: u16,
+    <span class="attribute">#[doc = <span class="string">&quot;The number of over-current events&quot;</span>]
+    </span><span class="kw">pub </span>current: u16,
+    <span class="attribute">#[doc = <span class="string">&quot;The number of over-temperature events&quot;</span>]
+    </span><span class="kw">pub </span>temperature: u16,
+}
+<span class="kw">impl </span>Serialize <span class="kw">for </span>EventsStruct {
+    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
+        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.voltage.to_le_bytes());
+        buffer[<span class="number">2usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.current.to_le_bytes());
+        buffer[<span class="number">4usize</span>..<span class="number">6usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.temperature.to_le_bytes());
+        <span class="number">6usize
     </span>}
 }
 <span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
@@ -807,102 +792,117 @@
         <span class="number">10usize </span>+ (<span class="self">self</span>.cell_voltages_length <span class="kw">as </span>usize * <span class="self">self</span>.cell_voltages.len()) <span class="kw">as </span>usize
     }
 }
+<span class="attribute">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;Get the undervoltage timeout&quot;</span>]
+</span><span class="kw">pub struct </span>CellTimeoutStruct {
+    <span class="attribute">#[doc = <span class="string">&quot;Information about message destiny and source&quot;</span>]
+    </span><span class="kw">pub </span>header: PingProtocolHead,
+    <span class="attribute">#[doc = <span class="string">&quot;If an individual cell exceeds the configured limit for this duration of time, the power will be locked-out&quot;</span>]
+    </span><span class="kw">pub </span>timeout: u16,
+}
+<span class="kw">impl </span>Serialize <span class="kw">for </span>CellTimeoutStruct {
+    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
+        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.timeout.to_le_bytes());
+        <span class="number">2usize
+    </span>}
+}
 <span class="kw">impl </span>PingMessage <span class="kw">for </span>Messages {
     <span class="kw">fn </span>message_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
         <span class="kw">match </span><span class="self">self </span>{
             Messages::ResetDefaults(..) =&gt; <span class="string">&quot;reset_defaults&quot;</span>,
-            Messages::CellVoltageMin(..) =&gt; <span class="string">&quot;cell_voltage_min&quot;</span>,
-            Messages::CellTimeout(..) =&gt; <span class="string">&quot;cell_timeout&quot;</span>,
-            Messages::SetStreamRate(..) =&gt; <span class="string">&quot;set_stream_rate&quot;</span>,
-            Messages::SetLpfSampleFrequency(..) =&gt; <span class="string">&quot;set_lpf_sample_frequency&quot;</span>,
-            Messages::TemperatureTimeout(..) =&gt; <span class="string">&quot;temperature_timeout&quot;</span>,
-            Messages::SetTemperatureTimeout(..) =&gt; <span class="string">&quot;set_temperature_timeout&quot;</span>,
-            Messages::TemperatureMax(..) =&gt; <span class="string">&quot;temperature_max&quot;</span>,
-            Messages::SetCellVoltageMinimum(..) =&gt; <span class="string">&quot;set_cell_voltage_minimum&quot;</span>,
             Messages::Reboot(..) =&gt; <span class="string">&quot;reboot&quot;</span>,
-            Messages::SetCellVoltageTimeout(..) =&gt; <span class="string">&quot;set_cell_voltage_timeout&quot;</span>,
-            Messages::SetTemperatureMax(..) =&gt; <span class="string">&quot;set_temperature_max&quot;</span>,
-            Messages::Events(..) =&gt; <span class="string">&quot;events&quot;</span>,
-            Messages::SetCurrentMax(..) =&gt; <span class="string">&quot;set_current_max&quot;</span>,
-            Messages::SetCurrentTimeout(..) =&gt; <span class="string">&quot;set_current_timeout&quot;</span>,
-            Messages::EraseFlash(..) =&gt; <span class="string">&quot;erase_flash&quot;</span>,
             Messages::CurrentTimeout(..) =&gt; <span class="string">&quot;current_timeout&quot;</span>,
+            Messages::SetLpfSampleFrequency(..) =&gt; <span class="string">&quot;set_lpf_sample_frequency&quot;</span>,
+            Messages::SetCellVoltageTimeout(..) =&gt; <span class="string">&quot;set_cell_voltage_timeout&quot;</span>,
+            Messages::SetStreamRate(..) =&gt; <span class="string">&quot;set_stream_rate&quot;</span>,
             Messages::CurrentMax(..) =&gt; <span class="string">&quot;current_max&quot;</span>,
+            Messages::SetCellVoltageMinimum(..) =&gt; <span class="string">&quot;set_cell_voltage_minimum&quot;</span>,
+            Messages::SetTemperatureMax(..) =&gt; <span class="string">&quot;set_temperature_max&quot;</span>,
+            Messages::TemperatureTimeout(..) =&gt; <span class="string">&quot;temperature_timeout&quot;</span>,
+            Messages::CellVoltageMin(..) =&gt; <span class="string">&quot;cell_voltage_min&quot;</span>,
+            Messages::SetCurrentTimeout(..) =&gt; <span class="string">&quot;set_current_timeout&quot;</span>,
+            Messages::SetCurrentMax(..) =&gt; <span class="string">&quot;set_current_max&quot;</span>,
+            Messages::SetTemperatureTimeout(..) =&gt; <span class="string">&quot;set_temperature_timeout&quot;</span>,
+            Messages::EraseFlash(..) =&gt; <span class="string">&quot;erase_flash&quot;</span>,
+            Messages::TemperatureMax(..) =&gt; <span class="string">&quot;temperature_max&quot;</span>,
             Messages::SetLpfSetting(..) =&gt; <span class="string">&quot;set_lpf_setting&quot;</span>,
+            Messages::Events(..) =&gt; <span class="string">&quot;events&quot;</span>,
             Messages::State(..) =&gt; <span class="string">&quot;state&quot;</span>,
+            Messages::CellTimeout(..) =&gt; <span class="string">&quot;cell_timeout&quot;</span>,
         }
     }
     <span class="kw">fn </span>message_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
         <span class="kw">match </span><span class="self">self </span>{
             Messages::ResetDefaults(..) =&gt; <span class="number">9202u16</span>,
-            Messages::CellVoltageMin(..) =&gt; <span class="number">9100u16</span>,
-            Messages::CellTimeout(..) =&gt; <span class="number">9101u16</span>,
-            Messages::SetStreamRate(..) =&gt; <span class="number">9006u16</span>,
-            Messages::SetLpfSampleFrequency(..) =&gt; <span class="number">9007u16</span>,
-            Messages::TemperatureTimeout(..) =&gt; <span class="number">9105u16</span>,
-            Messages::SetTemperatureTimeout(..) =&gt; <span class="number">9005u16</span>,
-            Messages::TemperatureMax(..) =&gt; <span class="number">9104u16</span>,
-            Messages::SetCellVoltageMinimum(..) =&gt; <span class="number">9000u16</span>,
             Messages::Reboot(..) =&gt; <span class="number">9200u16</span>,
-            Messages::SetCellVoltageTimeout(..) =&gt; <span class="number">9001u16</span>,
-            Messages::SetTemperatureMax(..) =&gt; <span class="number">9004u16</span>,
-            Messages::Events(..) =&gt; <span class="number">9107u16</span>,
-            Messages::SetCurrentMax(..) =&gt; <span class="number">9002u16</span>,
-            Messages::SetCurrentTimeout(..) =&gt; <span class="number">9003u16</span>,
-            Messages::EraseFlash(..) =&gt; <span class="number">9201u16</span>,
             Messages::CurrentTimeout(..) =&gt; <span class="number">9103u16</span>,
+            Messages::SetLpfSampleFrequency(..) =&gt; <span class="number">9007u16</span>,
+            Messages::SetCellVoltageTimeout(..) =&gt; <span class="number">9001u16</span>,
+            Messages::SetStreamRate(..) =&gt; <span class="number">9006u16</span>,
             Messages::CurrentMax(..) =&gt; <span class="number">9102u16</span>,
+            Messages::SetCellVoltageMinimum(..) =&gt; <span class="number">9000u16</span>,
+            Messages::SetTemperatureMax(..) =&gt; <span class="number">9004u16</span>,
+            Messages::TemperatureTimeout(..) =&gt; <span class="number">9105u16</span>,
+            Messages::CellVoltageMin(..) =&gt; <span class="number">9100u16</span>,
+            Messages::SetCurrentTimeout(..) =&gt; <span class="number">9003u16</span>,
+            Messages::SetCurrentMax(..) =&gt; <span class="number">9002u16</span>,
+            Messages::SetTemperatureTimeout(..) =&gt; <span class="number">9005u16</span>,
+            Messages::EraseFlash(..) =&gt; <span class="number">9201u16</span>,
+            Messages::TemperatureMax(..) =&gt; <span class="number">9104u16</span>,
             Messages::SetLpfSetting(..) =&gt; <span class="number">9008u16</span>,
+            Messages::Events(..) =&gt; <span class="number">9107u16</span>,
             Messages::State(..) =&gt; <span class="number">9106u16</span>,
+            Messages::CellTimeout(..) =&gt; <span class="number">9101u16</span>,
         }
     }
     <span class="kw">fn </span>message_id_from_name(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;u16, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt; {
         <span class="kw">match </span>name {
             <span class="string">&quot;reset_defaults&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9202u16</span>),
-            <span class="string">&quot;cell_voltage_min&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9100u16</span>),
-            <span class="string">&quot;cell_timeout&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9101u16</span>),
-            <span class="string">&quot;set_stream_rate&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9006u16</span>),
-            <span class="string">&quot;set_lpf_sample_frequency&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9007u16</span>),
-            <span class="string">&quot;temperature_timeout&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9105u16</span>),
-            <span class="string">&quot;set_temperature_timeout&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9005u16</span>),
-            <span class="string">&quot;temperature_max&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9104u16</span>),
-            <span class="string">&quot;set_cell_voltage_minimum&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9000u16</span>),
             <span class="string">&quot;reboot&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9200u16</span>),
-            <span class="string">&quot;set_cell_voltage_timeout&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9001u16</span>),
-            <span class="string">&quot;set_temperature_max&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9004u16</span>),
-            <span class="string">&quot;events&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9107u16</span>),
-            <span class="string">&quot;set_current_max&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9002u16</span>),
-            <span class="string">&quot;set_current_timeout&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9003u16</span>),
-            <span class="string">&quot;erase_flash&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9201u16</span>),
             <span class="string">&quot;current_timeout&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9103u16</span>),
+            <span class="string">&quot;set_lpf_sample_frequency&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9007u16</span>),
+            <span class="string">&quot;set_cell_voltage_timeout&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9001u16</span>),
+            <span class="string">&quot;set_stream_rate&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9006u16</span>),
             <span class="string">&quot;current_max&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9102u16</span>),
+            <span class="string">&quot;set_cell_voltage_minimum&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9000u16</span>),
+            <span class="string">&quot;set_temperature_max&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9004u16</span>),
+            <span class="string">&quot;temperature_timeout&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9105u16</span>),
+            <span class="string">&quot;cell_voltage_min&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9100u16</span>),
+            <span class="string">&quot;set_current_timeout&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9003u16</span>),
+            <span class="string">&quot;set_current_max&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9002u16</span>),
+            <span class="string">&quot;set_temperature_timeout&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9005u16</span>),
+            <span class="string">&quot;erase_flash&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9201u16</span>),
+            <span class="string">&quot;temperature_max&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9104u16</span>),
             <span class="string">&quot;set_lpf_setting&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9008u16</span>),
+            <span class="string">&quot;events&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9107u16</span>),
             <span class="string">&quot;state&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9106u16</span>),
+            <span class="string">&quot;cell_timeout&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">9101u16</span>),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="string">&quot;Invalid message name.&quot;</span>),
         }
     }
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
         <span class="kw">match </span><span class="self">self </span>{
             Messages::ResetDefaults(content) =&gt; content.serialize(buffer),
-            Messages::CellVoltageMin(content) =&gt; content.serialize(buffer),
-            Messages::CellTimeout(content) =&gt; content.serialize(buffer),
-            Messages::SetStreamRate(content) =&gt; content.serialize(buffer),
-            Messages::SetLpfSampleFrequency(content) =&gt; content.serialize(buffer),
-            Messages::TemperatureTimeout(content) =&gt; content.serialize(buffer),
-            Messages::SetTemperatureTimeout(content) =&gt; content.serialize(buffer),
-            Messages::TemperatureMax(content) =&gt; content.serialize(buffer),
-            Messages::SetCellVoltageMinimum(content) =&gt; content.serialize(buffer),
             Messages::Reboot(content) =&gt; content.serialize(buffer),
-            Messages::SetCellVoltageTimeout(content) =&gt; content.serialize(buffer),
-            Messages::SetTemperatureMax(content) =&gt; content.serialize(buffer),
-            Messages::Events(content) =&gt; content.serialize(buffer),
-            Messages::SetCurrentMax(content) =&gt; content.serialize(buffer),
-            Messages::SetCurrentTimeout(content) =&gt; content.serialize(buffer),
-            Messages::EraseFlash(content) =&gt; content.serialize(buffer),
             Messages::CurrentTimeout(content) =&gt; content.serialize(buffer),
+            Messages::SetLpfSampleFrequency(content) =&gt; content.serialize(buffer),
+            Messages::SetCellVoltageTimeout(content) =&gt; content.serialize(buffer),
+            Messages::SetStreamRate(content) =&gt; content.serialize(buffer),
             Messages::CurrentMax(content) =&gt; content.serialize(buffer),
+            Messages::SetCellVoltageMinimum(content) =&gt; content.serialize(buffer),
+            Messages::SetTemperatureMax(content) =&gt; content.serialize(buffer),
+            Messages::TemperatureTimeout(content) =&gt; content.serialize(buffer),
+            Messages::CellVoltageMin(content) =&gt; content.serialize(buffer),
+            Messages::SetCurrentTimeout(content) =&gt; content.serialize(buffer),
+            Messages::SetCurrentMax(content) =&gt; content.serialize(buffer),
+            Messages::SetTemperatureTimeout(content) =&gt; content.serialize(buffer),
+            Messages::EraseFlash(content) =&gt; content.serialize(buffer),
+            Messages::TemperatureMax(content) =&gt; content.serialize(buffer),
             Messages::SetLpfSetting(content) =&gt; content.serialize(buffer),
+            Messages::Events(content) =&gt; content.serialize(buffer),
             Messages::State(content) =&gt; content.serialize(buffer),
+            Messages::CellTimeout(content) =&gt; content.serialize(buffer),
         }
     }
 }
