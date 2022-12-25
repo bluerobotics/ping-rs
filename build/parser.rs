@@ -133,8 +133,9 @@ impl Payload {
                 };
             }
 
+            // There is no size_type, so it should be a string
             return quote! {
-                #name: Vec<#data_type>,
+                #name: String,
             };
         }
 
@@ -220,7 +221,20 @@ impl MessageDefinition {
                         #sum + (self.#length_name as usize * self.#name.len()) as usize
                     })
 
+                } else {
+                    // We are probably dealing with a string since size_type is empty
+                    variables_serialized.push(quote! {
+                        let string_size = self.#name.len();
+                        let final_size = #sum + string_size;
+                        buffer[#sum..final_size].copy_from_slice(self.#name.as_bytes());
+                        buffer[final_size] = 0;
+                    });
+
+                    sum_quote = Some(quote! {
+                        final_size + 1usize
+                    })
                 }
+
                 // Vector should be the last element, we should not care about sum
                 continue
             }
