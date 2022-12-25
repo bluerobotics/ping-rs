@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["bluebps",""],["common",""],["ping1d",""],["ping360",""]]});
+window.SIDEBAR_ITEMS = {"mod":[["bluebps",""],["common",""],["ping1d",""],["ping360",""],["serialize",""]],"struct":[["PingMessagePack",""]]};
