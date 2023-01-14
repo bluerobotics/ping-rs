@@ -190,7 +190,6 @@ impl MessageDefinition {
             let name = quote::format_ident!("{}", pay.name);
 
             if let PayloadType::VECTOR(vector) = &pay.typ {
-                let data_type = vector.data_type.to_rust();
                 if let Some(size_type) = &vector.size_type {
                     let length_name = quote::format_ident!("{}_length", name);
                     let content_size = size_type.to_size();
@@ -298,8 +297,6 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
         .iter()
         .map(|(name, message)| {
             let pascal_message_name = ident!(name.to_case(Case::Pascal));
-            let id = message.id;
-            let id = quote!(#id);
             quote!(Messages::#pascal_message_name(content) => content.serialize(buffer),)
         })
         .collect::<Vec<TokenStream>>();
