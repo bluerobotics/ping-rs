@@ -130,7 +130,7 @@ impl PingMessagePack {
         Self::HEADER_SIZE + self.payload_length() as usize + 2
     }
 
-    pub fn write(&self, writer: &mut Write) -> std::io::Result<usize> {
+    pub fn write(&self, writer: &mut dyn Write) -> std::io::Result<usize> {
         let length = self.length();
         writer.write_all(&self.0[..length])?;
         Ok(length)
