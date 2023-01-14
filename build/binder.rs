@@ -1,7 +1,5 @@
 use std::io::Write;
 
-use convert_case::{Case, Casing};
-use proc_macro2::{Ident, Punct, Spacing, Span, TokenStream, TokenTree};
 use quote;
 
 pub fn generate<W: Write>(modules: Vec<String>, out: &mut W) {
