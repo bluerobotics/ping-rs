@@ -280,7 +280,7 @@
         <span class="self">Self</span>::HEADER_SIZE + <span class="self">self</span>.payload_length() <span class="kw">as </span>usize + <span class="number">2
     </span>}
 
-    <span class="kw">pub fn </span>write(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span>Write) -&gt; std::io::Result&lt;usize&gt; {
+    <span class="kw">pub fn </span>write(<span class="kw-2">&amp;</span><span class="self">self</span>, writer: <span class="kw-2">&amp;mut </span><span class="kw">dyn </span>Write) -&gt; std::io::Result&lt;usize&gt; {
         <span class="kw">let </span>length = <span class="self">self</span>.length();
         writer.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>[..length])<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(length)
