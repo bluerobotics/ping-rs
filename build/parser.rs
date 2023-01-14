@@ -391,7 +391,7 @@ fn parse_description(
     file: &mut dyn Read,
 ) -> HashMap<std::string::String, HashMap<std::string::String, MessageDefinition>> {
     let mut file_content = String::new();
-    file.read_to_string(&mut file_content);
+    let _ = file.read_to_string(&mut file_content);
     let json: HashMap<String, HashMap<String, HashMap<String, serde_json::Value>>> =
         match serde_json::from_str(&file_content) {
             Ok(content) => content,
