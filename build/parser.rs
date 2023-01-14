@@ -368,7 +368,6 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
     let code = quote! {
         use crate::serialize::PingMessage;
         use crate::serialize::Serialize;
-        use bytes::BufMut;
 
         #[cfg(feature = "serde")]
         use serde::{Deserialize, Serialize};
