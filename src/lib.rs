@@ -135,6 +135,10 @@ impl PingMessagePack {
         writer.write_all(&self.0[..length])?;
         Ok(length)
     }
+
+    pub fn serialized(&self) -> &[u8] {
+        return &self.0[0..self.length()];
+    }
 }
 
 #[cfg(test)]
