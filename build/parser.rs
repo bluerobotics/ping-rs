@@ -73,7 +73,7 @@ impl PayloadType {
             PayloadType::I16 => quote! {i16},
             PayloadType::I32 => quote! {i32},
             PayloadType::F32 => quote! {f32},
-            PayloadType::VECTOR(vector) => panic!("Can't convert vector to rust."),
+            PayloadType::VECTOR(_vector) => panic!("Can't convert vector to rust."),
         }
     }
 
@@ -295,7 +295,7 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
 
     let message_enums_serialize = messages
         .iter()
-        .map(|(name, message)| {
+        .map(|(name, _message)| {
             let pascal_message_name = ident!(name.to_case(Case::Pascal));
             quote!(Messages::#pascal_message_name(content) => content.serialize(buffer),)
         })
@@ -336,7 +336,7 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
     let messages = parse_description(input);
     let messages = messages
         .iter()
-        .map(|(message_type, messages)| messages)
+        .map(|(_message_type, messages)| messages)
         .flatten()
         .collect::<HashMap<&String, &MessageDefinition>>();
 
@@ -358,7 +358,7 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
 
     let message_tokens = messages
         .iter()
-        .map(|(name, message)| message.emit_struct())
+        .map(|(_name, message)| message.emit_struct())
         .collect::<Vec<TokenStream>>();
 
     let protocol_wrapper = emit_protocol_wrapper();
