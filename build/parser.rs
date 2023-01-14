@@ -1,13 +1,8 @@
 use std::collections::HashMap;
 use std::io::{Read, Write};
 
-use serde::{
-    ser::{SerializeMap, SerializeSeq, SerializeStruct},
-    Deserialize, Serialize, Serializer,
-};
-
 use convert_case::{Case, Casing};
-use proc_macro2::{Ident, Punct, Spacing, Span, TokenStream, TokenTree};
+use proc_macro2::TokenStream;
 use quote;
 
 macro_rules! ident {
