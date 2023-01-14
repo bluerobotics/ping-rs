@@ -6,8 +6,6 @@ const PAYLOAD_SIZE: usize = 255;
 
 use std::io::Write;
 
-use crc_any::CRCu16;
-
 pub mod serialize;
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
@@ -103,7 +101,7 @@ impl PingMessagePack {
 
     pub fn checksum(&self) -> u16 {
         let payload_length: usize = self.payload_length().into();
-        let index_start_checksum = 1 + Self::HEADER_SIZE + payload_length;
+        let index_start_checksum = Self::HEADER_SIZE + payload_length;
         u16::from_le_bytes([
             self.0[index_start_checksum],
             self.0[index_start_checksum + 1],
@@ -112,7 +110,7 @@ impl PingMessagePack {
 
     pub fn update_checksum(&mut self) {
         let payload_length: usize = self.payload_length().into();
-        let index_start_checksum = 1 + Self::HEADER_SIZE + payload_length;
+        let index_start_checksum = Self::HEADER_SIZE + payload_length;
         let checksum = self.calculate_crc();
         self.0[index_start_checksum..=(index_start_checksum + 1)]
             .copy_from_slice(&checksum.to_le_bytes());
@@ -120,9 +118,8 @@ impl PingMessagePack {
 
     pub fn calculate_crc(&self) -> u16 {
         let payload_length: usize = self.payload_length().into();
-        let mut crc_calculator = CRCu16::crc16mcrf4cc();
-        crc_calculator.digest(&self.0[0..=(Self::HEADER_SIZE + payload_length)]);
-        crc_calculator.get_crc()
+        let array = &self.0[0..=(Self::HEADER_SIZE + payload_length)];
+        return (array.iter().fold(0 as u16, |s, &v| s + v as u16) % 255) as u16;
     }
 
     pub fn has_valid_crc(&self) -> bool {
