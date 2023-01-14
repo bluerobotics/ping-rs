@@ -1,1 +1,1 @@
-window.ALL_CRATES = ["bytes","crc_any","ping_rs"];
+window.ALL_CRATES = ["bytes","ping_rs"];

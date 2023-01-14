@@ -147,6 +147,7 @@
 <span id="147">147</span>
 <span id="148">148</span>
 <span id="149">149</span>
+<span id="150">150</span>
 </pre><pre class="rust"><code><span class="macro">include!</span>(<span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">&quot;OUT_DIR&quot;</span>), <span class="string">&quot;/mod.rs&quot;</span>));
 
 <span class="kw">use </span><span class="kw">crate</span>::serialize::PingMessage;
@@ -154,8 +155,6 @@
 <span class="kw">const </span>PAYLOAD_SIZE: usize = <span class="number">255</span>;
 
 <span class="kw">use </span>std::io::Write;
-
-<span class="kw">use </span>crc_any::CRCu16;
 
 <span class="kw">pub mod </span>serialize;
 
@@ -252,7 +251,7 @@
 
     <span class="kw">pub fn </span>checksum(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
         <span class="kw">let </span>payload_length: usize = <span class="self">self</span>.payload_length().into();
-        <span class="kw">let </span>index_start_checksum = <span class="number">1 </span>+ <span class="self">Self</span>::HEADER_SIZE + payload_length;
+        <span class="kw">let </span>index_start_checksum = <span class="self">Self</span>::HEADER_SIZE + payload_length;
         u16::from_le_bytes([
             <span class="self">self</span>.<span class="number">0</span>[index_start_checksum],
             <span class="self">self</span>.<span class="number">0</span>[index_start_checksum + <span class="number">1</span>],
@@ -261,7 +260,7 @@
 
     <span class="kw">pub fn </span>update_checksum(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="kw">let </span>payload_length: usize = <span class="self">self</span>.payload_length().into();
-        <span class="kw">let </span>index_start_checksum = <span class="number">1 </span>+ <span class="self">Self</span>::HEADER_SIZE + payload_length;
+        <span class="kw">let </span>index_start_checksum = <span class="self">Self</span>::HEADER_SIZE + payload_length;
         <span class="kw">let </span>checksum = <span class="self">self</span>.calculate_crc();
         <span class="self">self</span>.<span class="number">0</span>[index_start_checksum..=(index_start_checksum + <span class="number">1</span>)]
             .copy_from_slice(<span class="kw-2">&amp;</span>checksum.to_le_bytes());
@@ -269,9 +268,8 @@
 
     <span class="kw">pub fn </span>calculate_crc(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
         <span class="kw">let </span>payload_length: usize = <span class="self">self</span>.payload_length().into();
-        <span class="kw">let </span><span class="kw-2">mut </span>crc_calculator = CRCu16::crc16mcrf4cc();
-        crc_calculator.digest(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>[<span class="number">0</span>..=(<span class="self">Self</span>::HEADER_SIZE + payload_length)]);
-        crc_calculator.get_crc()
+        <span class="kw">let </span>array = <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>[<span class="number">0</span>..=(<span class="self">Self</span>::HEADER_SIZE + payload_length)];
+        <span class="kw">return </span>(array.iter().fold(<span class="number">0 </span><span class="kw">as </span>u16, |s, <span class="kw-2">&amp;</span>v| s + v <span class="kw">as </span>u16) % <span class="number">255</span>) <span class="kw">as </span>u16;
     }
 
     <span class="kw">pub fn </span>has_valid_crc(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
@@ -287,6 +285,10 @@
         writer.write_all(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>[..length])<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(length)
     }
+
+    <span class="kw">pub fn </span>serialized(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[u8] {
+        <span class="kw">return </span><span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>[<span class="number">0</span>..<span class="self">self</span>.length()];
+    }
 }
 
 <span class="attribute">#[cfg(test)]
@@ -297,4 +299,4 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ping_rs" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0 (69f9c33d7 2022-12-12)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="ping_rs" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.1 (90743e729 2023-01-10)" ></div></body></html>
