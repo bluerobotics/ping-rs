@@ -247,8 +247,6 @@ impl MessageDefinition {
             #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
             #[doc = #comment]
             pub struct #struct_name {
-                #[doc = "Information about message destiny and source"]
-                pub header: PingProtocolHead,
                 #(#variables)*
             }
 
