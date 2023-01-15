@@ -182,6 +182,7 @@ impl MessageDefinition {
             })
             .collect();
 
+        // Serialization part
         let mut sum_quote = None;
         let mut variables_serialized: Vec<TokenStream> = vec![];
         let mut sum = 0;
@@ -236,6 +237,78 @@ impl MessageDefinition {
 
         let sum_quote = sum_quote.or_else(|| Some(quote! { #sum }));
 
+        // Descerialization part
+        let mut b: usize = 0; // current byte
+        let variables_deserialized: Vec<TokenStream> = self
+            .payload
+            .iter()
+            .map(|field| {
+                let name = ident!(field.name);
+                match &field.typ {
+                    PayloadType::I8 | PayloadType::U8 | PayloadType::CHAR => {
+                        let value = quote! {
+                            #name: payload[#b].into(),
+                        };
+                        b += field.typ.to_size();
+                        value
+                    }
+                    PayloadType::U16 | PayloadType::I16 | PayloadType::U32 | PayloadType::I32 | PayloadType::F32 => {
+                        let data_type = field.typ.to_rust();
+                        let data_size = field.typ.to_size();
+                        let field_token = quote! {
+                            #name: #data_type::from_le_bytes(payload[#b..#b + #data_size].try_into().expect("Wrong slice length")),
+                        };
+                        b += data_size;
+                        field_token
+                    }
+                    PayloadType::VECTOR(vector) => {
+                        let data_type = vector.data_type.to_rust();
+                        let data_size = vector.data_type.to_size();
+                        if let Some(size_type) = &vector.size_type {
+                            let length_name = quote::format_ident!("{}_length", field.name);
+                            let length_type = size_type.to_rust();
+                            let length = self.payload.len();
+                            let field_token = {
+                                let value = match vector.data_type {
+                                    PayloadType::CHAR |
+                                    PayloadType::U8 |
+                                    PayloadType::I8 => quote! {
+                                        payload[#b..#b + payload.len()].to_vec()
+                                    },
+                                    PayloadType::U16 |
+                                    PayloadType::U32 |
+                                    PayloadType::I16 |
+                                    PayloadType::I32 |
+                                    PayloadType::F32 => quote! {
+                                        payload[#b..#b + payload.len()]
+                                            .chunks_exact(#data_size)
+                                            .into_iter()
+                                            .map(|a| u16::from_le_bytes((*a).try_into().expect("Wrong slice length")))
+                                            .collect::<Vec<#data_type>>()
+                                    },
+                                    PayloadType::VECTOR(_) => unimplemented!("Vector of vectors are not supported"),
+                                };
+
+                                quote! {
+                                    #length_name: payload.len() as #length_type,
+                                    #name: #value,
+                                }
+                            };
+                            b += length;
+                            field_token
+                        } else {
+                            let length = self.payload.len();
+                            let field_token = quote! {
+                                #name: String::from_utf8(payload[#b..#b + payload.len()].to_vec()).unwrap(),
+                            };
+                            b += length;
+                            field_token
+                        }
+                    }
+                }
+            })
+            .collect();
+
         quote! {
             #[derive(Debug, Clone, PartialEq, Default)]
             #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -245,9 +318,17 @@ impl MessageDefinition {
             }
 
             impl Serialize for #struct_name {
-                fn serialize(self, buffer: &mut [u8]) -> usize {
+                fn serialize(&self, buffer: &mut [u8]) -> usize {
                     #(#variables_serialized)*
                     #sum_quote
+                }
+            }
+
+            impl Deserialize for #struct_name {
+                fn deserialize(payload: &[u8]) -> Result<Self, &'static str> {
+                    Ok(Self {
+                        #(#variables_deserialized)*
+                    })
                 }
             }
         }
@@ -301,6 +382,19 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
         })
         .collect::<Vec<TokenStream>>();
 
+    let message_enums_deserialize = messages
+        .iter()
+        .map(|(name, message)| {
+            let pascal_message_name = ident!(name.to_case(Case::Pascal));
+            let struct_name = quote::format_ident!("{}Struct", pascal_message_name);
+            let id = message.id;
+
+            quote! {
+                #id => Messages::#pascal_message_name(#struct_name::deserialize(payload)?),
+            }
+        })
+        .collect::<Vec<TokenStream>>();
+
     quote! {
         impl PingMessage for Messages {
             fn message_name(&self) -> &'static str {
@@ -321,13 +415,45 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
                     _ => Err("Invalid message name."),
                 }
             }
+        }
 
-            fn serialize(self, buffer: &mut [u8]) -> usize {
+        impl Serialize for Messages {
+            fn serialize(&self, buffer: &mut [u8]) -> usize {
                 match self {
                     #(#message_enums_serialize)*
                 }
             }
         }
+
+        impl Deserialize for Messages {
+            fn deserialize(buffer: &[u8]) -> Result<Self, &'static str> {
+                // Parse start1 and start2
+                if !((buffer[0] == b'B') && (buffer[1] == b'R')) {
+                    return Err("Message should start with \"BR\" ASCII sequence");
+                }
+
+                // Get the package data
+                let payload_length = u16::from_le_bytes([buffer[2], buffer[3]]);
+                let message_id = u16::from_le_bytes([buffer[4], buffer[5]]);
+                let _src_device_id = buffer[6];
+                let _dst_device_id = buffer[7];
+                let payload = &buffer[8..(8 + payload_length) as usize];
+                let _checksum = u16::from_le_bytes([
+                    buffer[(payload_length + 1) as usize],
+                    buffer[(payload_length + 2) as usize],
+                ]);
+
+                // Parse the payload
+                Ok(match message_id {
+                    #(#message_enums_deserialize)*
+                    _ => {
+                        return Err(&"Unknown message id");
+                    }
+                })
+            }
+        }
+
+
     }
 }
 
@@ -368,6 +494,8 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
     let code = quote! {
         use crate::serialize::PingMessage;
         use crate::serialize::Serialize;
+        use crate::serialize::Deserialize;
+        use std::convert::TryInto;
 
         #[cfg(feature = "serde")]
         use serde::{Deserialize, Serialize};

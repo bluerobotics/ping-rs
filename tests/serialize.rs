@@ -5,7 +5,7 @@ use ping_rs::{common, PingMessagePack};
 fn test_simple_serialization() {
     let general_request =
         common_messages::GeneralRequest(common::GeneralRequestStruct { requested_id: 5 });
-    let message = PingMessagePack::from(general_request);
+    let message = PingMessagePack::from(&general_request);
 
     // From official ping protocol documentation
     assert_eq!(

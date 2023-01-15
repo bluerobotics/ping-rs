@@ -6,7 +6,7 @@ pub fn generate<W: Write>(modules: Vec<String>, out: &mut W) {
     dbg!(&modules);
     let modules_tokens = modules.into_iter().map(|module| {
         let file_name = module.clone() + ".rs";
-        let module_ident = quote::format_ident!("{}", module.clone());
+        let module_ident = quote::format_ident!("{module}");
 
         quote! {
             pub mod #module_ident {
@@ -19,5 +19,5 @@ pub fn generate<W: Write>(modules: Vec<String>, out: &mut W) {
         #(#modules_tokens)*
     };
 
-    writeln!(out, "{}", tokens).unwrap();
+    writeln!(out, "{tokens}").unwrap();
 }
