@@ -80,6 +80,7 @@ pub fn main() {
 
 fn format_code(cwd: impl AsRef<Path>, path: impl AsRef<OsStr>) {
     if let Err(error) = Command::new("rustfmt")
+        .args([""])
         .arg("--edition")
         .arg("2021")
         .arg(path)

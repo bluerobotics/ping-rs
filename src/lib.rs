@@ -1,11 +1,11 @@
 include!(concat!(env!("OUT_DIR"), "/mod.rs"));
 
-use crate::serialize::PingMessage;
+use crate::serialize::{Deserialize, PingMessage};
 
 const PAYLOAD_SIZE: usize = 255;
 
 use std::fmt;
-use std::io::Write;
+use std::{convert::TryFrom, io::Write};
 
 pub mod serialize;
 
@@ -18,6 +18,59 @@ impl Default for PingMessagePack {
         new.0[0] = 'B' as u8;
         new.0[1] = 'R' as u8;
         new
+    }
+}
+
+impl<T: PingMessage> From<&T> for PingMessagePack {
+    fn from(message: &T) -> Self {
+        let mut new: Self = Default::default();
+        new.set_message(message);
+        new
+    }
+}
+
+pub enum Messages {
+    Bluebps(bluebps::Messages),
+    Common(common::Messages),
+    Ping1d(ping1d::Messages),
+    Ping360(ping360::Messages),
+}
+
+impl TryFrom<&Vec<u8>> for Messages {
+    type Error = &'static str; // TODO: define error types for each kind of failure
+
+    fn try_from(buffer: &Vec<u8>) -> Result<Self, Self::Error> {
+        // Parse start1 and start2
+        if !((buffer[0] == b'B') && (buffer[1] == b'R')) {
+            return Err("Message should start with \"BR\" ASCII sequence");
+        }
+
+        // Get the package data
+        let payload_length = u16::from_le_bytes([buffer[2], buffer[3]]);
+        let _message_id = u16::from_le_bytes([buffer[4], buffer[5]]);
+        let _src_device_id = buffer[6];
+        let _dst_device_id = buffer[7];
+        let payload = &buffer[8..(8 + payload_length) as usize];
+        let _checksum = u16::from_le_bytes([
+            buffer[(payload_length + 1) as usize],
+            buffer[(payload_length + 2) as usize],
+        ]);
+
+        // Try to parse with each module
+        if let Ok(message) = bluebps::Messages::deserialize(buffer) {
+            return Ok(Messages::Bluebps(message));
+        }
+        if let Ok(message) = common::Messages::deserialize(buffer) {
+            return Ok(Messages::Common(message));
+        }
+        if let Ok(message) = ping1d::Messages::deserialize(buffer) {
+            return Ok(Messages::Ping1d(message));
+        }
+        if let Ok(message) = ping360::Messages::deserialize(buffer) {
+            return Ok(Messages::Ping360(message));
+        }
+
+        Err("Unknown message")
     }
 }
 
@@ -45,13 +98,7 @@ impl PingMessagePack {
         Default::default()
     }
 
-    pub fn from(message: impl PingMessage) -> Self {
-        let mut new: Self = Default::default();
-        new.set_message(message);
-        new
-    }
-
-    pub fn set_message(&mut self, message: impl PingMessage) {
+    pub fn set_message(&mut self, message: &impl PingMessage) {
         let message_id = message.message_id();
         let (left, right) = self.0.split_at_mut(Self::HEADER_SIZE);
         let length = message.serialize(right) as u16;
