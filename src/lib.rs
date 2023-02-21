@@ -121,7 +121,7 @@ impl PingMessagePack {
 
     pub fn calculate_crc(&self) -> u16 {
         let payload_length: usize = self.payload_length().into();
-        let array = &self.0[0..=(Self::HEADER_SIZE + payload_length)];
+        let array = &self.0[0..(Self::HEADER_SIZE + payload_length)];
         return (array.iter().fold(0 as u16, |s, &v| s + v as u16) % 255) as u16;
     }
 
