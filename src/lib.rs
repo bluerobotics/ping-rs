@@ -83,6 +83,7 @@ impl PingMessagePack {
     #[inline]
     pub fn set_src_device_id(&mut self, src_device_id: u8) {
         self.0[6] = src_device_id;
+        self.update_checksum();
     }
 
     #[inline]
@@ -93,6 +94,7 @@ impl PingMessagePack {
     #[inline]
     pub fn set_dst_device_id(&mut self, dst_device_id: u8) {
         self.0[7] = dst_device_id;
+        self.update_checksum();
     }
 
     pub fn payload(&self) -> &[u8] {
