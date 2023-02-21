@@ -14,7 +14,7 @@ pub struct PingMessagePack([u8; 1 + Self::HEADER_SIZE + PAYLOAD_SIZE + 2]);
 
 impl Default for PingMessagePack {
     fn default() -> Self {
-        let mut new = Self::new();
+        let mut new = Self([0; 1 + Self::HEADER_SIZE + PAYLOAD_SIZE + 2]);
         new.0[0] = 'B' as u8;
         new.0[1] = 'R' as u8;
         new
@@ -41,8 +41,8 @@ impl PingMessagePack {
 
     const HEADER_SIZE: usize = 8;
 
-    pub const fn new() -> Self {
-        Self([0; 1 + Self::HEADER_SIZE + PAYLOAD_SIZE + 2])
+    pub fn new() -> Self {
+        Default::default()
     }
 
     pub fn from(message: impl PingMessage) -> Self {
