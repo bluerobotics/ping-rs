@@ -99,7 +99,7 @@ impl PingMessagePack {
 
     pub fn payload(&self) -> &[u8] {
         let payload_length: usize = self.payload_length().into();
-        &self.0[Self::HEADER_SIZE..=(Self::HEADER_SIZE + payload_length)]
+        &self.0[Self::HEADER_SIZE..(Self::HEADER_SIZE + payload_length)]
     }
 
     pub fn checksum(&self) -> u16 {
