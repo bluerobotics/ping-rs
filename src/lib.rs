@@ -4,11 +4,12 @@ use crate::serialize::PingMessage;
 
 const PAYLOAD_SIZE: usize = 255;
 
+use std::fmt;
 use std::io::Write;
 
 pub mod serialize;
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Copy, Clone, PartialEq, Eq)]
 pub struct PingMessagePack([u8; 1 + Self::HEADER_SIZE + PAYLOAD_SIZE + 2]);
 
 impl Default for PingMessagePack {
@@ -138,6 +139,21 @@ impl PingMessagePack {
 
     pub fn serialized(&self) -> &[u8] {
         return &self.0[0..self.length()];
+    }
+}
+
+impl fmt::Debug for PingMessagePack {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("PingMessagePack")
+            .field("start1", &self.0[0])
+            .field("start2", &self.0[1])
+            .field("payload_length", &self.payload_length())
+            .field("message_id", &self.message_id())
+            .field("src_device_id", &self.src_device_id())
+            .field("dst_device_id", &self.dst_device_id())
+            .field("payload", &self.payload())
+            .field("checksum", &self.checksum())
+            .finish()
     }
 }
 
