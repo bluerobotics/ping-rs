@@ -585,57 +585,83 @@
 <span class="attr">#[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>Messages {
-    TransmitDuration(TransmitDurationStruct),
-    GainSetting(GainSettingStruct),
-    PingEnable(PingEnableStruct),
-    DeviceId(DeviceIdStruct),
-    SetPingInterval(SetPingIntervalStruct),
-    SetDeviceId(SetDeviceIdStruct),
-    ProcessorTemperature(ProcessorTemperatureStruct),
-    PingInterval(PingIntervalStruct),
-    Range(RangeStruct),
-    Distance(DistanceStruct),
-    Profile(ProfileStruct),
-    SetPingEnable(SetPingEnableStruct),
-    PcbTemperature(PcbTemperatureStruct),
-    SetSpeedOfSound(SetSpeedOfSoundStruct),
-    ModeAuto(ModeAutoStruct),
-    SetGainSetting(SetGainSettingStruct),
-    GotoBootloader(GotoBootloaderStruct),
-    SpeedOfSound(SpeedOfSoundStruct),
     SetModeAuto(SetModeAutoStruct),
-    ContinuousStop(ContinuousStopStruct),
-    GeneralInfo(GeneralInfoStruct),
-    DistanceSimple(DistanceSimpleStruct),
     Voltage5(Voltage5Struct),
-    FirmwareVersion(FirmwareVersionStruct),
-    SetRange(SetRangeStruct),
+    ProcessorTemperature(ProcessorTemperatureStruct),
+    SetPingEnable(SetPingEnableStruct),
+    PingEnable(PingEnableStruct),
+    ModeAuto(ModeAutoStruct),
+    SetPingInterval(SetPingIntervalStruct),
+    DistanceSimple(DistanceSimpleStruct),
+    Profile(ProfileStruct),
+    PingInterval(PingIntervalStruct),
+    SetSpeedOfSound(SetSpeedOfSoundStruct),
     ContinuousStart(ContinuousStartStruct),
+    GotoBootloader(GotoBootloaderStruct),
+    Range(RangeStruct),
+    SetDeviceId(SetDeviceIdStruct),
+    Distance(DistanceStruct),
+    SetRange(SetRangeStruct),
+    FirmwareVersion(FirmwareVersionStruct),
+    GeneralInfo(GeneralInfoStruct),
+    GainSetting(GainSettingStruct),
+    PcbTemperature(PcbTemperatureStruct),
+    TransmitDuration(TransmitDurationStruct),
+    DeviceId(DeviceIdStruct),
+    SpeedOfSound(SpeedOfSoundStruct),
+    ContinuousStop(ContinuousStopStruct),
+    SetGainSetting(SetGainSettingStruct),
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;The duration of the acoustic activation/transmission.&quot;</span>]
-</span><span class="kw">pub struct </span>TransmitDurationStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Acoustic pulse duration.&quot;</span>]
-    </span><span class="kw">pub </span>transmit_duration: u16,
+#[doc = <span class="string">&quot;Set automatic or manual mode. Manual mode allows for manual selection of the gain and scan range.&quot;</span>]
+</span><span class="kw">pub struct </span>SetModeAutoStruct {
+    <span class="attr">#[doc = <span class="string">&quot;0: manual mode. 1: auto mode.&quot;</span>]
+    </span><span class="kw">pub </span>mode_auto: u8,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>TransmitDurationStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>SetModeAutoStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_duration.to_le_bytes());
+        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode_auto.to_le_bytes());
+        <span class="number">1usize
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;The 5V rail voltage.&quot;</span>]
+</span><span class="kw">pub struct </span>Voltage5Struct {
+    <span class="attr">#[doc = <span class="string">&quot;The 5V rail voltage.&quot;</span>]
+    </span><span class="kw">pub </span>voltage_5: u16,
+}
+<span class="kw">impl </span>Serialize <span class="kw">for </span>Voltage5Struct {
+    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
+        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.voltage_5.to_le_bytes());
         <span class="number">2usize
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;The current gain setting.&quot;</span>]
-</span><span class="kw">pub struct </span>GainSettingStruct {
-    <span class="attr">#[doc = <span class="string">&quot;The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144&quot;</span>]
-    </span><span class="kw">pub </span>gain_setting: u32,
+#[doc = <span class="string">&quot;Temperature of the device cpu.&quot;</span>]
+</span><span class="kw">pub struct </span>ProcessorTemperatureStruct {
+    <span class="attr">#[doc = <span class="string">&quot;The temperature in centi-degrees Centigrade (100 * degrees C).&quot;</span>]
+    </span><span class="kw">pub </span>processor_temperature: u16,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>GainSettingStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>ProcessorTemperatureStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
-        <span class="number">4usize
+        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.processor_temperature.to_le_bytes());
+        <span class="number">2usize
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;Enable or disable acoustic measurements.&quot;</span>]
+</span><span class="kw">pub struct </span>SetPingEnableStruct {
+    <span class="attr">#[doc = <span class="string">&quot;0: Disable, 1: Enable.&quot;</span>]
+    </span><span class="kw">pub </span>ping_enabled: u8,
+}
+<span class="kw">impl </span>Serialize <span class="kw">for </span>SetPingEnableStruct {
+    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
+        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.ping_enabled.to_le_bytes());
+        <span class="number">1usize
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
@@ -653,14 +679,14 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;The device ID.&quot;</span>]
-</span><span class="kw">pub struct </span>DeviceIdStruct {
-    <span class="attr">#[doc = <span class="string">&quot;The device ID (0-254). 255 is reserved for broadcast messages.&quot;</span>]
-    </span><span class="kw">pub </span>device_id: u8,
+#[doc = <span class="string">&quot;The current operating mode of the device. Manual mode allows for manual selection of the gain and scan range.&quot;</span>]
+</span><span class="kw">pub struct </span>ModeAutoStruct {
+    <span class="attr">#[doc = <span class="string">&quot;0: manual mode, 1: auto mode&quot;</span>]
+    </span><span class="kw">pub </span>mode_auto: u8,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>DeviceIdStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>ModeAutoStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_id.to_le_bytes());
+        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode_auto.to_le_bytes());
         <span class="number">1usize
     </span>}
 }
@@ -679,88 +705,18 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Set the device ID.&quot;</span>]
-</span><span class="kw">pub struct </span>SetDeviceIdStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Device ID (0-254). 255 is reserved for broadcast messages.&quot;</span>]
-    </span><span class="kw">pub </span>device_id: u8,
-}
-<span class="kw">impl </span>Serialize <span class="kw">for </span>SetDeviceIdStruct {
-    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_id.to_le_bytes());
-        <span class="number">1usize
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Temperature of the device cpu.&quot;</span>]
-</span><span class="kw">pub struct </span>ProcessorTemperatureStruct {
-    <span class="attr">#[doc = <span class="string">&quot;The temperature in centi-degrees Centigrade (100 * degrees C).&quot;</span>]
-    </span><span class="kw">pub </span>processor_temperature: u16,
-}
-<span class="kw">impl </span>Serialize <span class="kw">for </span>ProcessorTemperatureStruct {
-    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.processor_temperature.to_le_bytes());
-        <span class="number">2usize
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;The interval between acoustic measurements.&quot;</span>]
-</span><span class="kw">pub struct </span>PingIntervalStruct {
-    <span class="attr">#[doc = <span class="string">&quot;The minimum interval between acoustic measurements. The actual interval may be longer.&quot;</span>]
-    </span><span class="kw">pub </span>ping_interval: u16,
-}
-<span class="kw">impl </span>Serialize <span class="kw">for </span>PingIntervalStruct {
-    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.ping_interval.to_le_bytes());
-        <span class="number">2usize
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;The scan range for acoustic measurements. Measurements returned by the device will lie in the range (scan_start, scan_start + scan_length).&quot;</span>]
-</span><span class="kw">pub struct </span>RangeStruct {
-    <span class="attr">#[doc = <span class="string">&quot;The beginning of the scan range in mm from the transducer.&quot;</span>]
-    </span><span class="kw">pub </span>scan_start: u32,
-    <span class="attr">#[doc = <span class="string">&quot;The length of the scan range.&quot;</span>]
-    </span><span class="kw">pub </span>scan_length: u32,
-}
-<span class="kw">impl </span>Serialize <span class="kw">for </span>RangeStruct {
-    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_start.to_le_bytes());
-        buffer[<span class="number">4usize</span>..<span class="number">8usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_length.to_le_bytes());
-        <span class="number">8usize
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;The distance to target with confidence estimate. Relevant device parameters during the measurement are also provided.&quot;</span>]
-</span><span class="kw">pub struct </span>DistanceStruct {
-    <span class="attr">#[doc = <span class="string">&quot;The current return distance determined for the most recent acoustic measurement.&quot;</span>]
+#[doc = <span class="string">&quot;The distance to target with confidence estimate.&quot;</span>]
+</span><span class="kw">pub struct </span>DistanceSimpleStruct {
+    <span class="attr">#[doc = <span class="string">&quot;Distance to the target.&quot;</span>]
     </span><span class="kw">pub </span>distance: u32,
-    <span class="attr">#[doc = <span class="string">&quot;Confidence in the most recent range measurement.&quot;</span>]
-    </span><span class="kw">pub </span>confidence: u16,
-    <span class="attr">#[doc = <span class="string">&quot;The acoustic pulse length during acoustic transmission/activation.&quot;</span>]
-    </span><span class="kw">pub </span>transmit_duration: u16,
-    <span class="attr">#[doc = <span class="string">&quot;The pulse/measurement count since boot.&quot;</span>]
-    </span><span class="kw">pub </span>ping_number: u32,
-    <span class="attr">#[doc = <span class="string">&quot;The beginning of the scan region in mm from the transducer.&quot;</span>]
-    </span><span class="kw">pub </span>scan_start: u32,
-    <span class="attr">#[doc = <span class="string">&quot;The length of the scan region.&quot;</span>]
-    </span><span class="kw">pub </span>scan_length: u32,
-    <span class="attr">#[doc = <span class="string">&quot;The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144&quot;</span>]
-    </span><span class="kw">pub </span>gain_setting: u32,
+    <span class="attr">#[doc = <span class="string">&quot;Confidence in the distance measurement.&quot;</span>]
+    </span><span class="kw">pub </span>confidence: u8,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>DistanceStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>DistanceSimpleStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
         buffer[<span class="number">0usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.distance.to_le_bytes());
-        buffer[<span class="number">4usize</span>..<span class="number">6usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.confidence.to_le_bytes());
-        buffer[<span class="number">6usize</span>..<span class="number">8usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_duration.to_le_bytes());
-        buffer[<span class="number">8usize</span>..<span class="number">12usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.ping_number.to_le_bytes());
-        buffer[<span class="number">12usize</span>..<span class="number">16usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_start.to_le_bytes());
-        buffer[<span class="number">16usize</span>..<span class="number">20usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_length.to_le_bytes());
-        buffer[<span class="number">20usize</span>..<span class="number">24usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
-        <span class="number">24usize
+        buffer[<span class="number">4usize</span>..<span class="number">5usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.confidence.to_le_bytes());
+        <span class="number">5usize
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
@@ -804,27 +760,14 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Enable or disable acoustic measurements.&quot;</span>]
-</span><span class="kw">pub struct </span>SetPingEnableStruct {
-    <span class="attr">#[doc = <span class="string">&quot;0: Disable, 1: Enable.&quot;</span>]
-    </span><span class="kw">pub </span>ping_enabled: u8,
+#[doc = <span class="string">&quot;The interval between acoustic measurements.&quot;</span>]
+</span><span class="kw">pub struct </span>PingIntervalStruct {
+    <span class="attr">#[doc = <span class="string">&quot;The minimum interval between acoustic measurements. The actual interval may be longer.&quot;</span>]
+    </span><span class="kw">pub </span>ping_interval: u16,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>SetPingEnableStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>PingIntervalStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.ping_enabled.to_le_bytes());
-        <span class="number">1usize
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Temperature of the on-board thermistor.&quot;</span>]
-</span><span class="kw">pub struct </span>PcbTemperatureStruct {
-    <span class="attr">#[doc = <span class="string">&quot;The temperature in centi-degrees Centigrade (100 * degrees C).&quot;</span>]
-    </span><span class="kw">pub </span>pcb_temperature: u16,
-}
-<span class="kw">impl </span>Serialize <span class="kw">for </span>PcbTemperatureStruct {
-    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.pcb_temperature.to_le_bytes());
+        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.ping_interval.to_le_bytes());
         <span class="number">2usize
     </span>}
 }
@@ -843,28 +786,15 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;The current operating mode of the device. Manual mode allows for manual selection of the gain and scan range.&quot;</span>]
-</span><span class="kw">pub struct </span>ModeAutoStruct {
-    <span class="attr">#[doc = <span class="string">&quot;0: manual mode, 1: auto mode&quot;</span>]
-    </span><span class="kw">pub </span>mode_auto: u8,
+#[doc = <span class="string">&quot;Command to initiate continuous data stream of profile messages.&quot;</span>]
+</span><span class="kw">pub struct </span>ContinuousStartStruct {
+    <span class="attr">#[doc = <span class="string">&quot;The message id to stream. 1300: profile&quot;</span>]
+    </span><span class="kw">pub </span>id: u16,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>ModeAutoStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>ContinuousStartStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode_auto.to_le_bytes());
-        <span class="number">1usize
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Set the current gain setting.&quot;</span>]
-</span><span class="kw">pub struct </span>SetGainSettingStruct {
-    <span class="attr">#[doc = <span class="string">&quot;The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144&quot;</span>]
-    </span><span class="kw">pub </span>gain_setting: u8,
-}
-<span class="kw">impl </span>Serialize <span class="kw">for </span>SetGainSettingStruct {
-    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
-        <span class="number">1usize
+        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.id.to_le_bytes());
+        <span class="number">2usize
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
@@ -878,41 +808,100 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;The speed of sound used for distance calculations.&quot;</span>]
-</span><span class="kw">pub struct </span>SpeedOfSoundStruct {
-    <span class="attr">#[doc = <span class="string">&quot;The speed of sound in the measurement medium. ~1,500,000 mm/s for water.&quot;</span>]
-    </span><span class="kw">pub </span>speed_of_sound: u32,
+#[doc = <span class="string">&quot;The scan range for acoustic measurements. Measurements returned by the device will lie in the range (scan_start, scan_start + scan_length).&quot;</span>]
+</span><span class="kw">pub struct </span>RangeStruct {
+    <span class="attr">#[doc = <span class="string">&quot;The beginning of the scan range in mm from the transducer.&quot;</span>]
+    </span><span class="kw">pub </span>scan_start: u32,
+    <span class="attr">#[doc = <span class="string">&quot;The length of the scan range.&quot;</span>]
+    </span><span class="kw">pub </span>scan_length: u32,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>SpeedOfSoundStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>RangeStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.speed_of_sound.to_le_bytes());
-        <span class="number">4usize
+        buffer[<span class="number">0usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_start.to_le_bytes());
+        buffer[<span class="number">4usize</span>..<span class="number">8usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_length.to_le_bytes());
+        <span class="number">8usize
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Set automatic or manual mode. Manual mode allows for manual selection of the gain and scan range.&quot;</span>]
-</span><span class="kw">pub struct </span>SetModeAutoStruct {
-    <span class="attr">#[doc = <span class="string">&quot;0: manual mode. 1: auto mode.&quot;</span>]
-    </span><span class="kw">pub </span>mode_auto: u8,
+#[doc = <span class="string">&quot;Set the device ID.&quot;</span>]
+</span><span class="kw">pub struct </span>SetDeviceIdStruct {
+    <span class="attr">#[doc = <span class="string">&quot;Device ID (0-254). 255 is reserved for broadcast messages.&quot;</span>]
+    </span><span class="kw">pub </span>device_id: u8,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>SetModeAutoStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>SetDeviceIdStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode_auto.to_le_bytes());
+        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_id.to_le_bytes());
         <span class="number">1usize
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Command to stop the continuous data stream of profile messages.&quot;</span>]
-</span><span class="kw">pub struct </span>ContinuousStopStruct {
-    <span class="attr">#[doc = <span class="string">&quot;The message id to stop streaming. 1300: profile&quot;</span>]
-    </span><span class="kw">pub </span>id: u16,
+#[doc = <span class="string">&quot;The distance to target with confidence estimate. Relevant device parameters during the measurement are also provided.&quot;</span>]
+</span><span class="kw">pub struct </span>DistanceStruct {
+    <span class="attr">#[doc = <span class="string">&quot;The current return distance determined for the most recent acoustic measurement.&quot;</span>]
+    </span><span class="kw">pub </span>distance: u32,
+    <span class="attr">#[doc = <span class="string">&quot;Confidence in the most recent range measurement.&quot;</span>]
+    </span><span class="kw">pub </span>confidence: u16,
+    <span class="attr">#[doc = <span class="string">&quot;The acoustic pulse length during acoustic transmission/activation.&quot;</span>]
+    </span><span class="kw">pub </span>transmit_duration: u16,
+    <span class="attr">#[doc = <span class="string">&quot;The pulse/measurement count since boot.&quot;</span>]
+    </span><span class="kw">pub </span>ping_number: u32,
+    <span class="attr">#[doc = <span class="string">&quot;The beginning of the scan region in mm from the transducer.&quot;</span>]
+    </span><span class="kw">pub </span>scan_start: u32,
+    <span class="attr">#[doc = <span class="string">&quot;The length of the scan region.&quot;</span>]
+    </span><span class="kw">pub </span>scan_length: u32,
+    <span class="attr">#[doc = <span class="string">&quot;The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144&quot;</span>]
+    </span><span class="kw">pub </span>gain_setting: u32,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>ContinuousStopStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>DistanceStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.id.to_le_bytes());
-        <span class="number">2usize
+        buffer[<span class="number">0usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.distance.to_le_bytes());
+        buffer[<span class="number">4usize</span>..<span class="number">6usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.confidence.to_le_bytes());
+        buffer[<span class="number">6usize</span>..<span class="number">8usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_duration.to_le_bytes());
+        buffer[<span class="number">8usize</span>..<span class="number">12usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.ping_number.to_le_bytes());
+        buffer[<span class="number">12usize</span>..<span class="number">16usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_start.to_le_bytes());
+        buffer[<span class="number">16usize</span>..<span class="number">20usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_length.to_le_bytes());
+        buffer[<span class="number">20usize</span>..<span class="number">24usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
+        <span class="number">24usize
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;Set the scan range for acoustic measurements.&quot;</span>]
+</span><span class="kw">pub struct </span>SetRangeStruct {
+    <span class="attr">#[doc = <span class="string">&quot;Not documented&quot;</span>]
+    </span><span class="kw">pub </span>scan_start: u32,
+    <span class="attr">#[doc = <span class="string">&quot;The length of the scan range.&quot;</span>]
+    </span><span class="kw">pub </span>scan_length: u32,
+}
+<span class="kw">impl </span>Serialize <span class="kw">for </span>SetRangeStruct {
+    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
+        buffer[<span class="number">0usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_start.to_le_bytes());
+        buffer[<span class="number">4usize</span>..<span class="number">8usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_length.to_le_bytes());
+        <span class="number">8usize
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;Device information&quot;</span>]
+</span><span class="kw">pub struct </span>FirmwareVersionStruct {
+    <span class="attr">#[doc = <span class="string">&quot;Device type. 0: Unknown; 1: Echosounder&quot;</span>]
+    </span><span class="kw">pub </span>device_type: u8,
+    <span class="attr">#[doc = <span class="string">&quot;Device model. 0: Unknown; 1: Ping1D&quot;</span>]
+    </span><span class="kw">pub </span>device_model: u8,
+    <span class="attr">#[doc = <span class="string">&quot;Firmware version major number.&quot;</span>]
+    </span><span class="kw">pub </span>firmware_version_major: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Firmware version minor number.&quot;</span>]
+    </span><span class="kw">pub </span>firmware_version_minor: u16,
+}
+<span class="kw">impl </span>Serialize <span class="kw">for </span>FirmwareVersionStruct {
+    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
+        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_type.to_le_bytes());
+        buffer[<span class="number">1usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_model.to_le_bytes());
+        buffer[<span class="number">2usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.firmware_version_major.to_le_bytes());
+        buffer[<span class="number">4usize</span>..<span class="number">6usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.firmware_version_minor.to_le_bytes());
+        <span class="number">6usize
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
@@ -945,204 +934,215 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;The distance to target with confidence estimate.&quot;</span>]
-</span><span class="kw">pub struct </span>DistanceSimpleStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Distance to the target.&quot;</span>]
-    </span><span class="kw">pub </span>distance: u32,
-    <span class="attr">#[doc = <span class="string">&quot;Confidence in the distance measurement.&quot;</span>]
-    </span><span class="kw">pub </span>confidence: u8,
+#[doc = <span class="string">&quot;The current gain setting.&quot;</span>]
+</span><span class="kw">pub struct </span>GainSettingStruct {
+    <span class="attr">#[doc = <span class="string">&quot;The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144&quot;</span>]
+    </span><span class="kw">pub </span>gain_setting: u32,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>DistanceSimpleStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>GainSettingStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.distance.to_le_bytes());
-        buffer[<span class="number">4usize</span>..<span class="number">5usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.confidence.to_le_bytes());
-        <span class="number">5usize
+        buffer[<span class="number">0usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
+        <span class="number">4usize
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;The 5V rail voltage.&quot;</span>]
-</span><span class="kw">pub struct </span>Voltage5Struct {
-    <span class="attr">#[doc = <span class="string">&quot;The 5V rail voltage.&quot;</span>]
-    </span><span class="kw">pub </span>voltage_5: u16,
+#[doc = <span class="string">&quot;Temperature of the on-board thermistor.&quot;</span>]
+</span><span class="kw">pub struct </span>PcbTemperatureStruct {
+    <span class="attr">#[doc = <span class="string">&quot;The temperature in centi-degrees Centigrade (100 * degrees C).&quot;</span>]
+    </span><span class="kw">pub </span>pcb_temperature: u16,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>Voltage5Struct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>PcbTemperatureStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.voltage_5.to_le_bytes());
+        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.pcb_temperature.to_le_bytes());
         <span class="number">2usize
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Device information&quot;</span>]
-</span><span class="kw">pub struct </span>FirmwareVersionStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Device type. 0: Unknown; 1: Echosounder&quot;</span>]
-    </span><span class="kw">pub </span>device_type: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Device model. 0: Unknown; 1: Ping1D&quot;</span>]
-    </span><span class="kw">pub </span>device_model: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Firmware version major number.&quot;</span>]
-    </span><span class="kw">pub </span>firmware_version_major: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Firmware version minor number.&quot;</span>]
-    </span><span class="kw">pub </span>firmware_version_minor: u16,
+#[doc = <span class="string">&quot;The duration of the acoustic activation/transmission.&quot;</span>]
+</span><span class="kw">pub struct </span>TransmitDurationStruct {
+    <span class="attr">#[doc = <span class="string">&quot;Acoustic pulse duration.&quot;</span>]
+    </span><span class="kw">pub </span>transmit_duration: u16,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>FirmwareVersionStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>TransmitDurationStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_type.to_le_bytes());
-        buffer[<span class="number">1usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_model.to_le_bytes());
-        buffer[<span class="number">2usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.firmware_version_major.to_le_bytes());
-        buffer[<span class="number">4usize</span>..<span class="number">6usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.firmware_version_minor.to_le_bytes());
-        <span class="number">6usize
+        buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_duration.to_le_bytes());
+        <span class="number">2usize
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Set the scan range for acoustic measurements.&quot;</span>]
-</span><span class="kw">pub struct </span>SetRangeStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Not documented&quot;</span>]
-    </span><span class="kw">pub </span>scan_start: u32,
-    <span class="attr">#[doc = <span class="string">&quot;The length of the scan range.&quot;</span>]
-    </span><span class="kw">pub </span>scan_length: u32,
+#[doc = <span class="string">&quot;The device ID.&quot;</span>]
+</span><span class="kw">pub struct </span>DeviceIdStruct {
+    <span class="attr">#[doc = <span class="string">&quot;The device ID (0-254). 255 is reserved for broadcast messages.&quot;</span>]
+    </span><span class="kw">pub </span>device_id: u8,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>SetRangeStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>DeviceIdStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_start.to_le_bytes());
-        buffer[<span class="number">4usize</span>..<span class="number">8usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_length.to_le_bytes());
-        <span class="number">8usize
+        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_id.to_le_bytes());
+        <span class="number">1usize
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Command to initiate continuous data stream of profile messages.&quot;</span>]
-</span><span class="kw">pub struct </span>ContinuousStartStruct {
-    <span class="attr">#[doc = <span class="string">&quot;The message id to stream. 1300: profile&quot;</span>]
+#[doc = <span class="string">&quot;The speed of sound used for distance calculations.&quot;</span>]
+</span><span class="kw">pub struct </span>SpeedOfSoundStruct {
+    <span class="attr">#[doc = <span class="string">&quot;The speed of sound in the measurement medium. ~1,500,000 mm/s for water.&quot;</span>]
+    </span><span class="kw">pub </span>speed_of_sound: u32,
+}
+<span class="kw">impl </span>Serialize <span class="kw">for </span>SpeedOfSoundStruct {
+    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
+        buffer[<span class="number">0usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.speed_of_sound.to_le_bytes());
+        <span class="number">4usize
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;Command to stop the continuous data stream of profile messages.&quot;</span>]
+</span><span class="kw">pub struct </span>ContinuousStopStruct {
+    <span class="attr">#[doc = <span class="string">&quot;The message id to stop streaming. 1300: profile&quot;</span>]
     </span><span class="kw">pub </span>id: u16,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>ContinuousStartStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>ContinuousStopStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
         buffer[<span class="number">0usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.id.to_le_bytes());
         <span class="number">2usize
     </span>}
 }
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;Set the current gain setting.&quot;</span>]
+</span><span class="kw">pub struct </span>SetGainSettingStruct {
+    <span class="attr">#[doc = <span class="string">&quot;The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144&quot;</span>]
+    </span><span class="kw">pub </span>gain_setting: u8,
+}
+<span class="kw">impl </span>Serialize <span class="kw">for </span>SetGainSettingStruct {
+    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
+        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
+        <span class="number">1usize
+    </span>}
+}
 <span class="kw">impl </span>PingMessage <span class="kw">for </span>Messages {
     <span class="kw">fn </span>message_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::TransmitDuration(..) =&gt; <span class="string">&quot;transmit_duration&quot;</span>,
-            Messages::GainSetting(..) =&gt; <span class="string">&quot;gain_setting&quot;</span>,
-            Messages::PingEnable(..) =&gt; <span class="string">&quot;ping_enable&quot;</span>,
-            Messages::DeviceId(..) =&gt; <span class="string">&quot;device_id&quot;</span>,
-            Messages::SetPingInterval(..) =&gt; <span class="string">&quot;set_ping_interval&quot;</span>,
-            Messages::SetDeviceId(..) =&gt; <span class="string">&quot;set_device_id&quot;</span>,
-            Messages::ProcessorTemperature(..) =&gt; <span class="string">&quot;processor_temperature&quot;</span>,
-            Messages::PingInterval(..) =&gt; <span class="string">&quot;ping_interval&quot;</span>,
-            Messages::Range(..) =&gt; <span class="string">&quot;range&quot;</span>,
-            Messages::Distance(..) =&gt; <span class="string">&quot;distance&quot;</span>,
-            Messages::Profile(..) =&gt; <span class="string">&quot;profile&quot;</span>,
-            Messages::SetPingEnable(..) =&gt; <span class="string">&quot;set_ping_enable&quot;</span>,
-            Messages::PcbTemperature(..) =&gt; <span class="string">&quot;pcb_temperature&quot;</span>,
-            Messages::SetSpeedOfSound(..) =&gt; <span class="string">&quot;set_speed_of_sound&quot;</span>,
-            Messages::ModeAuto(..) =&gt; <span class="string">&quot;mode_auto&quot;</span>,
-            Messages::SetGainSetting(..) =&gt; <span class="string">&quot;set_gain_setting&quot;</span>,
-            Messages::GotoBootloader(..) =&gt; <span class="string">&quot;goto_bootloader&quot;</span>,
-            Messages::SpeedOfSound(..) =&gt; <span class="string">&quot;speed_of_sound&quot;</span>,
             Messages::SetModeAuto(..) =&gt; <span class="string">&quot;set_mode_auto&quot;</span>,
-            Messages::ContinuousStop(..) =&gt; <span class="string">&quot;continuous_stop&quot;</span>,
-            Messages::GeneralInfo(..) =&gt; <span class="string">&quot;general_info&quot;</span>,
-            Messages::DistanceSimple(..) =&gt; <span class="string">&quot;distance_simple&quot;</span>,
             Messages::Voltage5(..) =&gt; <span class="string">&quot;voltage_5&quot;</span>,
-            Messages::FirmwareVersion(..) =&gt; <span class="string">&quot;firmware_version&quot;</span>,
-            Messages::SetRange(..) =&gt; <span class="string">&quot;set_range&quot;</span>,
+            Messages::ProcessorTemperature(..) =&gt; <span class="string">&quot;processor_temperature&quot;</span>,
+            Messages::SetPingEnable(..) =&gt; <span class="string">&quot;set_ping_enable&quot;</span>,
+            Messages::PingEnable(..) =&gt; <span class="string">&quot;ping_enable&quot;</span>,
+            Messages::ModeAuto(..) =&gt; <span class="string">&quot;mode_auto&quot;</span>,
+            Messages::SetPingInterval(..) =&gt; <span class="string">&quot;set_ping_interval&quot;</span>,
+            Messages::DistanceSimple(..) =&gt; <span class="string">&quot;distance_simple&quot;</span>,
+            Messages::Profile(..) =&gt; <span class="string">&quot;profile&quot;</span>,
+            Messages::PingInterval(..) =&gt; <span class="string">&quot;ping_interval&quot;</span>,
+            Messages::SetSpeedOfSound(..) =&gt; <span class="string">&quot;set_speed_of_sound&quot;</span>,
             Messages::ContinuousStart(..) =&gt; <span class="string">&quot;continuous_start&quot;</span>,
+            Messages::GotoBootloader(..) =&gt; <span class="string">&quot;goto_bootloader&quot;</span>,
+            Messages::Range(..) =&gt; <span class="string">&quot;range&quot;</span>,
+            Messages::SetDeviceId(..) =&gt; <span class="string">&quot;set_device_id&quot;</span>,
+            Messages::Distance(..) =&gt; <span class="string">&quot;distance&quot;</span>,
+            Messages::SetRange(..) =&gt; <span class="string">&quot;set_range&quot;</span>,
+            Messages::FirmwareVersion(..) =&gt; <span class="string">&quot;firmware_version&quot;</span>,
+            Messages::GeneralInfo(..) =&gt; <span class="string">&quot;general_info&quot;</span>,
+            Messages::GainSetting(..) =&gt; <span class="string">&quot;gain_setting&quot;</span>,
+            Messages::PcbTemperature(..) =&gt; <span class="string">&quot;pcb_temperature&quot;</span>,
+            Messages::TransmitDuration(..) =&gt; <span class="string">&quot;transmit_duration&quot;</span>,
+            Messages::DeviceId(..) =&gt; <span class="string">&quot;device_id&quot;</span>,
+            Messages::SpeedOfSound(..) =&gt; <span class="string">&quot;speed_of_sound&quot;</span>,
+            Messages::ContinuousStop(..) =&gt; <span class="string">&quot;continuous_stop&quot;</span>,
+            Messages::SetGainSetting(..) =&gt; <span class="string">&quot;set_gain_setting&quot;</span>,
         }
     }
     <span class="kw">fn </span>message_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::TransmitDuration(..) =&gt; <span class="number">1208u16</span>,
-            Messages::GainSetting(..) =&gt; <span class="number">1207u16</span>,
-            Messages::PingEnable(..) =&gt; <span class="number">1215u16</span>,
-            Messages::DeviceId(..) =&gt; <span class="number">1201u16</span>,
-            Messages::SetPingInterval(..) =&gt; <span class="number">1004u16</span>,
-            Messages::SetDeviceId(..) =&gt; <span class="number">1000u16</span>,
-            Messages::ProcessorTemperature(..) =&gt; <span class="number">1213u16</span>,
-            Messages::PingInterval(..) =&gt; <span class="number">1206u16</span>,
-            Messages::Range(..) =&gt; <span class="number">1204u16</span>,
-            Messages::Distance(..) =&gt; <span class="number">1212u16</span>,
-            Messages::Profile(..) =&gt; <span class="number">1300u16</span>,
-            Messages::SetPingEnable(..) =&gt; <span class="number">1006u16</span>,
-            Messages::PcbTemperature(..) =&gt; <span class="number">1214u16</span>,
-            Messages::SetSpeedOfSound(..) =&gt; <span class="number">1002u16</span>,
-            Messages::ModeAuto(..) =&gt; <span class="number">1205u16</span>,
-            Messages::SetGainSetting(..) =&gt; <span class="number">1005u16</span>,
-            Messages::GotoBootloader(..) =&gt; <span class="number">1100u16</span>,
-            Messages::SpeedOfSound(..) =&gt; <span class="number">1203u16</span>,
             Messages::SetModeAuto(..) =&gt; <span class="number">1003u16</span>,
-            Messages::ContinuousStop(..) =&gt; <span class="number">1401u16</span>,
-            Messages::GeneralInfo(..) =&gt; <span class="number">1210u16</span>,
-            Messages::DistanceSimple(..) =&gt; <span class="number">1211u16</span>,
             Messages::Voltage5(..) =&gt; <span class="number">1202u16</span>,
-            Messages::FirmwareVersion(..) =&gt; <span class="number">1200u16</span>,
-            Messages::SetRange(..) =&gt; <span class="number">1001u16</span>,
+            Messages::ProcessorTemperature(..) =&gt; <span class="number">1213u16</span>,
+            Messages::SetPingEnable(..) =&gt; <span class="number">1006u16</span>,
+            Messages::PingEnable(..) =&gt; <span class="number">1215u16</span>,
+            Messages::ModeAuto(..) =&gt; <span class="number">1205u16</span>,
+            Messages::SetPingInterval(..) =&gt; <span class="number">1004u16</span>,
+            Messages::DistanceSimple(..) =&gt; <span class="number">1211u16</span>,
+            Messages::Profile(..) =&gt; <span class="number">1300u16</span>,
+            Messages::PingInterval(..) =&gt; <span class="number">1206u16</span>,
+            Messages::SetSpeedOfSound(..) =&gt; <span class="number">1002u16</span>,
             Messages::ContinuousStart(..) =&gt; <span class="number">1400u16</span>,
+            Messages::GotoBootloader(..) =&gt; <span class="number">1100u16</span>,
+            Messages::Range(..) =&gt; <span class="number">1204u16</span>,
+            Messages::SetDeviceId(..) =&gt; <span class="number">1000u16</span>,
+            Messages::Distance(..) =&gt; <span class="number">1212u16</span>,
+            Messages::SetRange(..) =&gt; <span class="number">1001u16</span>,
+            Messages::FirmwareVersion(..) =&gt; <span class="number">1200u16</span>,
+            Messages::GeneralInfo(..) =&gt; <span class="number">1210u16</span>,
+            Messages::GainSetting(..) =&gt; <span class="number">1207u16</span>,
+            Messages::PcbTemperature(..) =&gt; <span class="number">1214u16</span>,
+            Messages::TransmitDuration(..) =&gt; <span class="number">1208u16</span>,
+            Messages::DeviceId(..) =&gt; <span class="number">1201u16</span>,
+            Messages::SpeedOfSound(..) =&gt; <span class="number">1203u16</span>,
+            Messages::ContinuousStop(..) =&gt; <span class="number">1401u16</span>,
+            Messages::SetGainSetting(..) =&gt; <span class="number">1005u16</span>,
         }
     }
     <span class="kw">fn </span>message_id_from_name(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;u16, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt; {
         <span class="kw">match </span>name {
-            <span class="string">&quot;transmit_duration&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1208u16</span>),
-            <span class="string">&quot;gain_setting&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1207u16</span>),
-            <span class="string">&quot;ping_enable&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1215u16</span>),
-            <span class="string">&quot;device_id&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1201u16</span>),
-            <span class="string">&quot;set_ping_interval&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1004u16</span>),
-            <span class="string">&quot;set_device_id&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1000u16</span>),
-            <span class="string">&quot;processor_temperature&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1213u16</span>),
-            <span class="string">&quot;ping_interval&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1206u16</span>),
-            <span class="string">&quot;range&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1204u16</span>),
-            <span class="string">&quot;distance&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1212u16</span>),
-            <span class="string">&quot;profile&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1300u16</span>),
-            <span class="string">&quot;set_ping_enable&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1006u16</span>),
-            <span class="string">&quot;pcb_temperature&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1214u16</span>),
-            <span class="string">&quot;set_speed_of_sound&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1002u16</span>),
-            <span class="string">&quot;mode_auto&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1205u16</span>),
-            <span class="string">&quot;set_gain_setting&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1005u16</span>),
-            <span class="string">&quot;goto_bootloader&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1100u16</span>),
-            <span class="string">&quot;speed_of_sound&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1203u16</span>),
             <span class="string">&quot;set_mode_auto&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1003u16</span>),
-            <span class="string">&quot;continuous_stop&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1401u16</span>),
-            <span class="string">&quot;general_info&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1210u16</span>),
-            <span class="string">&quot;distance_simple&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1211u16</span>),
             <span class="string">&quot;voltage_5&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1202u16</span>),
-            <span class="string">&quot;firmware_version&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1200u16</span>),
-            <span class="string">&quot;set_range&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1001u16</span>),
+            <span class="string">&quot;processor_temperature&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1213u16</span>),
+            <span class="string">&quot;set_ping_enable&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1006u16</span>),
+            <span class="string">&quot;ping_enable&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1215u16</span>),
+            <span class="string">&quot;mode_auto&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1205u16</span>),
+            <span class="string">&quot;set_ping_interval&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1004u16</span>),
+            <span class="string">&quot;distance_simple&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1211u16</span>),
+            <span class="string">&quot;profile&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1300u16</span>),
+            <span class="string">&quot;ping_interval&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1206u16</span>),
+            <span class="string">&quot;set_speed_of_sound&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1002u16</span>),
             <span class="string">&quot;continuous_start&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1400u16</span>),
+            <span class="string">&quot;goto_bootloader&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1100u16</span>),
+            <span class="string">&quot;range&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1204u16</span>),
+            <span class="string">&quot;set_device_id&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1000u16</span>),
+            <span class="string">&quot;distance&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1212u16</span>),
+            <span class="string">&quot;set_range&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1001u16</span>),
+            <span class="string">&quot;firmware_version&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1200u16</span>),
+            <span class="string">&quot;general_info&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1210u16</span>),
+            <span class="string">&quot;gain_setting&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1207u16</span>),
+            <span class="string">&quot;pcb_temperature&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1214u16</span>),
+            <span class="string">&quot;transmit_duration&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1208u16</span>),
+            <span class="string">&quot;device_id&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1201u16</span>),
+            <span class="string">&quot;speed_of_sound&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1203u16</span>),
+            <span class="string">&quot;continuous_stop&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1401u16</span>),
+            <span class="string">&quot;set_gain_setting&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1005u16</span>),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="string">&quot;Invalid message name.&quot;</span>),
         }
     }
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::TransmitDuration(content) =&gt; content.serialize(buffer),
-            Messages::GainSetting(content) =&gt; content.serialize(buffer),
-            Messages::PingEnable(content) =&gt; content.serialize(buffer),
-            Messages::DeviceId(content) =&gt; content.serialize(buffer),
-            Messages::SetPingInterval(content) =&gt; content.serialize(buffer),
-            Messages::SetDeviceId(content) =&gt; content.serialize(buffer),
-            Messages::ProcessorTemperature(content) =&gt; content.serialize(buffer),
-            Messages::PingInterval(content) =&gt; content.serialize(buffer),
-            Messages::Range(content) =&gt; content.serialize(buffer),
-            Messages::Distance(content) =&gt; content.serialize(buffer),
-            Messages::Profile(content) =&gt; content.serialize(buffer),
-            Messages::SetPingEnable(content) =&gt; content.serialize(buffer),
-            Messages::PcbTemperature(content) =&gt; content.serialize(buffer),
-            Messages::SetSpeedOfSound(content) =&gt; content.serialize(buffer),
-            Messages::ModeAuto(content) =&gt; content.serialize(buffer),
-            Messages::SetGainSetting(content) =&gt; content.serialize(buffer),
-            Messages::GotoBootloader(content) =&gt; content.serialize(buffer),
-            Messages::SpeedOfSound(content) =&gt; content.serialize(buffer),
             Messages::SetModeAuto(content) =&gt; content.serialize(buffer),
-            Messages::ContinuousStop(content) =&gt; content.serialize(buffer),
-            Messages::GeneralInfo(content) =&gt; content.serialize(buffer),
-            Messages::DistanceSimple(content) =&gt; content.serialize(buffer),
             Messages::Voltage5(content) =&gt; content.serialize(buffer),
-            Messages::FirmwareVersion(content) =&gt; content.serialize(buffer),
-            Messages::SetRange(content) =&gt; content.serialize(buffer),
+            Messages::ProcessorTemperature(content) =&gt; content.serialize(buffer),
+            Messages::SetPingEnable(content) =&gt; content.serialize(buffer),
+            Messages::PingEnable(content) =&gt; content.serialize(buffer),
+            Messages::ModeAuto(content) =&gt; content.serialize(buffer),
+            Messages::SetPingInterval(content) =&gt; content.serialize(buffer),
+            Messages::DistanceSimple(content) =&gt; content.serialize(buffer),
+            Messages::Profile(content) =&gt; content.serialize(buffer),
+            Messages::PingInterval(content) =&gt; content.serialize(buffer),
+            Messages::SetSpeedOfSound(content) =&gt; content.serialize(buffer),
             Messages::ContinuousStart(content) =&gt; content.serialize(buffer),
+            Messages::GotoBootloader(content) =&gt; content.serialize(buffer),
+            Messages::Range(content) =&gt; content.serialize(buffer),
+            Messages::SetDeviceId(content) =&gt; content.serialize(buffer),
+            Messages::Distance(content) =&gt; content.serialize(buffer),
+            Messages::SetRange(content) =&gt; content.serialize(buffer),
+            Messages::FirmwareVersion(content) =&gt; content.serialize(buffer),
+            Messages::GeneralInfo(content) =&gt; content.serialize(buffer),
+            Messages::GainSetting(content) =&gt; content.serialize(buffer),
+            Messages::PcbTemperature(content) =&gt; content.serialize(buffer),
+            Messages::TransmitDuration(content) =&gt; content.serialize(buffer),
+            Messages::DeviceId(content) =&gt; content.serialize(buffer),
+            Messages::SpeedOfSound(content) =&gt; content.serialize(buffer),
+            Messages::ContinuousStop(content) =&gt; content.serialize(buffer),
+            Messages::SetGainSetting(content) =&gt; content.serialize(buffer),
         }
     }
 }
