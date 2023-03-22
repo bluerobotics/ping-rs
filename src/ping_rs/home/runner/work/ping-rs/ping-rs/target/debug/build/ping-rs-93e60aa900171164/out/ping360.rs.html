@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/work/ping-rs/ping-rs/target/debug/build/ping-rs-e9c411356609a345/out/ping360.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ping360.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../../../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../../../../../../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../../../../../../../../../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../../../../../../../../../../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../../../../../../../../../../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../../../../../../../../../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../../../../../../../../../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../../../../../../../../../../../source-files.js"></script><script defer src="../../../../../../../../../../../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../../../../../../../../../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../../../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../../../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../../../../../../../../../../ping_rs/index.html"><img class="rust-logo" src="../../../../../../../../../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../../../../../../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../../../../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../../../../../../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/work/ping-rs/ping-rs/target/debug/build/ping-rs-93e60aa900171164/out/ping360.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>ping360.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../../../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../../../../../../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../../../../../../../../../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../../../../../../../../../../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../../../../../../../../../../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../../../../../../../../../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../../../../../../../../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../../../../../../../../../../source-files.js"></script><script defer src="../../../../../../../../../../../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../../../../../../../../../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../../../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../../../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../../../../../../../../../../ping_rs/index.html"><img class="rust-logo" src="../../../../../../../../../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../../../../../../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../../../../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../../../../../../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -287,66 +287,26 @@
 <span class="attr">#[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>Messages {
-    AutoTransmit(AutoTransmitStruct),
-    Reset(ResetStruct),
-    AutoDeviceData(AutoDeviceDataStruct),
-    Transducer(TransducerStruct),
-    DeviceData(DeviceDataStruct),
     DeviceId(DeviceIdStruct),
+    AutoDeviceData(AutoDeviceDataStruct),
+    DeviceData(DeviceDataStruct),
+    AutoTransmit(AutoTransmitStruct),
     MotorOff(MotorOffStruct),
+    Reset(ResetStruct),
+    Transducer(TransducerStruct),
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Extended *transducer* message with auto-scan function. The sonar will automatically scan the region between start_angle and end_angle and send auto_device_data messages as soon as new data is available. Send a line break to stop scanning (and also begin the autobaudrate procedure). Alternatively, a motor_off message may be sent (but retrys might be necessary on the half-duplex RS485 interface).&quot;</span>]
-</span><span class="kw">pub struct </span>AutoTransmitStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Operating mode (1 for Ping360)&quot;</span>]
-    </span><span class="kw">pub </span>mode: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Analog gain setting (0 = low, 1 = normal, 2 = high)&quot;</span>]
-    </span><span class="kw">pub </span>gain_setting: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Acoustic transmission duration (1~1000 microseconds)&quot;</span>]
-    </span><span class="kw">pub </span>transmit_duration: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Time interval between individual signal intensity samples in 25nsec increments (80 to 40000 == 2 microseconds to 1000 microseconds)&quot;</span>]
-    </span><span class="kw">pub </span>sample_period: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Acoustic operating frequency. Frequency range is 500kHz to 1000kHz, however it is only practical to use say 650kHz to 850kHz due to the narrow bandwidth of the acoustic receiver.&quot;</span>]
-    </span><span class="kw">pub </span>transmit_frequency: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Number of samples per reflected signal&quot;</span>]
-    </span><span class="kw">pub </span>number_of_samples: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Head angle to begin scan sector for autoscan in gradians (0~399 = 0~360 degrees).&quot;</span>]
-    </span><span class="kw">pub </span>start_angle: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Head angle to end scan sector for autoscan in gradians (0~399 = 0~360 degrees).&quot;</span>]
-    </span><span class="kw">pub </span>stop_angle: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Number of 0.9 degree motor steps between pings for auto scan (1~10 = 0.9~9.0 degrees)&quot;</span>]
-    </span><span class="kw">pub </span>num_steps: u8,
-    <span class="attr">#[doc = <span class="string">&quot;An additional delay between successive transmit pulses (0~100 ms). This may be necessary for some programs to avoid collisions on the RS485 USRT.&quot;</span>]
-    </span><span class="kw">pub </span>delay: u8,
-}
-<span class="kw">impl </span>Serialize <span class="kw">for </span>AutoTransmitStruct {
-    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode.to_le_bytes());
-        buffer[<span class="number">1usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
-        buffer[<span class="number">2usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_duration.to_le_bytes());
-        buffer[<span class="number">4usize</span>..<span class="number">6usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.sample_period.to_le_bytes());
-        buffer[<span class="number">6usize</span>..<span class="number">8usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_frequency.to_le_bytes());
-        buffer[<span class="number">8usize</span>..<span class="number">10usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.number_of_samples.to_le_bytes());
-        buffer[<span class="number">10usize</span>..<span class="number">12usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.start_angle.to_le_bytes());
-        buffer[<span class="number">12usize</span>..<span class="number">14usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.stop_angle.to_le_bytes());
-        buffer[<span class="number">14usize</span>..<span class="number">15usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.num_steps.to_le_bytes());
-        buffer[<span class="number">15usize</span>..<span class="number">16usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.delay.to_le_bytes());
-        <span class="number">16usize
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Reset the sonar. The bootloader may run depending on the selection according to the `bootloader` payload field. When the bootloader runs, the external LED flashes at 5Hz. If the bootloader is not contacted within 5 seconds, it will run the current program. If there is no program, then the bootloader will wait forever for a connection. Note that if you issue a reset then you will have to close all your open comm ports and go back to issuing either a discovery message for UDP or go through the break sequence for serial comms before you can talk to the sonar again.&quot;</span>]
-</span><span class="kw">pub struct </span>ResetStruct {
-    <span class="attr">#[doc = <span class="string">&quot;0 = skip bootloader; 1 = run bootloader&quot;</span>]
-    </span><span class="kw">pub </span>bootloader: u8,
+#[doc = <span class="string">&quot;Change the device id&quot;</span>]
+</span><span class="kw">pub struct </span>DeviceIdStruct {
+    <span class="attr">#[doc = <span class="string">&quot;Device ID (1-254). 0 and 255 are reserved.&quot;</span>]
+    </span><span class="kw">pub </span>id: u8,
     <span class="attr">#[doc = <span class="string">&quot;reserved&quot;</span>]
     </span><span class="kw">pub </span>reserved: u8,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>ResetStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>DeviceIdStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.bootloader.to_le_bytes());
+        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.id.to_le_bytes());
         buffer[<span class="number">1usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
         <span class="number">2usize
     </span>}
@@ -404,43 +364,6 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;The transducer will apply the commanded settings. The sonar will reply with a `ping360_data` message. If the `transmit` field is 0, the sonar will not transmit after locating the transducer, and the `data` field in the `ping360_data` message reply will be empty. If the `transmit` field is 1, the sonar will make an acoustic transmission after locating the transducer, and the resulting data will be uploaded in the `data` field of the `ping360_data` message reply. To allow for the worst case reponse time the command timeout should be set to 4000 msec.&quot;</span>]
-</span><span class="kw">pub struct </span>TransducerStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Operating mode (1 for Ping360)&quot;</span>]
-    </span><span class="kw">pub </span>mode: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Analog gain setting (0 = low, 1 = normal, 2 = high)&quot;</span>]
-    </span><span class="kw">pub </span>gain_setting: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Head angle&quot;</span>]
-    </span><span class="kw">pub </span>angle: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Acoustic transmission duration (1~1000 microseconds)&quot;</span>]
-    </span><span class="kw">pub </span>transmit_duration: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Time interval between individual signal intensity samples in 25nsec increments (80 to 40000 == 2 microseconds to 1000 microseconds)&quot;</span>]
-    </span><span class="kw">pub </span>sample_period: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Acoustic operating frequency. Frequency range is 500kHz to 1000kHz, however it is only practical to use say 650kHz to 850kHz due to the narrow bandwidth of the acoustic receiver.&quot;</span>]
-    </span><span class="kw">pub </span>transmit_frequency: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Number of samples per reflected signal&quot;</span>]
-    </span><span class="kw">pub </span>number_of_samples: u16,
-    <span class="attr">#[doc = <span class="string">&quot;0 = do not transmit; 1 = transmit after the transducer has reached the specified angle&quot;</span>]
-    </span><span class="kw">pub </span>transmit: u8,
-    <span class="attr">#[doc = <span class="string">&quot;reserved&quot;</span>]
-    </span><span class="kw">pub </span>reserved: u8,
-}
-<span class="kw">impl </span>Serialize <span class="kw">for </span>TransducerStruct {
-    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode.to_le_bytes());
-        buffer[<span class="number">1usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
-        buffer[<span class="number">2usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.angle.to_le_bytes());
-        buffer[<span class="number">4usize</span>..<span class="number">6usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_duration.to_le_bytes());
-        buffer[<span class="number">6usize</span>..<span class="number">8usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.sample_period.to_le_bytes());
-        buffer[<span class="number">8usize</span>..<span class="number">10usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_frequency.to_le_bytes());
-        buffer[<span class="number">10usize</span>..<span class="number">12usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.number_of_samples.to_le_bytes());
-        buffer[<span class="number">12usize</span>..<span class="number">13usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit.to_le_bytes());
-        buffer[<span class="number">13usize</span>..<span class="number">14usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
-        <span class="number">14usize
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
 #[doc = <span class="string">&quot;This message is used to communicate the current sonar state. If the data field is populated, the other fields indicate the sonar state when the data was captured. The time taken before the response to the command is sent depends on the difference between the last angle scanned and the new angle in the parameters as well as the number of samples and sample interval (range). To allow for the worst case reponse time the command timeout should be set to 4000 msec.&quot;</span>]
 </span><span class="kw">pub struct </span>DeviceDataStruct {
     <span class="attr">#[doc = <span class="string">&quot;Operating mode (1 for Ping360)&quot;</span>]
@@ -480,18 +403,42 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Change the device id&quot;</span>]
-</span><span class="kw">pub struct </span>DeviceIdStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Device ID (1-254). 0 and 255 are reserved.&quot;</span>]
-    </span><span class="kw">pub </span>id: u8,
-    <span class="attr">#[doc = <span class="string">&quot;reserved&quot;</span>]
-    </span><span class="kw">pub </span>reserved: u8,
+#[doc = <span class="string">&quot;Extended *transducer* message with auto-scan function. The sonar will automatically scan the region between start_angle and end_angle and send auto_device_data messages as soon as new data is available. Send a line break to stop scanning (and also begin the autobaudrate procedure). Alternatively, a motor_off message may be sent (but retrys might be necessary on the half-duplex RS485 interface).&quot;</span>]
+</span><span class="kw">pub struct </span>AutoTransmitStruct {
+    <span class="attr">#[doc = <span class="string">&quot;Operating mode (1 for Ping360)&quot;</span>]
+    </span><span class="kw">pub </span>mode: u8,
+    <span class="attr">#[doc = <span class="string">&quot;Analog gain setting (0 = low, 1 = normal, 2 = high)&quot;</span>]
+    </span><span class="kw">pub </span>gain_setting: u8,
+    <span class="attr">#[doc = <span class="string">&quot;Acoustic transmission duration (1~1000 microseconds)&quot;</span>]
+    </span><span class="kw">pub </span>transmit_duration: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Time interval between individual signal intensity samples in 25nsec increments (80 to 40000 == 2 microseconds to 1000 microseconds)&quot;</span>]
+    </span><span class="kw">pub </span>sample_period: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Acoustic operating frequency. Frequency range is 500kHz to 1000kHz, however it is only practical to use say 650kHz to 850kHz due to the narrow bandwidth of the acoustic receiver.&quot;</span>]
+    </span><span class="kw">pub </span>transmit_frequency: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Number of samples per reflected signal&quot;</span>]
+    </span><span class="kw">pub </span>number_of_samples: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Head angle to begin scan sector for autoscan in gradians (0~399 = 0~360 degrees).&quot;</span>]
+    </span><span class="kw">pub </span>start_angle: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Head angle to end scan sector for autoscan in gradians (0~399 = 0~360 degrees).&quot;</span>]
+    </span><span class="kw">pub </span>stop_angle: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Number of 0.9 degree motor steps between pings for auto scan (1~10 = 0.9~9.0 degrees)&quot;</span>]
+    </span><span class="kw">pub </span>num_steps: u8,
+    <span class="attr">#[doc = <span class="string">&quot;An additional delay between successive transmit pulses (0~100 ms). This may be necessary for some programs to avoid collisions on the RS485 USRT.&quot;</span>]
+    </span><span class="kw">pub </span>delay: u8,
 }
-<span class="kw">impl </span>Serialize <span class="kw">for </span>DeviceIdStruct {
+<span class="kw">impl </span>Serialize <span class="kw">for </span>AutoTransmitStruct {
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
-        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.id.to_le_bytes());
-        buffer[<span class="number">1usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
-        <span class="number">2usize
+        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode.to_le_bytes());
+        buffer[<span class="number">1usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
+        buffer[<span class="number">2usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_duration.to_le_bytes());
+        buffer[<span class="number">4usize</span>..<span class="number">6usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.sample_period.to_le_bytes());
+        buffer[<span class="number">6usize</span>..<span class="number">8usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_frequency.to_le_bytes());
+        buffer[<span class="number">8usize</span>..<span class="number">10usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.number_of_samples.to_le_bytes());
+        buffer[<span class="number">10usize</span>..<span class="number">12usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.start_angle.to_le_bytes());
+        buffer[<span class="number">12usize</span>..<span class="number">14usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.stop_angle.to_le_bytes());
+        buffer[<span class="number">14usize</span>..<span class="number">15usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.num_steps.to_le_bytes());
+        buffer[<span class="number">15usize</span>..<span class="number">16usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.delay.to_le_bytes());
+        <span class="number">16usize
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
@@ -503,52 +450,105 @@
         <span class="number">0usize
     </span>}
 }
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;Reset the sonar. The bootloader may run depending on the selection according to the `bootloader` payload field. When the bootloader runs, the external LED flashes at 5Hz. If the bootloader is not contacted within 5 seconds, it will run the current program. If there is no program, then the bootloader will wait forever for a connection. Note that if you issue a reset then you will have to close all your open comm ports and go back to issuing either a discovery message for UDP or go through the break sequence for serial comms before you can talk to the sonar again.&quot;</span>]
+</span><span class="kw">pub struct </span>ResetStruct {
+    <span class="attr">#[doc = <span class="string">&quot;0 = skip bootloader; 1 = run bootloader&quot;</span>]
+    </span><span class="kw">pub </span>bootloader: u8,
+    <span class="attr">#[doc = <span class="string">&quot;reserved&quot;</span>]
+    </span><span class="kw">pub </span>reserved: u8,
+}
+<span class="kw">impl </span>Serialize <span class="kw">for </span>ResetStruct {
+    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
+        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.bootloader.to_le_bytes());
+        buffer[<span class="number">1usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
+        <span class="number">2usize
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;The transducer will apply the commanded settings. The sonar will reply with a `ping360_data` message. If the `transmit` field is 0, the sonar will not transmit after locating the transducer, and the `data` field in the `ping360_data` message reply will be empty. If the `transmit` field is 1, the sonar will make an acoustic transmission after locating the transducer, and the resulting data will be uploaded in the `data` field of the `ping360_data` message reply. To allow for the worst case reponse time the command timeout should be set to 4000 msec.&quot;</span>]
+</span><span class="kw">pub struct </span>TransducerStruct {
+    <span class="attr">#[doc = <span class="string">&quot;Operating mode (1 for Ping360)&quot;</span>]
+    </span><span class="kw">pub </span>mode: u8,
+    <span class="attr">#[doc = <span class="string">&quot;Analog gain setting (0 = low, 1 = normal, 2 = high)&quot;</span>]
+    </span><span class="kw">pub </span>gain_setting: u8,
+    <span class="attr">#[doc = <span class="string">&quot;Head angle&quot;</span>]
+    </span><span class="kw">pub </span>angle: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Acoustic transmission duration (1~1000 microseconds)&quot;</span>]
+    </span><span class="kw">pub </span>transmit_duration: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Time interval between individual signal intensity samples in 25nsec increments (80 to 40000 == 2 microseconds to 1000 microseconds)&quot;</span>]
+    </span><span class="kw">pub </span>sample_period: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Acoustic operating frequency. Frequency range is 500kHz to 1000kHz, however it is only practical to use say 650kHz to 850kHz due to the narrow bandwidth of the acoustic receiver.&quot;</span>]
+    </span><span class="kw">pub </span>transmit_frequency: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Number of samples per reflected signal&quot;</span>]
+    </span><span class="kw">pub </span>number_of_samples: u16,
+    <span class="attr">#[doc = <span class="string">&quot;0 = do not transmit; 1 = transmit after the transducer has reached the specified angle&quot;</span>]
+    </span><span class="kw">pub </span>transmit: u8,
+    <span class="attr">#[doc = <span class="string">&quot;reserved&quot;</span>]
+    </span><span class="kw">pub </span>reserved: u8,
+}
+<span class="kw">impl </span>Serialize <span class="kw">for </span>TransducerStruct {
+    <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
+        buffer[<span class="number">0usize</span>..<span class="number">1usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode.to_le_bytes());
+        buffer[<span class="number">1usize</span>..<span class="number">2usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
+        buffer[<span class="number">2usize</span>..<span class="number">4usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.angle.to_le_bytes());
+        buffer[<span class="number">4usize</span>..<span class="number">6usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_duration.to_le_bytes());
+        buffer[<span class="number">6usize</span>..<span class="number">8usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.sample_period.to_le_bytes());
+        buffer[<span class="number">8usize</span>..<span class="number">10usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_frequency.to_le_bytes());
+        buffer[<span class="number">10usize</span>..<span class="number">12usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.number_of_samples.to_le_bytes());
+        buffer[<span class="number">12usize</span>..<span class="number">13usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit.to_le_bytes());
+        buffer[<span class="number">13usize</span>..<span class="number">14usize</span>].copy_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
+        <span class="number">14usize
+    </span>}
+}
 <span class="kw">impl </span>PingMessage <span class="kw">for </span>Messages {
     <span class="kw">fn </span>message_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::AutoTransmit(..) =&gt; <span class="string">&quot;auto_transmit&quot;</span>,
-            Messages::Reset(..) =&gt; <span class="string">&quot;reset&quot;</span>,
-            Messages::AutoDeviceData(..) =&gt; <span class="string">&quot;auto_device_data&quot;</span>,
-            Messages::Transducer(..) =&gt; <span class="string">&quot;transducer&quot;</span>,
-            Messages::DeviceData(..) =&gt; <span class="string">&quot;device_data&quot;</span>,
             Messages::DeviceId(..) =&gt; <span class="string">&quot;device_id&quot;</span>,
+            Messages::AutoDeviceData(..) =&gt; <span class="string">&quot;auto_device_data&quot;</span>,
+            Messages::DeviceData(..) =&gt; <span class="string">&quot;device_data&quot;</span>,
+            Messages::AutoTransmit(..) =&gt; <span class="string">&quot;auto_transmit&quot;</span>,
             Messages::MotorOff(..) =&gt; <span class="string">&quot;motor_off&quot;</span>,
+            Messages::Reset(..) =&gt; <span class="string">&quot;reset&quot;</span>,
+            Messages::Transducer(..) =&gt; <span class="string">&quot;transducer&quot;</span>,
         }
     }
     <span class="kw">fn </span>message_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::AutoTransmit(..) =&gt; <span class="number">2602u16</span>,
-            Messages::Reset(..) =&gt; <span class="number">2600u16</span>,
-            Messages::AutoDeviceData(..) =&gt; <span class="number">2301u16</span>,
-            Messages::Transducer(..) =&gt; <span class="number">2601u16</span>,
-            Messages::DeviceData(..) =&gt; <span class="number">2300u16</span>,
             Messages::DeviceId(..) =&gt; <span class="number">2000u16</span>,
+            Messages::AutoDeviceData(..) =&gt; <span class="number">2301u16</span>,
+            Messages::DeviceData(..) =&gt; <span class="number">2300u16</span>,
+            Messages::AutoTransmit(..) =&gt; <span class="number">2602u16</span>,
             Messages::MotorOff(..) =&gt; <span class="number">2903u16</span>,
+            Messages::Reset(..) =&gt; <span class="number">2600u16</span>,
+            Messages::Transducer(..) =&gt; <span class="number">2601u16</span>,
         }
     }
     <span class="kw">fn </span>message_id_from_name(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;u16, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt; {
         <span class="kw">match </span>name {
-            <span class="string">&quot;auto_transmit&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2602u16</span>),
-            <span class="string">&quot;reset&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2600u16</span>),
-            <span class="string">&quot;auto_device_data&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2301u16</span>),
-            <span class="string">&quot;transducer&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2601u16</span>),
-            <span class="string">&quot;device_data&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2300u16</span>),
             <span class="string">&quot;device_id&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2000u16</span>),
+            <span class="string">&quot;auto_device_data&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2301u16</span>),
+            <span class="string">&quot;device_data&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2300u16</span>),
+            <span class="string">&quot;auto_transmit&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2602u16</span>),
             <span class="string">&quot;motor_off&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2903u16</span>),
+            <span class="string">&quot;reset&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2600u16</span>),
+            <span class="string">&quot;transducer&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2601u16</span>),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="string">&quot;Invalid message name.&quot;</span>),
         }
     }
     <span class="kw">fn </span>serialize(<span class="self">self</span>, buffer: <span class="kw-2">&amp;mut </span>[u8]) -&gt; usize {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::AutoTransmit(content) =&gt; content.serialize(buffer),
-            Messages::Reset(content) =&gt; content.serialize(buffer),
-            Messages::AutoDeviceData(content) =&gt; content.serialize(buffer),
-            Messages::Transducer(content) =&gt; content.serialize(buffer),
-            Messages::DeviceData(content) =&gt; content.serialize(buffer),
             Messages::DeviceId(content) =&gt; content.serialize(buffer),
+            Messages::AutoDeviceData(content) =&gt; content.serialize(buffer),
+            Messages::DeviceData(content) =&gt; content.serialize(buffer),
+            Messages::AutoTransmit(content) =&gt; content.serialize(buffer),
             Messages::MotorOff(content) =&gt; content.serialize(buffer),
+            Messages::Reset(content) =&gt; content.serialize(buffer),
+            Messages::Transducer(content) =&gt; content.serialize(buffer),
         }
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../../../../../../../../../../" data-static-root-path="../../../../../../../../../../../../static.files/" data-current-crate="ping_rs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.1 (d5a82bbd2 2023-02-07)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</section></main><div id="rustdoc-vars" data-root-path="../../../../../../../../../../../../" data-static-root-path="../../../../../../../../../../../../static.files/" data-current-crate="ping_rs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.0 (2c8cc3432 2023-03-06)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>
