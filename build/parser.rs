@@ -409,10 +409,10 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
                 }
             }
 
-            fn message_id_from_name(name: &str) -> Result<u16, &'static str> {
+            fn message_id_from_name(name: &str) -> Result<u16, String> {
                 match name {
                     #(#message_enums_name_id)*
-                    _ => Err("Invalid message name."),
+                    _ => Err(format!("Failed to find message ID from name: {name}.")),
                 }
             }
         }
