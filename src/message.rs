@@ -1,3 +1,28 @@
+pub const HEADER: [u8; 2] = ['B' as u8, 'R' as u8];
+
+#[derive(Clone, Debug)]
+pub struct ProtocolMessage {
+    pub payload_length: u16,
+    pub message_id: u16,
+    pub src_device_id: u8,
+    pub dst_device_id: u8,
+    pub payload: Vec<u8>,
+    pub checksum: u16,
+}
+
+impl ProtocolMessage {
+    pub fn new() -> Self {
+        ProtocolMessage {
+            payload_length: 0,
+            message_id: 0,
+            src_device_id: 0,
+            dst_device_id: 0,
+            payload: Vec::new(),
+            checksum: 0,
+        }
+    }
+}
+
 pub trait PingMessage
 where
     Self: Sized + Serialize + Deserialize,

@@ -1,15 +1,14 @@
 include!(concat!(env!("OUT_DIR"), "/mod.rs"));
 
-use crate::message::{Deserialize, PingMessage};
+use crate::message::{Deserialize, PingMessage, HEADER};
 
 const PAYLOAD_SIZE: usize = 255;
 
 use std::fmt;
 use std::{convert::TryFrom, io::Write};
 
+pub mod decoder;
 pub mod message;
-
-pub const HEADER: [u8; 2] = ['B' as u8, 'R' as u8];
 
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub struct PingMessagePack([u8; 1 + Self::HEADER_SIZE + PAYLOAD_SIZE + 2]);
@@ -49,8 +48,7 @@ impl TryFrom<&Vec<u8>> for Messages {
 
     fn try_from(buffer: &Vec<u8>) -> Result<Self, Self::Error> {
         // Parse start1 and start2
-        if !((buffer[0] == HEADER[0]) && (buffer[1] == HEADER[1]))
-        {
+        if !((buffer[0] == HEADER[0]) && (buffer[1] == HEADER[1])) {
             return Err(format!("Message should start with \"BR\" ASCII sequence, received: [{0}({:0x}), {1}({:0x})]", buffer[0], buffer[1]));
         }
 
