@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["PingMessage",""],["Serialize",""]]};
+window.SIDEBAR_ITEMS = {"trait":["Deserialize","PingMessage","Serialize"]};
