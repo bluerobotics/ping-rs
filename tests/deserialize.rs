@@ -12,7 +12,7 @@ fn test_simple_deserialization() {
         0x42, 0x52, 0x02, 0x00, 0x06, 0x00, 0x00, 0x00, 0x05, 0x00, 0xa1, 0x00,
     ];
     let Messages::Common(parsed) = Messages::try_from(&buffer).unwrap() else {
-        panic!("");
+        panic!("Failed to parse common message.");
     };
 
     // From official ping protocol documentation
