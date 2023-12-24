@@ -9,14 +9,16 @@ use std::{convert::TryFrom, io::Write};
 
 pub mod message;
 
+pub const HEADER: [u8; 2] = ['B' as u8, 'R' as u8];
+
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub struct PingMessagePack([u8; 1 + Self::HEADER_SIZE + PAYLOAD_SIZE + 2]);
 
 impl Default for PingMessagePack {
     fn default() -> Self {
         let mut new = Self([0; 1 + Self::HEADER_SIZE + PAYLOAD_SIZE + 2]);
-        new.0[0] = Self::HEADER[0];
-        new.0[1] = Self::HEADER[1];
+        new.0[0] = HEADER[0];
+        new.0[1] = HEADER[1];
         new
     }
 }
@@ -47,7 +49,7 @@ impl TryFrom<&Vec<u8>> for Messages {
 
     fn try_from(buffer: &Vec<u8>) -> Result<Self, Self::Error> {
         // Parse start1 and start2
-        if !((buffer[0] == PingMessagePack::HEADER[0]) && (buffer[1] == PingMessagePack::HEADER[1]))
+        if !((buffer[0] == HEADER[0]) && (buffer[1] == HEADER[1]))
         {
             return Err(format!("Message should start with \"BR\" ASCII sequence, received: [{0}({:0x}), {1}({:0x})]", buffer[0], buffer[1]));
         }
@@ -106,7 +108,6 @@ impl PingMessagePack {
      */
 
     const HEADER_SIZE: usize = 8;
-    const HEADER: [u8; 2] = ['B' as u8, 'R' as u8];
 
     pub fn new() -> Self {
         Default::default()
