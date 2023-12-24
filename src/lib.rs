@@ -36,6 +36,12 @@ pub enum Messages {
     Ping360(ping360::Messages),
 }
 
+pub fn calculate_crc(pack_without_payload: &[u8]) -> u16 {
+    return pack_without_payload
+        .iter()
+        .fold(0 as u16, |s, &v| s.wrapping_add(v as u16));
+}
+
 impl TryFrom<&Vec<u8>> for Messages {
     type Error = &'static str; // TODO: define error types for each kind of failure
 
@@ -171,9 +177,7 @@ impl PingMessagePack {
     pub fn calculate_crc(&self) -> u16 {
         let payload_length: usize = self.payload_length().into();
         let array = &self.0[0..(Self::HEADER_SIZE + payload_length)];
-        return array
-            .iter()
-            .fold(0 as u16, |s, &v| s.wrapping_add(v as u16));
+        return calculate_crc(array);
     }
 
     pub fn has_valid_crc(&self) -> bool {
