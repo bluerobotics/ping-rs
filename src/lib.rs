@@ -57,11 +57,17 @@ impl TryFrom<&Vec<u8>> for Messages {
         let _message_id = u16::from_le_bytes([buffer[4], buffer[5]]);
         let _src_device_id = buffer[6];
         let _dst_device_id = buffer[7];
-        let payload = &buffer[8..(8 + payload_length) as usize];
-        let _checksum = u16::from_le_bytes([
-            buffer[(payload_length + 1) as usize],
-            buffer[(payload_length + 2) as usize],
+        let _payload = &buffer[8..(8 + payload_length) as usize];
+        let crc = u16::from_le_bytes([
+            buffer[(8 + payload_length) as usize],
+            buffer[(8 + payload_length + 1) as usize],
         ]);
+        let calculated_crc = calculate_crc(&buffer[..buffer.len() - 2]);
+        if crc != calculated_crc {
+            return Err(format!(
+                "Missmatch crc, expected: 0x{calculated_crc:04x}, received: 0x{crc:04x}"
+            ));
+        }
 
         // Try to parse with each module
         if let Ok(message) = bluebps::Messages::deserialize(buffer) {
