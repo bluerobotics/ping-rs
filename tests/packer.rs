@@ -5,7 +5,7 @@ use ping_rs::{common, PingMessagePack};
 fn test_simple_from() {
     let general_request =
         common_messages::GeneralRequest(common::GeneralRequestStruct { requested_id: 5 });
-    let message = PingMessagePack::from(general_request);
+    let message = PingMessagePack::from(&general_request);
 
     assert_eq!(
         message.serialized(),
@@ -17,14 +17,14 @@ fn test_simple_from() {
 fn test_same_packer() {
     let mut packer = PingMessagePack::new();
     let mut general_request = common::GeneralRequestStruct { requested_id: 5 };
-    packer.set_message(common_messages::GeneralRequest(general_request.clone()));
+    packer.set_message(&common_messages::GeneralRequest(general_request.clone()));
 
     assert_eq!(
         packer.serialized(),
         [0x42, 0x52, 0x02, 0x00, 0x06, 0x00, 0x00, 0x00, 0x05, 0x00, 0xa1, 0x00]
     );
 
-    packer.set_message(common_messages::GeneralRequest(general_request.clone()));
+    packer.set_message(&common_messages::GeneralRequest(general_request.clone()));
 
     assert_eq!(
         packer.serialized(),
@@ -38,7 +38,7 @@ fn test_same_packer() {
     );
 
     general_request.requested_id = 1211;
-    packer.set_message(common_messages::GeneralRequest(general_request));
+    packer.set_message(&common_messages::GeneralRequest(general_request));
     packer.set_dst_device_id(0);
     assert_eq!(
         packer.serialized(),
