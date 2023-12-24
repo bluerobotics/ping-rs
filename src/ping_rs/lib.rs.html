@@ -217,6 +217,16 @@
 <a href="#217" id="217">217</a>
 <a href="#218" id="218">218</a>
 <a href="#219" id="219">219</a>
+<a href="#220" id="220">220</a>
+<a href="#221" id="221">221</a>
+<a href="#222" id="222">222</a>
+<a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
+<a href="#225" id="225">225</a>
+<a href="#226" id="226">226</a>
+<a href="#227" id="227">227</a>
+<a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
 </pre></div><pre class="rust"><code><span class="macro">include!</span>(<span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">&quot;OUT_DIR&quot;</span>), <span class="string">&quot;/mod.rs&quot;</span>));
 
 <span class="kw">use </span><span class="kw">crate</span>::message::{Deserialize, PingMessage};
@@ -255,14 +265,20 @@
     Ping360(ping360::Messages),
 }
 
+<span class="kw">pub fn </span>calculate_crc(pack_without_payload: <span class="kw-2">&amp;</span>[u8]) -&gt; u16 {
+    <span class="kw">return </span>pack_without_payload
+        .iter()
+        .fold(<span class="number">0 </span><span class="kw">as </span>u16, |s, <span class="kw-2">&amp;</span>v| s.wrapping_add(v <span class="kw">as </span>u16));
+}
+
 <span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span>Vec&lt;u8&gt;&gt; <span class="kw">for </span>Messages {
-    <span class="kw">type </span>Error = <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str; <span class="comment">// TODO: define error types for each kind of failure
+    <span class="kw">type </span>Error = String; <span class="comment">// TODO: define error types for each kind of failure
 
     </span><span class="kw">fn </span>try_from(buffer: <span class="kw-2">&amp;</span>Vec&lt;u8&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
         <span class="comment">// Parse start1 and start2
         </span><span class="kw">if </span>!((buffer[<span class="number">0</span>] == PingMessagePack::HEADER[<span class="number">0</span>]) &amp;&amp; (buffer[<span class="number">1</span>] == PingMessagePack::HEADER[<span class="number">1</span>]))
         {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="string">&quot;Message should start with \&quot;BR\&quot; ASCII sequence&quot;</span>);
+            <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">&quot;Message should start with \&quot;BR\&quot; ASCII sequence, received: [{0}({:0x}), {1}({:0x})]&quot;</span>, buffer[<span class="number">0</span>], buffer[<span class="number">1</span>]));
         }
 
         <span class="comment">// Get the package data
@@ -270,11 +286,17 @@
         <span class="kw">let </span>_message_id = u16::from_le_bytes([buffer[<span class="number">4</span>], buffer[<span class="number">5</span>]]);
         <span class="kw">let </span>_src_device_id = buffer[<span class="number">6</span>];
         <span class="kw">let </span>_dst_device_id = buffer[<span class="number">7</span>];
-        <span class="kw">let </span>payload = <span class="kw-2">&amp;</span>buffer[<span class="number">8</span>..(<span class="number">8 </span>+ payload_length) <span class="kw">as </span>usize];
-        <span class="kw">let </span>_checksum = u16::from_le_bytes([
-            buffer[(payload_length + <span class="number">1</span>) <span class="kw">as </span>usize],
-            buffer[(payload_length + <span class="number">2</span>) <span class="kw">as </span>usize],
+        <span class="kw">let </span>_payload = <span class="kw-2">&amp;</span>buffer[<span class="number">8</span>..(<span class="number">8 </span>+ payload_length) <span class="kw">as </span>usize];
+        <span class="kw">let </span>crc = u16::from_le_bytes([
+            buffer[(<span class="number">8 </span>+ payload_length) <span class="kw">as </span>usize],
+            buffer[(<span class="number">8 </span>+ payload_length + <span class="number">1</span>) <span class="kw">as </span>usize],
         ]);
+        <span class="kw">let </span>calculated_crc = calculate_crc(<span class="kw-2">&amp;</span>buffer[..buffer.len() - <span class="number">2</span>]);
+        <span class="kw">if </span>crc != calculated_crc {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">format!</span>(
+                <span class="string">&quot;Missmatch crc, expected: 0x{calculated_crc:04x}, received: 0x{crc:04x}&quot;
+            </span>));
+        }
 
         <span class="comment">// Try to parse with each module
         </span><span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = bluebps::Messages::deserialize(buffer) {
@@ -290,7 +312,7 @@
             <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping360(message));
         }
 
-        <span class="prelude-val">Err</span>(<span class="string">&quot;Unknown message&quot;</span>)
+        <span class="prelude-val">Err</span>(<span class="string">&quot;Unknown message&quot;</span>.into())
     }
 }
 
@@ -390,9 +412,7 @@
     <span class="kw">pub fn </span>calculate_crc(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
         <span class="kw">let </span>payload_length: usize = <span class="self">self</span>.payload_length().into();
         <span class="kw">let </span>array = <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>[<span class="number">0</span>..(<span class="self">Self</span>::HEADER_SIZE + payload_length)];
-        <span class="kw">return </span>array
-            .iter()
-            .fold(<span class="number">0 </span><span class="kw">as </span>u16, |s, <span class="kw-2">&amp;</span>v| s.wrapping_add(v <span class="kw">as </span>u16));
+        <span class="kw">return </span>calculate_crc(array);
     }
 
     <span class="kw">pub fn </span>has_valid_crc(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
