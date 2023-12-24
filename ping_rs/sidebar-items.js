@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Messages"],"mod":["bluebps","common","ping1d","ping360","serialize"],"struct":["PingMessagePack"]};
+window.SIDEBAR_ITEMS = {"enum":["Messages"],"mod":["bluebps","common","message","ping1d","ping360"],"struct":["PingMessagePack"]};

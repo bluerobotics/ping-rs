@@ -219,14 +219,14 @@
 <a href="#219" id="219">219</a>
 </pre></div><pre class="rust"><code><span class="macro">include!</span>(<span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">&quot;OUT_DIR&quot;</span>), <span class="string">&quot;/mod.rs&quot;</span>));
 
-<span class="kw">use </span><span class="kw">crate</span>::serialize::{Deserialize, PingMessage};
+<span class="kw">use </span><span class="kw">crate</span>::message::{Deserialize, PingMessage};
 
 <span class="kw">const </span>PAYLOAD_SIZE: usize = <span class="number">255</span>;
 
 <span class="kw">use </span>std::fmt;
 <span class="kw">use </span>std::{convert::TryFrom, io::Write};
 
-<span class="kw">pub mod </span>serialize;
+<span class="kw">pub mod </span>message;
 
 <span class="attr">#[derive(Copy, Clone, PartialEq, Eq)]
 </span><span class="kw">pub struct </span>PingMessagePack([u8; <span class="number">1 </span>+ <span class="self">Self</span>::HEADER_SIZE + PAYLOAD_SIZE + <span class="number">2</span>]);
