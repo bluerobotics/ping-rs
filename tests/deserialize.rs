@@ -14,7 +14,12 @@ fn test_simple_deserialization() {
     let Messages::Common(parsed) = Messages::try_from(&buffer).unwrap() else {
         panic!("Failed to parse common message.");
     };
-
     // From official ping protocol documentation
     assert_eq!(general_request, parsed);
+
+    // Wrong CRC test
+    let buffer: Vec<u8> = vec![
+        0x42, 0x52, 0x02, 0x00, 0x06, 0x00, 0x00, 0x00, 0x05, 0x00, 0xa1, 0x01,
+    ];
+    assert!(Messages::try_from(&buffer).is_err());
 }
