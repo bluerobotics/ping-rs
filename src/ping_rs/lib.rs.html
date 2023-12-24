@@ -226,16 +226,16 @@
 <a href="#226" id="226">226</a>
 <a href="#227" id="227">227</a>
 <a href="#228" id="228">228</a>
-<a href="#229" id="229">229</a>
 </pre></div><pre class="rust"><code><span class="macro">include!</span>(<span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">&quot;OUT_DIR&quot;</span>), <span class="string">&quot;/mod.rs&quot;</span>));
 
-<span class="kw">use </span><span class="kw">crate</span>::message::{Deserialize, PingMessage};
+<span class="kw">use </span><span class="kw">crate</span>::message::{Deserialize, PingMessage, HEADER};
 
 <span class="kw">const </span>PAYLOAD_SIZE: usize = <span class="number">255</span>;
 
 <span class="kw">use </span>std::fmt;
 <span class="kw">use </span>std::{convert::TryFrom, io::Write};
 
+<span class="kw">pub mod </span>decoder;
 <span class="kw">pub mod </span>message;
 
 <span class="attr">#[derive(Copy, Clone, PartialEq, Eq)]
@@ -244,8 +244,8 @@
 <span class="kw">impl </span>Default <span class="kw">for </span>PingMessagePack {
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
         <span class="kw">let </span><span class="kw-2">mut </span>new = <span class="self">Self</span>([<span class="number">0</span>; <span class="number">1 </span>+ <span class="self">Self</span>::HEADER_SIZE + PAYLOAD_SIZE + <span class="number">2</span>]);
-        new.<span class="number">0</span>[<span class="number">0</span>] = <span class="self">Self</span>::HEADER[<span class="number">0</span>];
-        new.<span class="number">0</span>[<span class="number">1</span>] = <span class="self">Self</span>::HEADER[<span class="number">1</span>];
+        new.<span class="number">0</span>[<span class="number">0</span>] = HEADER[<span class="number">0</span>];
+        new.<span class="number">0</span>[<span class="number">1</span>] = HEADER[<span class="number">1</span>];
         new
     }
 }
@@ -276,8 +276,7 @@
 
     </span><span class="kw">fn </span>try_from(buffer: <span class="kw-2">&amp;</span>Vec&lt;u8&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
         <span class="comment">// Parse start1 and start2
-        </span><span class="kw">if </span>!((buffer[<span class="number">0</span>] == PingMessagePack::HEADER[<span class="number">0</span>]) &amp;&amp; (buffer[<span class="number">1</span>] == PingMessagePack::HEADER[<span class="number">1</span>]))
-        {
+        </span><span class="kw">if </span>!((buffer[<span class="number">0</span>] == HEADER[<span class="number">0</span>]) &amp;&amp; (buffer[<span class="number">1</span>] == HEADER[<span class="number">1</span>])) {
             <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">&quot;Message should start with \&quot;BR\&quot; ASCII sequence, received: [{0}({:0x}), {1}({:0x})]&quot;</span>, buffer[<span class="number">0</span>], buffer[<span class="number">1</span>]));
         }
 
@@ -335,7 +334,6 @@
      */
 
     </span><span class="kw">const </span>HEADER_SIZE: usize = <span class="number">8</span>;
-    <span class="kw">const </span>HEADER: [u8; <span class="number">2</span>] = [<span class="string">&#39;B&#39; </span><span class="kw">as </span>u8, <span class="string">&#39;R&#39; </span><span class="kw">as </span>u8];
 
     <span class="kw">pub fn </span>new() -&gt; <span class="self">Self </span>{
         Default::default()

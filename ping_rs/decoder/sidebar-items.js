@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["DecoderResult","DecoderState","ParseError"],"struct":["Decoder"]};
