@@ -43,13 +43,13 @@ pub fn calculate_crc(pack_without_payload: &[u8]) -> u16 {
 }
 
 impl TryFrom<&Vec<u8>> for Messages {
-    type Error = &'static str; // TODO: define error types for each kind of failure
+    type Error = String; // TODO: define error types for each kind of failure
 
     fn try_from(buffer: &Vec<u8>) -> Result<Self, Self::Error> {
         // Parse start1 and start2
         if !((buffer[0] == PingMessagePack::HEADER[0]) && (buffer[1] == PingMessagePack::HEADER[1]))
         {
-            return Err("Message should start with \"BR\" ASCII sequence");
+            return Err(format!("Message should start with \"BR\" ASCII sequence, received: [{0}({:0x}), {1}({:0x})]", buffer[0], buffer[1]));
         }
 
         // Get the package data
@@ -77,7 +77,7 @@ impl TryFrom<&Vec<u8>> for Messages {
             return Ok(Messages::Ping360(message));
         }
 
-        Err("Unknown message")
+        Err("Unknown message".into())
     }
 }
 
