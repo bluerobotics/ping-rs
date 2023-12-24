@@ -1,13 +1,13 @@
 include!(concat!(env!("OUT_DIR"), "/mod.rs"));
 
-use crate::serialize::{Deserialize, PingMessage};
+use crate::message::{Deserialize, PingMessage};
 
 const PAYLOAD_SIZE: usize = 255;
 
 use std::fmt;
 use std::{convert::TryFrom, io::Write};
 
-pub mod serialize;
+pub mod message;
 
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub struct PingMessagePack([u8; 1 + Self::HEADER_SIZE + PAYLOAD_SIZE + 2]);

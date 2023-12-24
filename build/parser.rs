@@ -492,9 +492,9 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
     let ping_message = emit_ping_message(messages);
 
     let code = quote! {
-        use crate::serialize::PingMessage;
-        use crate::serialize::Serialize;
-        use crate::serialize::Deserialize;
+        use crate::message::PingMessage;
+        use crate::message::Serialize;
+        use crate::message::Deserialize;
         use std::convert::TryInto;
 
         #[cfg(feature = "serde")]
