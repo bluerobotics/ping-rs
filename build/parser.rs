@@ -125,7 +125,7 @@ impl Payload {
 
             // There is no size_type, so it should be a string
             return quote! {
-                #name: String,
+                pub #name: String,
             };
         }
 
