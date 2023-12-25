@@ -494,192 +494,13 @@
 <span class="attr">#[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>Messages {
-    DeviceId(DeviceIdStruct),
-    AutoTransmit(AutoTransmitStruct),
-    Transducer(TransducerStruct),
     Reset(ResetStruct),
+    DeviceId(DeviceIdStruct),
     AutoDeviceData(AutoDeviceDataStruct),
-    DeviceData(DeviceDataStruct),
+    Transducer(TransducerStruct),
     MotorOff(MotorOffStruct),
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Change the device id&quot;</span>]
-</span><span class="kw">pub struct </span>DeviceIdStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Device ID (1-254). 0 and 255 are reserved.&quot;</span>]
-    </span><span class="kw">pub </span>id: u8,
-    <span class="attr">#[doc = <span class="string">&quot;reserved&quot;</span>]
-    </span><span class="kw">pub </span>reserved: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>DeviceIdStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.id.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>DeviceIdStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            id: payload[<span class="number">0usize</span>].into(),
-            reserved: payload[<span class="number">1usize</span>].into(),
-        }
-    }
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Extended *transducer* message with auto-scan function. The sonar will automatically scan the region between start_angle and end_angle and send auto_device_data messages as soon as new data is available. Send a line break to stop scanning (and also begin the autobaudrate procedure). Alternatively, a motor_off message may be sent (but retrys might be necessary on the half-duplex RS485 interface).&quot;</span>]
-</span><span class="kw">pub struct </span>AutoTransmitStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Operating mode (1 for Ping360)&quot;</span>]
-    </span><span class="kw">pub </span>mode: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Analog gain setting (0 = low, 1 = normal, 2 = high)&quot;</span>]
-    </span><span class="kw">pub </span>gain_setting: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Acoustic transmission duration (1~1000 microseconds)&quot;</span>]
-    </span><span class="kw">pub </span>transmit_duration: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Time interval between individual signal intensity samples in 25nsec increments (80 to 40000 == 2 microseconds to 1000 microseconds)&quot;</span>]
-    </span><span class="kw">pub </span>sample_period: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Acoustic operating frequency. Frequency range is 500kHz to 1000kHz, however it is only practical to use say 650kHz to 850kHz due to the narrow bandwidth of the acoustic receiver.&quot;</span>]
-    </span><span class="kw">pub </span>transmit_frequency: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Number of samples per reflected signal&quot;</span>]
-    </span><span class="kw">pub </span>number_of_samples: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Head angle to begin scan sector for autoscan in gradians (0~399 = 0~360 degrees).&quot;</span>]
-    </span><span class="kw">pub </span>start_angle: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Head angle to end scan sector for autoscan in gradians (0~399 = 0~360 degrees).&quot;</span>]
-    </span><span class="kw">pub </span>stop_angle: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Number of 0.9 degree motor steps between pings for auto scan (1~10 = 0.9~9.0 degrees)&quot;</span>]
-    </span><span class="kw">pub </span>num_steps: u8,
-    <span class="attr">#[doc = <span class="string">&quot;An additional delay between successive transmit pulses (0~100 ms). This may be necessary for some programs to avoid collisions on the RS485 USRT.&quot;</span>]
-    </span><span class="kw">pub </span>delay: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>AutoTransmitStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_duration.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.sample_period.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_frequency.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.number_of_samples.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.start_angle.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.stop_angle.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.num_steps.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.delay.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>AutoTransmitStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            mode: payload[<span class="number">0usize</span>].into(),
-            gain_setting: payload[<span class="number">1usize</span>].into(),
-            transmit_duration: u16::from_le_bytes(
-                payload[<span class="number">2usize</span>..<span class="number">2usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
-            ),
-            sample_period: u16::from_le_bytes(
-                payload[<span class="number">4usize</span>..<span class="number">4usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
-            ),
-            transmit_frequency: u16::from_le_bytes(
-                payload[<span class="number">6usize</span>..<span class="number">6usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
-            ),
-            number_of_samples: u16::from_le_bytes(
-                payload[<span class="number">8usize</span>..<span class="number">8usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
-            ),
-            start_angle: u16::from_le_bytes(
-                payload[<span class="number">10usize</span>..<span class="number">10usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
-            ),
-            stop_angle: u16::from_le_bytes(
-                payload[<span class="number">12usize</span>..<span class="number">12usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
-            ),
-            num_steps: payload[<span class="number">14usize</span>].into(),
-            delay: payload[<span class="number">15usize</span>].into(),
-        }
-    }
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;The transducer will apply the commanded settings. The sonar will reply with a `ping360_data` message. If the `transmit` field is 0, the sonar will not transmit after locating the transducer, and the `data` field in the `ping360_data` message reply will be empty. If the `transmit` field is 1, the sonar will make an acoustic transmission after locating the transducer, and the resulting data will be uploaded in the `data` field of the `ping360_data` message reply. To allow for the worst case reponse time the command timeout should be set to 4000 msec.&quot;</span>]
-</span><span class="kw">pub struct </span>TransducerStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Operating mode (1 for Ping360)&quot;</span>]
-    </span><span class="kw">pub </span>mode: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Analog gain setting (0 = low, 1 = normal, 2 = high)&quot;</span>]
-    </span><span class="kw">pub </span>gain_setting: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Head angle&quot;</span>]
-    </span><span class="kw">pub </span>angle: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Acoustic transmission duration (1~1000 microseconds)&quot;</span>]
-    </span><span class="kw">pub </span>transmit_duration: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Time interval between individual signal intensity samples in 25nsec increments (80 to 40000 == 2 microseconds to 1000 microseconds)&quot;</span>]
-    </span><span class="kw">pub </span>sample_period: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Acoustic operating frequency. Frequency range is 500kHz to 1000kHz, however it is only practical to use say 650kHz to 850kHz due to the narrow bandwidth of the acoustic receiver.&quot;</span>]
-    </span><span class="kw">pub </span>transmit_frequency: u16,
-    <span class="attr">#[doc = <span class="string">&quot;Number of samples per reflected signal&quot;</span>]
-    </span><span class="kw">pub </span>number_of_samples: u16,
-    <span class="attr">#[doc = <span class="string">&quot;0 = do not transmit; 1 = transmit after the transducer has reached the specified angle&quot;</span>]
-    </span><span class="kw">pub </span>transmit: u8,
-    <span class="attr">#[doc = <span class="string">&quot;reserved&quot;</span>]
-    </span><span class="kw">pub </span>reserved: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>TransducerStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.angle.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_duration.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.sample_period.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_frequency.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.number_of_samples.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>TransducerStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            mode: payload[<span class="number">0usize</span>].into(),
-            gain_setting: payload[<span class="number">1usize</span>].into(),
-            angle: u16::from_le_bytes(
-                payload[<span class="number">2usize</span>..<span class="number">2usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
-            ),
-            transmit_duration: u16::from_le_bytes(
-                payload[<span class="number">4usize</span>..<span class="number">4usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
-            ),
-            sample_period: u16::from_le_bytes(
-                payload[<span class="number">6usize</span>..<span class="number">6usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
-            ),
-            transmit_frequency: u16::from_le_bytes(
-                payload[<span class="number">8usize</span>..<span class="number">8usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
-            ),
-            number_of_samples: u16::from_le_bytes(
-                payload[<span class="number">10usize</span>..<span class="number">10usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
-            ),
-            transmit: payload[<span class="number">12usize</span>].into(),
-            reserved: payload[<span class="number">13usize</span>].into(),
-        }
-    }
+    DeviceData(DeviceDataStruct),
+    AutoTransmit(AutoTransmitStruct),
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
@@ -702,6 +523,31 @@
     <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             bootloader: payload[<span class="number">0usize</span>].into(),
+            reserved: payload[<span class="number">1usize</span>].into(),
+        }
+    }
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;Change the device id&quot;</span>]
+</span><span class="kw">pub struct </span>DeviceIdStruct {
+    <span class="attr">#[doc = <span class="string">&quot;Device ID (1-254). 0 and 255 are reserved.&quot;</span>]
+    </span><span class="kw">pub </span>id: u8,
+    <span class="attr">#[doc = <span class="string">&quot;reserved&quot;</span>]
+    </span><span class="kw">pub </span>reserved: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>DeviceIdStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.id.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>DeviceIdStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            id: payload[<span class="number">0usize</span>].into(),
             reserved: payload[<span class="number">1usize</span>].into(),
         }
     }
@@ -806,6 +652,94 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;The transducer will apply the commanded settings. The sonar will reply with a `ping360_data` message. If the `transmit` field is 0, the sonar will not transmit after locating the transducer, and the `data` field in the `ping360_data` message reply will be empty. If the `transmit` field is 1, the sonar will make an acoustic transmission after locating the transducer, and the resulting data will be uploaded in the `data` field of the `ping360_data` message reply. To allow for the worst case reponse time the command timeout should be set to 4000 msec.&quot;</span>]
+</span><span class="kw">pub struct </span>TransducerStruct {
+    <span class="attr">#[doc = <span class="string">&quot;Operating mode (1 for Ping360)&quot;</span>]
+    </span><span class="kw">pub </span>mode: u8,
+    <span class="attr">#[doc = <span class="string">&quot;Analog gain setting (0 = low, 1 = normal, 2 = high)&quot;</span>]
+    </span><span class="kw">pub </span>gain_setting: u8,
+    <span class="attr">#[doc = <span class="string">&quot;Head angle&quot;</span>]
+    </span><span class="kw">pub </span>angle: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Acoustic transmission duration (1~1000 microseconds)&quot;</span>]
+    </span><span class="kw">pub </span>transmit_duration: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Time interval between individual signal intensity samples in 25nsec increments (80 to 40000 == 2 microseconds to 1000 microseconds)&quot;</span>]
+    </span><span class="kw">pub </span>sample_period: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Acoustic operating frequency. Frequency range is 500kHz to 1000kHz, however it is only practical to use say 650kHz to 850kHz due to the narrow bandwidth of the acoustic receiver.&quot;</span>]
+    </span><span class="kw">pub </span>transmit_frequency: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Number of samples per reflected signal&quot;</span>]
+    </span><span class="kw">pub </span>number_of_samples: u16,
+    <span class="attr">#[doc = <span class="string">&quot;0 = do not transmit; 1 = transmit after the transducer has reached the specified angle&quot;</span>]
+    </span><span class="kw">pub </span>transmit: u8,
+    <span class="attr">#[doc = <span class="string">&quot;reserved&quot;</span>]
+    </span><span class="kw">pub </span>reserved: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>TransducerStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.angle.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_duration.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.sample_period.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_frequency.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.number_of_samples.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>TransducerStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            mode: payload[<span class="number">0usize</span>].into(),
+            gain_setting: payload[<span class="number">1usize</span>].into(),
+            angle: u16::from_le_bytes(
+                payload[<span class="number">2usize</span>..<span class="number">2usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
+            ),
+            transmit_duration: u16::from_le_bytes(
+                payload[<span class="number">4usize</span>..<span class="number">4usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
+            ),
+            sample_period: u16::from_le_bytes(
+                payload[<span class="number">6usize</span>..<span class="number">6usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
+            ),
+            transmit_frequency: u16::from_le_bytes(
+                payload[<span class="number">8usize</span>..<span class="number">8usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
+            ),
+            number_of_samples: u16::from_le_bytes(
+                payload[<span class="number">10usize</span>..<span class="number">10usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
+            ),
+            transmit: payload[<span class="number">12usize</span>].into(),
+            reserved: payload[<span class="number">13usize</span>].into(),
+        }
+    }
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">&quot;The sonar switches the current through the stepper motor windings off to save power. The sonar will send an ack message in response. The command timeout should be set to 50 msec. If the sonar is idle (not scanning) for more than 30 seconds then the motor current will automatically turn off. When the user sends any command that involves moving the transducer then the motor current is automatically re-enabled.&quot;</span>]
+</span><span class="kw">pub struct </span>MotorOffStruct {}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>MotorOffStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>MotorOffStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{}
+    }
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
 #[doc = <span class="string">&quot;This message is used to communicate the current sonar state. If the data field is populated, the other fields indicate the sonar state when the data was captured. The time taken before the response to the command is sent depends on the difference between the last angle scanned and the new angle in the parameters as well as the number of samples and sample interval (range). To allow for the worst case reponse time the command timeout should be set to 4000 msec.&quot;</span>]
 </span><span class="kw">pub struct </span>DeviceDataStruct {
     <span class="attr">#[doc = <span class="string">&quot;Operating mode (1 for Ping360)&quot;</span>]
@@ -880,51 +814,117 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;The sonar switches the current through the stepper motor windings off to save power. The sonar will send an ack message in response. The command timeout should be set to 50 msec. If the sonar is idle (not scanning) for more than 30 seconds then the motor current will automatically turn off. When the user sends any command that involves moving the transducer then the motor current is automatically re-enabled.&quot;</span>]
-</span><span class="kw">pub struct </span>MotorOffStruct {}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>MotorOffStruct {
+#[doc = <span class="string">&quot;Extended *transducer* message with auto-scan function. The sonar will automatically scan the region between start_angle and end_angle and send auto_device_data messages as soon as new data is available. Send a line break to stop scanning (and also begin the autobaudrate procedure). Alternatively, a motor_off message may be sent (but retrys might be necessary on the half-duplex RS485 interface).&quot;</span>]
+</span><span class="kw">pub struct </span>AutoTransmitStruct {
+    <span class="attr">#[doc = <span class="string">&quot;Operating mode (1 for Ping360)&quot;</span>]
+    </span><span class="kw">pub </span>mode: u8,
+    <span class="attr">#[doc = <span class="string">&quot;Analog gain setting (0 = low, 1 = normal, 2 = high)&quot;</span>]
+    </span><span class="kw">pub </span>gain_setting: u8,
+    <span class="attr">#[doc = <span class="string">&quot;Acoustic transmission duration (1~1000 microseconds)&quot;</span>]
+    </span><span class="kw">pub </span>transmit_duration: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Time interval between individual signal intensity samples in 25nsec increments (80 to 40000 == 2 microseconds to 1000 microseconds)&quot;</span>]
+    </span><span class="kw">pub </span>sample_period: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Acoustic operating frequency. Frequency range is 500kHz to 1000kHz, however it is only practical to use say 650kHz to 850kHz due to the narrow bandwidth of the acoustic receiver.&quot;</span>]
+    </span><span class="kw">pub </span>transmit_frequency: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Number of samples per reflected signal&quot;</span>]
+    </span><span class="kw">pub </span>number_of_samples: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Head angle to begin scan sector for autoscan in gradians (0~399 = 0~360 degrees).&quot;</span>]
+    </span><span class="kw">pub </span>start_angle: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Head angle to end scan sector for autoscan in gradians (0~399 = 0~360 degrees).&quot;</span>]
+    </span><span class="kw">pub </span>stop_angle: u16,
+    <span class="attr">#[doc = <span class="string">&quot;Number of 0.9 degree motor steps between pings for auto scan (1~10 = 0.9~9.0 degrees)&quot;</span>]
+    </span><span class="kw">pub </span>num_steps: u8,
+    <span class="attr">#[doc = <span class="string">&quot;An additional delay between successive transmit pulses (0~100 ms). This may be necessary for some programs to avoid collisions on the RS485 USRT.&quot;</span>]
+    </span><span class="kw">pub </span>delay: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>AutoTransmitStruct {
     <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_duration.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.sample_period.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.transmit_frequency.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.number_of_samples.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.start_angle.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.stop_angle.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.num_steps.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.delay.to_le_bytes());
         buffer
     }
 }
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>MotorOffStruct {
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>AutoTransmitStruct {
     <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{}
+        <span class="self">Self </span>{
+            mode: payload[<span class="number">0usize</span>].into(),
+            gain_setting: payload[<span class="number">1usize</span>].into(),
+            transmit_duration: u16::from_le_bytes(
+                payload[<span class="number">2usize</span>..<span class="number">2usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
+            ),
+            sample_period: u16::from_le_bytes(
+                payload[<span class="number">4usize</span>..<span class="number">4usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
+            ),
+            transmit_frequency: u16::from_le_bytes(
+                payload[<span class="number">6usize</span>..<span class="number">6usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
+            ),
+            number_of_samples: u16::from_le_bytes(
+                payload[<span class="number">8usize</span>..<span class="number">8usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
+            ),
+            start_angle: u16::from_le_bytes(
+                payload[<span class="number">10usize</span>..<span class="number">10usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
+            ),
+            stop_angle: u16::from_le_bytes(
+                payload[<span class="number">12usize</span>..<span class="number">12usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
+            ),
+            num_steps: payload[<span class="number">14usize</span>].into(),
+            delay: payload[<span class="number">15usize</span>].into(),
+        }
     }
 }
 <span class="kw">impl </span>PingMessage <span class="kw">for </span>Messages {
     <span class="kw">fn </span>message_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::DeviceId(..) =&gt; <span class="string">&quot;device_id&quot;</span>,
-            Messages::AutoTransmit(..) =&gt; <span class="string">&quot;auto_transmit&quot;</span>,
-            Messages::Transducer(..) =&gt; <span class="string">&quot;transducer&quot;</span>,
             Messages::Reset(..) =&gt; <span class="string">&quot;reset&quot;</span>,
+            Messages::DeviceId(..) =&gt; <span class="string">&quot;device_id&quot;</span>,
             Messages::AutoDeviceData(..) =&gt; <span class="string">&quot;auto_device_data&quot;</span>,
-            Messages::DeviceData(..) =&gt; <span class="string">&quot;device_data&quot;</span>,
+            Messages::Transducer(..) =&gt; <span class="string">&quot;transducer&quot;</span>,
             Messages::MotorOff(..) =&gt; <span class="string">&quot;motor_off&quot;</span>,
+            Messages::DeviceData(..) =&gt; <span class="string">&quot;device_data&quot;</span>,
+            Messages::AutoTransmit(..) =&gt; <span class="string">&quot;auto_transmit&quot;</span>,
         }
     }
     <span class="kw">fn </span>message_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::DeviceId(..) =&gt; <span class="number">2000u16</span>,
-            Messages::AutoTransmit(..) =&gt; <span class="number">2602u16</span>,
-            Messages::Transducer(..) =&gt; <span class="number">2601u16</span>,
             Messages::Reset(..) =&gt; <span class="number">2600u16</span>,
+            Messages::DeviceId(..) =&gt; <span class="number">2000u16</span>,
             Messages::AutoDeviceData(..) =&gt; <span class="number">2301u16</span>,
-            Messages::DeviceData(..) =&gt; <span class="number">2300u16</span>,
+            Messages::Transducer(..) =&gt; <span class="number">2601u16</span>,
             Messages::MotorOff(..) =&gt; <span class="number">2903u16</span>,
+            Messages::DeviceData(..) =&gt; <span class="number">2300u16</span>,
+            Messages::AutoTransmit(..) =&gt; <span class="number">2602u16</span>,
         }
     }
     <span class="kw">fn </span>message_id_from_name(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;u16, String&gt; {
         <span class="kw">match </span>name {
-            <span class="string">&quot;device_id&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2000u16</span>),
-            <span class="string">&quot;auto_transmit&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2602u16</span>),
-            <span class="string">&quot;transducer&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2601u16</span>),
             <span class="string">&quot;reset&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2600u16</span>),
+            <span class="string">&quot;device_id&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2000u16</span>),
             <span class="string">&quot;auto_device_data&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2301u16</span>),
-            <span class="string">&quot;device_data&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2300u16</span>),
+            <span class="string">&quot;transducer&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2601u16</span>),
             <span class="string">&quot;motor_off&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2903u16</span>),
+            <span class="string">&quot;device_data&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2300u16</span>),
+            <span class="string">&quot;auto_transmit&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2602u16</span>),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">&quot;Failed to find message ID from name: {name}.&quot;</span>)),
         }
     }
@@ -932,26 +932,26 @@
 <span class="kw">impl </span>SerializePayload <span class="kw">for </span>Messages {
     <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::DeviceId(content) =&gt; content.serialize(),
-            Messages::AutoTransmit(content) =&gt; content.serialize(),
-            Messages::Transducer(content) =&gt; content.serialize(),
             Messages::Reset(content) =&gt; content.serialize(),
+            Messages::DeviceId(content) =&gt; content.serialize(),
             Messages::AutoDeviceData(content) =&gt; content.serialize(),
-            Messages::DeviceData(content) =&gt; content.serialize(),
+            Messages::Transducer(content) =&gt; content.serialize(),
             Messages::MotorOff(content) =&gt; content.serialize(),
+            Messages::DeviceData(content) =&gt; content.serialize(),
+            Messages::AutoTransmit(content) =&gt; content.serialize(),
         }
     }
 }
 <span class="kw">impl </span>DeserializeGenericMessage <span class="kw">for </span>Messages {
     <span class="kw">fn </span>deserialize(message_id: u16, payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt; {
         <span class="prelude-val">Ok</span>(<span class="kw">match </span>message_id {
-            <span class="number">2000u16 </span>=&gt; Messages::DeviceId(DeviceIdStruct::deserialize(payload)),
-            <span class="number">2602u16 </span>=&gt; Messages::AutoTransmit(AutoTransmitStruct::deserialize(payload)),
-            <span class="number">2601u16 </span>=&gt; Messages::Transducer(TransducerStruct::deserialize(payload)),
             <span class="number">2600u16 </span>=&gt; Messages::Reset(ResetStruct::deserialize(payload)),
+            <span class="number">2000u16 </span>=&gt; Messages::DeviceId(DeviceIdStruct::deserialize(payload)),
             <span class="number">2301u16 </span>=&gt; Messages::AutoDeviceData(AutoDeviceDataStruct::deserialize(payload)),
-            <span class="number">2300u16 </span>=&gt; Messages::DeviceData(DeviceDataStruct::deserialize(payload)),
+            <span class="number">2601u16 </span>=&gt; Messages::Transducer(TransducerStruct::deserialize(payload)),
             <span class="number">2903u16 </span>=&gt; Messages::MotorOff(MotorOffStruct::deserialize(payload)),
+            <span class="number">2300u16 </span>=&gt; Messages::DeviceData(DeviceDataStruct::deserialize(payload)),
+            <span class="number">2602u16 </span>=&gt; Messages::AutoTransmit(AutoTransmitStruct::deserialize(payload)),
             <span class="kw">_ </span>=&gt; {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="kw-2">&amp;</span><span class="string">&quot;Unknown message id&quot;</span>);
             }
