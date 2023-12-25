@@ -1,15 +1,19 @@
-use ping_rs::common::Messages as common_messages;
-use ping_rs::{common, PingMessagePack};
+use ping_rs::common;
+use ping_rs::message::SerializePayload;
 
 #[test]
 fn test_simple_serialization() {
-    let general_request =
-        common_messages::GeneralRequest(common::GeneralRequestStruct { requested_id: 5 });
-    let message = PingMessagePack::from(&general_request);
+    let general_request = common::GeneralRequestStruct { requested_id: 5 };
 
-    // From official ping protocol documentation
+    assert_eq!(general_request.serialize(), [0x05, 0x00]);
+
+    let nack = common::NackStruct {
+        nacked_id: 0x666,
+        nack_message: "BATATA".into(),
+    };
+
     assert_eq!(
-        message.serialized(),
-        [0x42, 0x52, 0x02, 0x00, 0x06, 0x00, 0x00, 0x00, 0x05, 0x00, 0xa1, 0x00]
+        nack.serialize(),
+        [0x66, 0x6, 0x42, 0x41, 0x54, 0x41, 0x54, 0x41, 0x00]
     );
 }

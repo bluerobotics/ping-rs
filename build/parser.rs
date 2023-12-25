@@ -183,59 +183,39 @@ impl MessageDefinition {
             .collect();
 
         // Serialization part
-        let mut sum_quote = None;
         let mut variables_serialized: Vec<TokenStream> = vec![];
-        let mut sum = 0;
         for pay in &self.payload {
-            let size = pay.typ.to_size();
             let name = quote::format_ident!("{}", pay.name);
 
             if let PayloadType::VECTOR(vector) = &pay.typ {
-                if let Some(size_type) = &vector.size_type {
+                if let Some(_) = &vector.size_type {
                     let length_name = quote::format_ident!("{}_length", name);
-                    let content_size = size_type.to_size();
 
-                    let final_size = sum + content_size;
                     variables_serialized.push(quote! {
-                        buffer[#sum..#final_size].copy_from_slice(&self.#length_name.to_le_bytes());
+                        buffer.extend_from_slice(&self.#length_name.to_le_bytes());
                     });
-                    sum = final_size;
 
                     variables_serialized.push(quote! {
-                        for (index, value) in self.#name.iter().enumerate() {
-                            buffer[(#sum + index * #content_size)..(#sum + (1 + index) * #content_size)].copy_from_slice(&value.to_le_bytes());
+                        for value in self.#name.iter() {
+                            buffer.extend_from_slice(&value.to_le_bytes());
                         }
                     });
-
-                    sum_quote = Some(quote! {
-                        #sum + (self.#length_name as usize * self.#name.len()) as usize
-                    })
                 } else {
                     // We are probably dealing with a string since size_type is empty
                     variables_serialized.push(quote! {
-                        let string_size = self.#name.len();
-                        let final_size = #sum + string_size;
-                        buffer[#sum..final_size].copy_from_slice(self.#name.as_bytes());
-                        buffer[final_size] = 0;
+                        buffer.extend_from_slice(self.#name.as_bytes());
+                        buffer.push(0);
                     });
-
-                    sum_quote = Some(quote! {
-                        final_size + 1usize
-                    })
                 }
 
                 // Vector should be the last element, we should not care about sum
                 continue;
             }
 
-            let final_size = sum + size;
             variables_serialized.push(quote! {
-                buffer[#sum..#final_size].copy_from_slice(&self.#name.to_le_bytes());
+                buffer.extend_from_slice(&self.#name.to_le_bytes());
             });
-            sum = final_size;
         }
-
-        let sum_quote = sum_quote.or_else(|| Some(quote! { #sum }));
 
         // Descerialization part
         let mut b: usize = 0; // current byte
@@ -317,18 +297,19 @@ impl MessageDefinition {
                 #(#variables)*
             }
 
-            impl Serialize for #struct_name {
-                fn serialize(&self, buffer: &mut [u8]) -> usize {
+            impl SerializePayload for #struct_name {
+                fn serialize(&self) -> Vec<u8> {
+                    let mut buffer: Vec<u8> = Default::default();
                     #(#variables_serialized)*
-                    #sum_quote
+                    buffer
                 }
             }
 
-            impl Deserialize for #struct_name {
-                fn deserialize(payload: &[u8]) -> Result<Self, &'static str> {
-                    Ok(Self {
+            impl DeserializePayload for #struct_name {
+                fn deserialize(payload: &[u8]) -> Self {
+                    Self {
                         #(#variables_deserialized)*
-                    })
+                    }
                 }
             }
         }
@@ -378,7 +359,7 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
         .iter()
         .map(|(name, _message)| {
             let pascal_message_name = ident!(name.to_case(Case::Pascal));
-            quote!(Messages::#pascal_message_name(content) => content.serialize(buffer),)
+            quote!(Messages::#pascal_message_name(content) => content.serialize(),)
         })
         .collect::<Vec<TokenStream>>();
 
@@ -390,7 +371,7 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
             let id = message.id;
 
             quote! {
-                #id => Messages::#pascal_message_name(#struct_name::deserialize(payload)?),
+                #id => Messages::#pascal_message_name(#struct_name::deserialize(payload)),
             }
         })
         .collect::<Vec<TokenStream>>();
@@ -417,33 +398,16 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
             }
         }
 
-        impl Serialize for Messages {
-            fn serialize(&self, buffer: &mut [u8]) -> usize {
+        impl SerializePayload for Messages {
+            fn serialize(&self) -> Vec<u8> {
                 match self {
                     #(#message_enums_serialize)*
                 }
             }
         }
 
-        impl Deserialize for Messages {
-            fn deserialize(buffer: &[u8]) -> Result<Self, &'static str> {
-                // Parse start1 and start2
-                if !((buffer[0] == b'B') && (buffer[1] == b'R')) {
-                    return Err("Message should start with \"BR\" ASCII sequence");
-                }
-
-                // Get the package data
-                let payload_length = u16::from_le_bytes([buffer[2], buffer[3]]);
-                let message_id = u16::from_le_bytes([buffer[4], buffer[5]]);
-                let _src_device_id = buffer[6];
-                let _dst_device_id = buffer[7];
-                let payload = &buffer[8..(8 + payload_length) as usize];
-                let _checksum = u16::from_le_bytes([
-                    buffer[(payload_length + 1) as usize],
-                    buffer[(payload_length + 2) as usize],
-                ]);
-
-                // Parse the payload
+        impl DeserializeGenericMessage for Messages {
+            fn deserialize(message_id: u16, payload: &[u8]) -> Result<Self, &'static str> {
                 Ok(match message_id {
                     #(#message_enums_deserialize)*
                     _ => {
@@ -452,8 +416,6 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
                 })
             }
         }
-
-
     }
 }
 
@@ -493,8 +455,9 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
 
     let code = quote! {
         use crate::message::PingMessage;
-        use crate::message::Serialize;
-        use crate::message::Deserialize;
+        use crate::message::SerializePayload;
+        use crate::message::DeserializePayload;
+        use crate::message::DeserializeGenericMessage;
         use std::convert::TryInto;
 
         #[cfg(feature = "serde")]
