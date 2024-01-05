@@ -1,2 +1,2 @@
 # ping-rs
-https://patrickelectric.work/ping-rs/ping_rs/
+https://docs.bluerobotics.com/ping-rs/
