@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/work/ping-rs/ping-rs/target/debug/build/ping-rs-d6dfbce8a49b4140/out/common.rs`."><title>common.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../../../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../../../../../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../../../../../../../../../../" data-static-root-path="../../../../../../../../../../../../static.files/" data-current-crate="ping_rs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0 (82e1608df 2023-12-21)" data-channel="1.75.0" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../../../../../../../../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../../../../../../../../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../../../../../../../../../../src-files.js"></script><script defer src="../../../../../../../../../../../../static.files/main-9dd44ab47b99a0fb.js"></script><noscript><link rel="stylesheet" href="../../../../../../../../../../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../../../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../../../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../../../../../../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../../../../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../../../../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/work/ping-rs/ping-rs/target/debug/build/ping-rs-b755b5855bdec7a7/out/common.rs`."><title>common.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../../../../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../../../../../../../static.files/rustdoc-ac92e1bbe349e143.css"><meta name="rustdoc-vars" data-root-path="../../../../../../../../../../../../" data-static-root-path="../../../../../../../../../../../../static.files/" data-current-crate="ping_rs" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0 (07dca489a 2024-02-04)" data-channel="1.76.0" data-search-js="search-2b6ce74ff89ae146.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../../../../../../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../../../../../../../../../../static.files/src-script-39ed315d46fb705f.js"></script><script defer src="../../../../../../../../../../../../src-files.js"></script><script defer src="../../../../../../../../../../../../static.files/main-305769736d49e732.js"></script><noscript><link rel="stylesheet" href="../../../../../../../../../../../../static.files/noscript-feafe1bb7466e4bd.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../../../../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../../../../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../../../../../../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../../../../../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../../../../../../../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -290,33 +291,33 @@
 <span class="kw">use </span><span class="kw">crate</span>::message::DeserializePayload;
 <span class="kw">use </span><span class="kw">crate</span>::message::PingMessage;
 <span class="kw">use </span><span class="kw">crate</span>::message::SerializePayload;
-<span class="attr">#[cfg(feature = <span class="string">&quot;serde&quot;</span>)]
+<span class="attr">#[cfg(feature = <span class="string">"serde"</span>)]
 </span><span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>std::convert::TryInto;
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub struct </span>PingProtocolHead {
     <span class="kw">pub </span>source_device_id: u8,
     <span class="kw">pub </span>destiny_device_id: u8,
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>Messages {
     Nack(NackStruct),
     AsciiText(AsciiTextStruct),
+    DeviceInformation(DeviceInformationStruct),
     ProtocolVersion(ProtocolVersionStruct),
+    Ack(AckStruct),
     GeneralRequest(GeneralRequestStruct),
     SetDeviceId(SetDeviceIdStruct),
-    Ack(AckStruct),
-    DeviceInformation(DeviceInformationStruct),
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Not acknowledged.&quot;</span>]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Not acknowledged."</span>]
 </span><span class="kw">pub struct </span>NackStruct {
-    <span class="attr">#[doc = <span class="string">&quot;The message ID that is Not ACKnowledged.&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"The message ID that is Not ACKnowledged."</span>]
     </span><span class="kw">pub </span>nacked_id: u16,
-    <span class="attr">#[doc = <span class="string">&quot;ASCII text message indicating NACK condition. (not necessarily NULL terminated)&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"ASCII text message indicating NACK condition. (not necessarily NULL terminated)"</span>]
     </span><span class="kw">pub </span>nack_message: String,
 }
 <span class="kw">impl </span>SerializePayload <span class="kw">for </span>NackStruct {
@@ -334,7 +335,7 @@
             nacked_id: u16::from_le_bytes(
                 payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">2usize</span>]
                     .try_into()
-                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
+                    .expect(<span class="string">"Wrong slice length"</span>),
             ),
             nack_message: String::from_utf8(payload[<span class="number">2usize</span>..<span class="number">2usize </span>+ payload.len()].to_vec())
                 .unwrap(),
@@ -342,10 +343,10 @@
     }
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;A message for transmitting text data.&quot;</span>]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"A message for transmitting text data."</span>]
 </span><span class="kw">pub struct </span>AsciiTextStruct {
-    <span class="attr">#[doc = <span class="string">&quot;ASCII text message. (not necessarily NULL terminated)&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"ASCII text message. (not necessarily NULL terminated)"</span>]
     </span><span class="kw">pub </span>ascii_message: String,
 }
 <span class="kw">impl </span>SerializePayload <span class="kw">for </span>AsciiTextStruct {
@@ -365,124 +366,20 @@
     }
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;The protocol version&quot;</span>]
-</span><span class="kw">pub struct </span>ProtocolVersionStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Protocol version major number.&quot;</span>]
-    </span><span class="kw">pub </span>version_major: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Protocol version minor number.&quot;</span>]
-    </span><span class="kw">pub </span>version_minor: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Protocol version patch number.&quot;</span>]
-    </span><span class="kw">pub </span>version_patch: u8,
-    <span class="attr">#[doc = <span class="string">&quot;reserved&quot;</span>]
-    </span><span class="kw">pub </span>reserved: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>ProtocolVersionStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.version_major.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.version_minor.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.version_patch.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>ProtocolVersionStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            version_major: payload[<span class="number">0usize</span>].into(),
-            version_minor: payload[<span class="number">1usize</span>].into(),
-            version_patch: payload[<span class="number">2usize</span>].into(),
-            reserved: payload[<span class="number">3usize</span>].into(),
-        }
-    }
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Requests a specific message to be sent from the sonar to the host. Command timeout should be set to 50 msec.&quot;</span>]
-</span><span class="kw">pub struct </span>GeneralRequestStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Message ID to be requested.&quot;</span>]
-    </span><span class="kw">pub </span>requested_id: u16,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>GeneralRequestStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.requested_id.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>GeneralRequestStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            requested_id: u16::from_le_bytes(
-                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
-            ),
-        }
-    }
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Set the device ID.&quot;</span>]
-</span><span class="kw">pub struct </span>SetDeviceIdStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Device ID (1-254). 0 is unknown and 255 is reserved for broadcast messages.&quot;</span>]
-    </span><span class="kw">pub </span>device_id: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetDeviceIdStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_id.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetDeviceIdStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            device_id: payload[<span class="number">0usize</span>].into(),
-        }
-    }
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Acknowledged.&quot;</span>]
-</span><span class="kw">pub struct </span>AckStruct {
-    <span class="attr">#[doc = <span class="string">&quot;The message ID that is ACKnowledged.&quot;</span>]
-    </span><span class="kw">pub </span>acked_id: u16,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>AckStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.acked_id.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>AckStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            acked_id: u16::from_le_bytes(
-                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">&quot;Wrong slice length&quot;</span>),
-            ),
-        }
-    }
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">&quot;serde&quot;</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">&quot;Device information&quot;</span>]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Device information"</span>]
 </span><span class="kw">pub struct </span>DeviceInformationStruct {
-    <span class="attr">#[doc = <span class="string">&quot;Device type. 0: Unknown; 1: Ping Echosounder; 2: Ping360&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"Device type. 0: Unknown; 1: Ping Echosounder; 2: Ping360"</span>]
     </span><span class="kw">pub </span>device_type: u8,
-    <span class="attr">#[doc = <span class="string">&quot;device-specific hardware revision&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"device-specific hardware revision"</span>]
     </span><span class="kw">pub </span>device_revision: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Firmware version major number.&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"Firmware version major number."</span>]
     </span><span class="kw">pub </span>firmware_version_major: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Firmware version minor number.&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"Firmware version minor number."</span>]
     </span><span class="kw">pub </span>firmware_version_minor: u8,
-    <span class="attr">#[doc = <span class="string">&quot;Firmware version patch number.&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"Firmware version patch number."</span>]
     </span><span class="kw">pub </span>firmware_version_patch: u8,
-    <span class="attr">#[doc = <span class="string">&quot;reserved&quot;</span>]
+    <span class="attr">#[doc = <span class="string">"reserved"</span>]
     </span><span class="kw">pub </span>reserved: u8,
 }
 <span class="kw">impl </span>SerializePayload <span class="kw">for </span>DeviceInformationStruct {
@@ -509,39 +406,143 @@
         }
     }
 }
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"The protocol version"</span>]
+</span><span class="kw">pub struct </span>ProtocolVersionStruct {
+    <span class="attr">#[doc = <span class="string">"Protocol version major number."</span>]
+    </span><span class="kw">pub </span>version_major: u8,
+    <span class="attr">#[doc = <span class="string">"Protocol version minor number."</span>]
+    </span><span class="kw">pub </span>version_minor: u8,
+    <span class="attr">#[doc = <span class="string">"Protocol version patch number."</span>]
+    </span><span class="kw">pub </span>version_patch: u8,
+    <span class="attr">#[doc = <span class="string">"reserved"</span>]
+    </span><span class="kw">pub </span>reserved: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>ProtocolVersionStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.version_major.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.version_minor.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.version_patch.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>ProtocolVersionStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            version_major: payload[<span class="number">0usize</span>].into(),
+            version_minor: payload[<span class="number">1usize</span>].into(),
+            version_patch: payload[<span class="number">2usize</span>].into(),
+            reserved: payload[<span class="number">3usize</span>].into(),
+        }
+    }
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Acknowledged."</span>]
+</span><span class="kw">pub struct </span>AckStruct {
+    <span class="attr">#[doc = <span class="string">"The message ID that is ACKnowledged."</span>]
+    </span><span class="kw">pub </span>acked_id: u16,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>AckStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.acked_id.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>AckStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            acked_id: u16::from_le_bytes(
+                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+        }
+    }
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Requests a specific message to be sent from the sonar to the host. Command timeout should be set to 50 msec."</span>]
+</span><span class="kw">pub struct </span>GeneralRequestStruct {
+    <span class="attr">#[doc = <span class="string">"Message ID to be requested."</span>]
+    </span><span class="kw">pub </span>requested_id: u16,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>GeneralRequestStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.requested_id.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>GeneralRequestStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            requested_id: u16::from_le_bytes(
+                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+        }
+    }
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Set the device ID."</span>]
+</span><span class="kw">pub struct </span>SetDeviceIdStruct {
+    <span class="attr">#[doc = <span class="string">"Device ID (1-254). 0 is unknown and 255 is reserved for broadcast messages."</span>]
+    </span><span class="kw">pub </span>device_id: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetDeviceIdStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_id.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetDeviceIdStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            device_id: payload[<span class="number">0usize</span>].into(),
+        }
+    }
+}
 <span class="kw">impl </span>PingMessage <span class="kw">for </span>Messages {
-    <span class="kw">fn </span>message_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str {
+    <span class="kw">fn </span>message_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::Nack(..) =&gt; <span class="string">&quot;nack&quot;</span>,
-            Messages::AsciiText(..) =&gt; <span class="string">&quot;ascii_text&quot;</span>,
-            Messages::ProtocolVersion(..) =&gt; <span class="string">&quot;protocol_version&quot;</span>,
-            Messages::GeneralRequest(..) =&gt; <span class="string">&quot;general_request&quot;</span>,
-            Messages::SetDeviceId(..) =&gt; <span class="string">&quot;set_device_id&quot;</span>,
-            Messages::Ack(..) =&gt; <span class="string">&quot;ack&quot;</span>,
-            Messages::DeviceInformation(..) =&gt; <span class="string">&quot;device_information&quot;</span>,
+            Messages::Nack(..) =&gt; <span class="string">"nack"</span>,
+            Messages::AsciiText(..) =&gt; <span class="string">"ascii_text"</span>,
+            Messages::DeviceInformation(..) =&gt; <span class="string">"device_information"</span>,
+            Messages::ProtocolVersion(..) =&gt; <span class="string">"protocol_version"</span>,
+            Messages::Ack(..) =&gt; <span class="string">"ack"</span>,
+            Messages::GeneralRequest(..) =&gt; <span class="string">"general_request"</span>,
+            Messages::SetDeviceId(..) =&gt; <span class="string">"set_device_id"</span>,
         }
     }
     <span class="kw">fn </span>message_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
         <span class="kw">match </span><span class="self">self </span>{
             Messages::Nack(..) =&gt; <span class="number">2u16</span>,
             Messages::AsciiText(..) =&gt; <span class="number">3u16</span>,
+            Messages::DeviceInformation(..) =&gt; <span class="number">4u16</span>,
             Messages::ProtocolVersion(..) =&gt; <span class="number">5u16</span>,
+            Messages::Ack(..) =&gt; <span class="number">1u16</span>,
             Messages::GeneralRequest(..) =&gt; <span class="number">6u16</span>,
             Messages::SetDeviceId(..) =&gt; <span class="number">100u16</span>,
-            Messages::Ack(..) =&gt; <span class="number">1u16</span>,
-            Messages::DeviceInformation(..) =&gt; <span class="number">4u16</span>,
         }
     }
     <span class="kw">fn </span>message_id_from_name(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;u16, String&gt; {
         <span class="kw">match </span>name {
-            <span class="string">&quot;nack&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2u16</span>),
-            <span class="string">&quot;ascii_text&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">3u16</span>),
-            <span class="string">&quot;protocol_version&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">5u16</span>),
-            <span class="string">&quot;general_request&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">6u16</span>),
-            <span class="string">&quot;set_device_id&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">100u16</span>),
-            <span class="string">&quot;ack&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1u16</span>),
-            <span class="string">&quot;device_information&quot; </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">4u16</span>),
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">&quot;Failed to find message ID from name: {name}.&quot;</span>)),
+            <span class="string">"nack" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2u16</span>),
+            <span class="string">"ascii_text" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">3u16</span>),
+            <span class="string">"device_information" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">4u16</span>),
+            <span class="string">"protocol_version" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">5u16</span>),
+            <span class="string">"ack" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1u16</span>),
+            <span class="string">"general_request" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">6u16</span>),
+            <span class="string">"set_device_id" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">100u16</span>),
+            <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">"Failed to find message ID from name: {name}."</span>)),
         }
     }
 }
@@ -550,26 +551,26 @@
         <span class="kw">match </span><span class="self">self </span>{
             Messages::Nack(content) =&gt; content.serialize(),
             Messages::AsciiText(content) =&gt; content.serialize(),
+            Messages::DeviceInformation(content) =&gt; content.serialize(),
             Messages::ProtocolVersion(content) =&gt; content.serialize(),
+            Messages::Ack(content) =&gt; content.serialize(),
             Messages::GeneralRequest(content) =&gt; content.serialize(),
             Messages::SetDeviceId(content) =&gt; content.serialize(),
-            Messages::Ack(content) =&gt; content.serialize(),
-            Messages::DeviceInformation(content) =&gt; content.serialize(),
         }
     }
 }
 <span class="kw">impl </span>DeserializeGenericMessage <span class="kw">for </span>Messages {
-    <span class="kw">fn </span>deserialize(message_id: u16, payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>str&gt; {
+    <span class="kw">fn </span>deserialize(message_id: u16, payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt; {
         <span class="prelude-val">Ok</span>(<span class="kw">match </span>message_id {
             <span class="number">2u16 </span>=&gt; Messages::Nack(NackStruct::deserialize(payload)),
             <span class="number">3u16 </span>=&gt; Messages::AsciiText(AsciiTextStruct::deserialize(payload)),
+            <span class="number">4u16 </span>=&gt; Messages::DeviceInformation(DeviceInformationStruct::deserialize(payload)),
             <span class="number">5u16 </span>=&gt; Messages::ProtocolVersion(ProtocolVersionStruct::deserialize(payload)),
+            <span class="number">1u16 </span>=&gt; Messages::Ack(AckStruct::deserialize(payload)),
             <span class="number">6u16 </span>=&gt; Messages::GeneralRequest(GeneralRequestStruct::deserialize(payload)),
             <span class="number">100u16 </span>=&gt; Messages::SetDeviceId(SetDeviceIdStruct::deserialize(payload)),
-            <span class="number">1u16 </span>=&gt; Messages::Ack(AckStruct::deserialize(payload)),
-            <span class="number">4u16 </span>=&gt; Messages::DeviceInformation(DeviceInformationStruct::deserialize(payload)),
             <span class="kw">_ </span>=&gt; {
-                <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="kw-2">&amp;</span><span class="string">&quot;Unknown message id&quot;</span>);
+                <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="kw-2">&amp;</span><span class="string">"Unknown message id"</span>);
             }
         })
     }
