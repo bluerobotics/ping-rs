@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   quick-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@master
     - uses: actions-rs/toolchain@v1.0.6
@@ -20,7 +20,7 @@ jobs:
 
   build:
     needs: quick-tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@master
     - uses: actions-rs/toolchain@v1.0.6
