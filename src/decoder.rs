@@ -94,7 +94,7 @@ impl Decoder {
         }
     }
 
-    fn reset(&mut self) {
+    pub fn reset(&mut self) {
         self.state = DecoderState::AwaitingStart1;
         self.buffer.clear();
     }
