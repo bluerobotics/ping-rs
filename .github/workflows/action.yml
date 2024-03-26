@@ -4,13 +4,15 @@ on: [push, pull_request]
 
 jobs:
   quick-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@master
     - uses: actions-rs/toolchain@v1.0.6
       with:
         toolchain: stable
         override: true
+    - name: Install libudev
+      run: sudo apt-get update && sudo apt-get install libudev-dev
     - name: Check Type
       run: cargo fmt -- --check
     - name: Run internal tests
@@ -20,8 +22,10 @@ jobs:
 
   build:
     needs: quick-tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
+    - name: Install libudev
+      run: sudo apt-get update && sudo apt-get install libudev-dev
     - uses: actions/checkout@master
     - uses: actions-rs/toolchain@v1.0.6
       with:
