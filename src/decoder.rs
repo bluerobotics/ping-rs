@@ -23,6 +23,12 @@ pub enum DecoderState {
     ReadingChecksum,
 }
 
+impl std::fmt::Display for ParseError {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
+
 pub struct Decoder {
     pub state: DecoderState,
     buffer: Vec<u8>,
