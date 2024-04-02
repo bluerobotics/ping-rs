@@ -65,7 +65,12 @@ impl Decoder {
                     self.message.message_id = u16::from_le_bytes([self.buffer[2], self.buffer[3]]);
                     self.message.src_device_id = self.buffer[4];
                     self.message.dst_device_id = self.buffer[5];
-                    self.state = DecoderState::ReadingPayload;
+
+                    if self.message.payload_length == 0 {
+                        self.state = DecoderState::ReadingChecksum
+                    } else {
+                        self.state = DecoderState::ReadingPayload;
+                    }
                     self.buffer.clear();
                 }
                 return DecoderResult::InProgress;
