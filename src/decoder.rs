@@ -3,6 +3,7 @@ use crate::message::{ProtocolMessage, HEADER};
 #[derive(Debug)]
 pub enum ParseError {
     InvalidStartByte,
+    InvalidMessageId,
     IncompleteData,
     ChecksumError,
 }
@@ -62,7 +63,15 @@ impl Decoder {
                 if self.buffer.len() == 6 {
                     self.message.payload_length =
                         u16::from_le_bytes([self.buffer[0], self.buffer[1]]);
-                    self.message.message_id = u16::from_le_bytes([self.buffer[2], self.buffer[3]]);
+
+                    let msg_id = u16::from_le_bytes([self.buffer[2], self.buffer[3]]);
+                    const INVALID_MSG_MASK: u16 = 0b1111000000000000;
+                    if msg_id & INVALID_MSG_MASK != 0 {
+                        self.reset();
+                        return DecoderResult::Error(ParseError::InvalidMessageId);
+                    }
+                    self.message.message_id = msg_id;
+
                     self.message.src_device_id = self.buffer[4];
                     self.message.dst_device_id = self.buffer[5];
                     self.state = DecoderState::ReadingPayload;
