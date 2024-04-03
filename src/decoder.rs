@@ -4,7 +4,7 @@ use crate::message::{ProtocolMessage, HEADER};
 pub enum ParseError {
     InvalidStartByte,
     IncompleteData,
-    ChecksumError,
+    ChecksumError(ProtocolMessage),
 }
 
 #[derive(Debug)]
@@ -89,9 +89,12 @@ impl Decoder {
                 self.buffer.push(byte);
                 if self.buffer.len() == 2 {
                     self.message.checksum = u16::from_le_bytes([self.buffer[0], self.buffer[1]]);
+                    self.reset();
                     let message = self.message.clone();
                     self.message = ProtocolMessage::new();
-                    self.reset();
+                    if !message.has_valid_crc() {
+                        return DecoderResult::Error(ParseError::ChecksumError(message));
+                    }
                     return DecoderResult::Success(message);
                 }
                 return DecoderResult::InProgress;
