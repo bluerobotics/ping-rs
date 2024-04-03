@@ -101,6 +101,11 @@
 <a href="#99" id="99">99</a>
 <a href="#100" id="100">100</a>
 <a href="#101" id="101">101</a>
+<a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::message::{ProtocolMessage, HEADER};
 
 <span class="attr">#[derive(Debug)]
@@ -168,7 +173,12 @@
                     <span class="self">self</span>.message.message_id = u16::from_le_bytes([<span class="self">self</span>.buffer[<span class="number">2</span>], <span class="self">self</span>.buffer[<span class="number">3</span>]]);
                     <span class="self">self</span>.message.src_device_id = <span class="self">self</span>.buffer[<span class="number">4</span>];
                     <span class="self">self</span>.message.dst_device_id = <span class="self">self</span>.buffer[<span class="number">5</span>];
-                    <span class="self">self</span>.state = DecoderState::ReadingPayload;
+
+                    <span class="kw">if </span><span class="self">self</span>.message.payload_length == <span class="number">0 </span>{
+                        <span class="self">self</span>.state = DecoderState::ReadingChecksum
+                    } <span class="kw">else </span>{
+                        <span class="self">self</span>.state = DecoderState::ReadingPayload;
+                    }
                     <span class="self">self</span>.buffer.clear();
                 }
                 <span class="kw">return </span>DecoderResult::InProgress;
