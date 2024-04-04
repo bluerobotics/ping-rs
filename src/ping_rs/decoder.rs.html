@@ -106,13 +106,16 @@
 <a href="#104" id="104">104</a>
 <a href="#105" id="105">105</a>
 <a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::message::{ProtocolMessage, HEADER};
 
 <span class="attr">#[derive(Debug)]
 </span><span class="kw">pub enum </span>ParseError {
     InvalidStartByte,
     IncompleteData,
-    ChecksumError,
+    ChecksumError(ProtocolMessage),
 }
 
 <span class="attr">#[derive(Debug)]
@@ -197,9 +200,12 @@
                 <span class="self">self</span>.buffer.push(byte);
                 <span class="kw">if </span><span class="self">self</span>.buffer.len() == <span class="number">2 </span>{
                     <span class="self">self</span>.message.checksum = u16::from_le_bytes([<span class="self">self</span>.buffer[<span class="number">0</span>], <span class="self">self</span>.buffer[<span class="number">1</span>]]);
+                    <span class="self">self</span>.reset();
                     <span class="kw">let </span>message = <span class="self">self</span>.message.clone();
                     <span class="self">self</span>.message = ProtocolMessage::new();
-                    <span class="self">self</span>.reset();
+                    <span class="kw">if </span>!message.has_valid_crc() {
+                        <span class="kw">return </span>DecoderResult::Error(ParseError::ChecksumError(message));
+                    }
                     <span class="kw">return </span>DecoderResult::Success(message);
                 }
                 <span class="kw">return </span>DecoderResult::InProgress;
