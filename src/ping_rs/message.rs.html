@@ -143,6 +143,12 @@
 <a href="#141" id="141">141</a>
 <a href="#142" id="142">142</a>
 <a href="#143" id="143">143</a>
+<a href="#144" id="144">144</a>
+<a href="#145" id="145">145</a>
+<a href="#146" id="146">146</a>
+<a href="#147" id="147">147</a>
+<a href="#148" id="148">148</a>
+<a href="#149" id="149">149</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::io::Write;
 
 <span class="kw">pub const </span>HEADER: [u8; <span class="number">2</span>] = [<span class="string">'B' </span><span class="kw">as </span>u8, <span class="string">'R' </span><span class="kw">as </span>u8];
@@ -223,8 +229,14 @@
         <span class="kw">let </span><span class="kw-2">mut </span>checksum: u16 = <span class="number">0</span>;
         checksum += HEADER[<span class="number">0</span>] <span class="kw">as </span>u16;
         checksum += HEADER[<span class="number">1</span>] <span class="kw">as </span>u16;
-        checksum += <span class="self">self</span>.payload_length;
-        checksum += <span class="self">self</span>.message_id;
+        <span class="self">self</span>.payload_length
+            .to_le_bytes()
+            .iter()
+            .for_each(|byte| checksum += <span class="kw-2">*</span>byte <span class="kw">as </span>u16);
+        <span class="self">self</span>.message_id
+            .to_le_bytes()
+            .iter()
+            .for_each(|byte| checksum += <span class="kw-2">*</span>byte <span class="kw">as </span>u16);
         checksum += <span class="self">self</span>.src_device_id <span class="kw">as </span>u16;
         checksum += <span class="self">self</span>.dst_device_id <span class="kw">as </span>u16;
         <span class="kw">for </span><span class="kw-2">&amp;</span>byte <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.payload {
