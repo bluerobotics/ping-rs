@@ -78,8 +78,14 @@ impl ProtocolMessage {
         let mut checksum: u16 = 0;
         checksum += HEADER[0] as u16;
         checksum += HEADER[1] as u16;
-        checksum += self.payload_length;
-        checksum += self.message_id;
+        self.payload_length
+            .to_le_bytes()
+            .iter()
+            .for_each(|byte| checksum += *byte as u16);
+        self.message_id
+            .to_le_bytes()
+            .iter()
+            .for_each(|byte| checksum += *byte as u16);
         checksum += self.src_device_id as u16;
         checksum += self.dst_device_id as u16;
         for &byte in &self.payload {
