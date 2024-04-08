@@ -6,7 +6,9 @@ use crate::message::{DeserializeGenericMessage, HEADER};
 
 use std::convert::TryFrom;
 
+pub mod codec;
 pub mod decoder;
+pub mod error;
 pub mod message;
 
 pub fn calculate_crc(pack_without_payload: &[u8]) -> u16 {
