@@ -2,7 +2,7 @@ use std::io::Write;
 
 pub const HEADER: [u8; 2] = ['B' as u8, 'R' as u8];
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct ProtocolMessage {
     pub payload_length: u16,
     pub message_id: u16,
