@@ -253,14 +253,14 @@ impl MessageDefinition {
                                     PayloadType::CHAR |
                                     PayloadType::U8 |
                                     PayloadType::I8 => quote! {
-                                        payload[#b..#b + payload.len()].to_vec()
+                                        payload[#b..payload.len()].to_vec()
                                     },
                                     PayloadType::U16 |
                                     PayloadType::U32 |
                                     PayloadType::I16 |
                                     PayloadType::I32 |
                                     PayloadType::F32 => quote! {
-                                        payload[#b..#b + payload.len()]
+                                        payload[#b..payload.len()]
                                             .chunks_exact(#data_size)
                                             .into_iter()
                                             .map(|a| u16::from_le_bytes((*a).try_into().expect("Wrong slice length")))
