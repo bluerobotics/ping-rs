@@ -94,20 +94,20 @@
 </pre></div><pre class="rust"><code><span class="kw">pub mod </span>common {
     <span class="macro">include!</span>(<span class="string">"common.rs"</span>);
 }
-<span class="kw">pub mod </span>ping360 {
-    <span class="macro">include!</span>(<span class="string">"ping360.rs"</span>);
-}
 <span class="kw">pub mod </span>bluebps {
     <span class="macro">include!</span>(<span class="string">"bluebps.rs"</span>);
 }
 <span class="kw">pub mod </span>ping1d {
     <span class="macro">include!</span>(<span class="string">"ping1d.rs"</span>);
 }
+<span class="kw">pub mod </span>ping360 {
+    <span class="macro">include!</span>(<span class="string">"ping360.rs"</span>);
+}
 <span class="kw">pub enum </span>Messages {
     Common(common::Messages),
-    Ping360(ping360::Messages),
     Bluebps(bluebps::Messages),
     Ping1D(ping1d::Messages),
+    Ping360(ping360::Messages),
 }
 <span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span>ProtocolMessage&gt; <span class="kw">for </span>Messages {
     <span class="kw">type </span>Error = String;
@@ -122,14 +122,14 @@
         <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = common::Messages::deserialize(message.message_id, <span class="kw-2">&amp;</span>message.payload) {
             <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Common(message));
         }
-        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = ping360::Messages::deserialize(message.message_id, <span class="kw-2">&amp;</span>message.payload) {
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping360(message));
-        }
         <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = bluebps::Messages::deserialize(message.message_id, <span class="kw-2">&amp;</span>message.payload) {
             <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Bluebps(message));
         }
         <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = ping1d::Messages::deserialize(message.message_id, <span class="kw-2">&amp;</span>message.payload) {
             <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping1D(message));
+        }
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = ping360::Messages::deserialize(message.message_id, <span class="kw-2">&amp;</span>message.payload) {
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping360(message));
         }
         <span class="prelude-val">Err</span>(<span class="string">"Unknown message"</span>.into())
     }
@@ -165,11 +165,6 @@
             <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Common(message));
         }
         <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) =
-            ping360::Messages::deserialize(protocol_message.message_id, <span class="kw-2">&amp;</span>protocol_message.payload)
-        {
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping360(message));
-        }
-        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) =
             bluebps::Messages::deserialize(protocol_message.message_id, <span class="kw-2">&amp;</span>protocol_message.payload)
         {
             <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Bluebps(message));
@@ -178,6 +173,11 @@
             ping1d::Messages::deserialize(protocol_message.message_id, <span class="kw-2">&amp;</span>protocol_message.payload)
         {
             <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping1D(message));
+        }
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) =
+            ping360::Messages::deserialize(protocol_message.message_id, <span class="kw-2">&amp;</span>protocol_message.payload)
+        {
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping360(message));
         }
         <span class="prelude-val">Err</span>(<span class="string">"Unknown message"</span>.into())
     }
