@@ -1,6 +1,6 @@
 use crate::message::{ProtocolMessage, HEADER};
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum ParseError {
     InvalidStartByte,
     IncompleteData,
