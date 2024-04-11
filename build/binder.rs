@@ -121,6 +121,7 @@ pub fn generate<W: Write>(modules: Vec<String>, out: &mut W) {
     let tokens = quote! {
         #(#modules_tokens)*
 
+        #[derive(Debug)]
         #enum_ident
 
         #try_from_ident
