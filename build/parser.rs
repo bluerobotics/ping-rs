@@ -289,6 +289,7 @@ impl MessageDefinition {
             })
             .collect();
 
+        let id = self.id;
         quote! {
             #[derive(Debug, Clone, PartialEq, Default)]
             #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -310,6 +311,12 @@ impl MessageDefinition {
                     Self {
                         #(#variables_deserialized)*
                     }
+                }
+            }
+
+            impl MessageInfo for #struct_name {
+                fn id() -> u16 {
+                    #id
                 }
             }
         }
@@ -454,6 +461,7 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
     let ping_message = emit_ping_message(messages);
 
     let code = quote! {
+        use crate::message::MessageInfo;
         use crate::message::PingMessage;
         use crate::message::SerializePayload;
         use crate::message::DeserializePayload;

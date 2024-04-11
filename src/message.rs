@@ -141,6 +141,10 @@ pub trait DeserializePayload {
     fn deserialize(payload: &[u8]) -> Self;
 }
 
+pub trait MessageInfo {
+    fn id() -> u16;
+}
+
 pub trait DeserializeGenericMessage
 where
     Self: Sized,
