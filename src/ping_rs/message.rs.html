@@ -153,7 +153,7 @@
 
 <span class="kw">pub const </span>HEADER: [u8; <span class="number">2</span>] = [<span class="string">'B' </span><span class="kw">as </span>u8, <span class="string">'R' </span><span class="kw">as </span>u8];
 
-<span class="attr">#[derive(Clone, Debug, Default)]
+<span class="attr">#[derive(Clone, Debug, Default, PartialEq)]
 </span><span class="kw">pub struct </span>ProtocolMessage {
     <span class="kw">pub </span>payload_length: u16,
     <span class="kw">pub </span>message_id: u16,

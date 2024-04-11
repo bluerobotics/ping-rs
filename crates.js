@@ -1,1 +1,1 @@
-window.ALL_CRATES = ["bytes","ping_rs"];
+window.ALL_CRATES = ["bytes","cfg_if","futures_core","futures_sink","libc","lock_api","log","mio","num_cpus","parking_lot","parking_lot_core","pin_project_lite","ping_rs","proc_macro2","quote","scopeguard","signal_hook_registry","smallvec","socket2","syn","tokio","tokio_macros","tokio_util","unicode_ident"];

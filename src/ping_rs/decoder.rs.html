@@ -111,7 +111,7 @@
 <a href="#109" id="109">109</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::message::{ProtocolMessage, HEADER};
 
-<span class="attr">#[derive(Debug)]
+<span class="attr">#[derive(Debug, PartialEq)]
 </span><span class="kw">pub enum </span>ParseError {
     InvalidStartByte,
     IncompleteData,

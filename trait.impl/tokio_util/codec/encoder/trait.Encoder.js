@@ -1,0 +1,4 @@
+(function() {var implementors = {
+"ping_rs":[["impl <a class=\"trait\" href=\"tokio_util/codec/encoder/trait.Encoder.html\" title=\"trait tokio_util::codec::encoder::Encoder\">Encoder</a>&lt;<a class=\"struct\" href=\"ping_rs/message/struct.ProtocolMessage.html\" title=\"struct ping_rs::message::ProtocolMessage\">ProtocolMessage</a>&gt; for <a class=\"struct\" href=\"ping_rs/codec/struct.PingCodec.html\" title=\"struct ping_rs::codec::PingCodec\">PingCodec</a>"]],
+"tokio_util":[]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["CancellationToken","DropGuard","PollSemaphore","PollSender","ReusableBoxFuture","WaitForCancellationFuture"]};
