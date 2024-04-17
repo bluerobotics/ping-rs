@@ -1,5 +1,5 @@
 use ping_rs::common::{self, Messages as common_messages};
-use ping_rs::message::ProtocolMessage;
+use ping_rs::message::{MessageInfo, PingMessage, ProtocolMessage};
 
 #[test]
 fn test_same_packer() {
@@ -26,10 +26,15 @@ fn test_same_packer() {
     );
 
     general_request.requested_id = 1211;
-    packer.set_message(&common_messages::GeneralRequest(general_request));
+    packer.set_message(&common_messages::GeneralRequest(general_request.clone()));
     packer.set_dst_device_id(0);
     assert_eq!(
         packer.serialized(),
         [0x42, 0x52, 0x02, 0x00, 0x06, 0x00, 0x00, 0x00, 0xbb, 0x04, 0x5b, 0x01]
+    );
+
+    assert_eq!(
+        common::GeneralRequestStruct::id(),
+        common_messages::GeneralRequest(general_request).message_id()
     );
 }
