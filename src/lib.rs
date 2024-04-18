@@ -8,6 +8,7 @@ use std::convert::TryFrom;
 
 pub mod codec;
 pub mod decoder;
+pub mod device;
 pub mod error;
 pub mod message;
 
