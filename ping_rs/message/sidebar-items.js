@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"constant":["HEADER"],"struct":["ProtocolMessage"],"trait":["DeserializeGenericMessage","DeserializePayload","PingMessage","SerializePayload"]};
+window.SIDEBAR_ITEMS = {"constant":["HEADER"],"struct":["ProtocolMessage"],"trait":["DeserializeGenericMessage","DeserializePayload","MessageInfo","PingMessage","SerializePayload"]};
