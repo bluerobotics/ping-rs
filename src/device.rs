@@ -110,15 +110,17 @@ pub trait PingDevice {
         Ok(())
     }
 
-    async fn get_firmware(&mut self) -> Result<ProtocolVersionStruct, PingError> {
+    async fn wait_for_message<T: 'static>(&mut self) -> Result<T, PingError>
+    where
+        T: crate::message::MessageInfo + std::marker::Sync + Clone + std::marker::Send
+    {
         let mut receiver = self.subscribe();
-
         let result = tokio::spawn(async move {
             loop {
                 match receiver.recv().await {
                     Ok(answer) => match Messages::try_from(&answer) {
-                        Ok(Messages::Common(common::Messages::ProtocolVersion(answer))) => {
-                            return Ok(answer)
+                        Ok(answer) => {
+                            return Ok(answer.inner::<T>().unwrap().clone())
                         }
                         _ => continue,
                     },
@@ -128,13 +130,6 @@ pub trait PingDevice {
             }
         });
 
-        if let Err(e) = self
-            .send_general_request(common::GeneralRequestStruct { requested_id: 5 })
-            .await
-        {
-            return Err(e);
-        }
-
         match tokio::time::timeout(tokio::time::Duration::from_millis(10000), result).await {
             Ok(result) => match result {
                 Ok(result) => result,
@@ -142,6 +137,24 @@ pub trait PingDevice {
             },
             Err(_) => Err(PingError::TimeoutError),
         }
+    }
+
+    async fn request<T: 'static>(&mut self) -> Result<T, PingError>
+    where
+        T: crate::message::MessageInfo + std::marker::Sync + Clone + std::marker::Send
+    {
+        if let Err(e) = self
+            .send_general_request(common::GeneralRequestStruct { requested_id: T::id() })
+            .await
+        {
+            return Err(e);
+        }
+
+        self.wait_for_message().await
+    }
+
+    async fn get_firmware(&mut self) -> Result<ProtocolVersionStruct, PingError> {
+        self.request().await
     }
 }
 
