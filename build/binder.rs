@@ -46,7 +46,7 @@ pub fn generate<W: Write>(modules: Vec<String>, out: &mut W) {
         }
     }).collect::<Vec<TokenStream>>();
 
-    let deserialize_tokens = modules.into_iter().map(|module| {
+    let deserialize_tokens = modules.clone().into_iter().map(|module| {
         let pascal_case_ident = quote::format_ident!("{}", module.to_case(Case::Pascal));
         let module_ident = quote::format_ident!("{module}");
         quote! {
@@ -56,9 +56,29 @@ pub fn generate<W: Write>(modules: Vec<String>, out: &mut W) {
         }
     }).collect::<Vec<TokenStream>>();
 
+    let enum_tokens_inner = modules
+        .clone()
+        .into_iter()
+        .map(|module| {
+            let pascal_case_ident = quote::format_ident!("{}", module.to_case(Case::Pascal));
+
+            quote! {
+                Self::#pascal_case_ident(inner_enum) => inner_enum.inner(),
+            }
+        })
+        .collect::<Vec<TokenStream>>();
+
     let enum_ident = quote! {
         pub enum Messages {
             #(#enum_tokens)*
+        }
+
+        impl Messages {
+            pub fn inner<T: 'static>(&self) -> Option<&T> {
+                match self {
+                    #(#enum_tokens_inner)*
+                }
+            }
         }
     };
 
