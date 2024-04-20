@@ -436,11 +436,28 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
             quote!(#pascal_message_name(#pascal_struct_name),)
         })
         .collect::<Vec<TokenStream>>();
+
+    let message_enums_inner = messages
+        .iter()
+        .map(|(name, _message)| {
+            let pascal_message_name = ident!(name.to_case(Case::Pascal));
+            quote!(Self::#pascal_message_name(inner_struct) => (inner_struct as &dyn std::any::Any).downcast_ref::<T>(),)
+        })
+        .collect::<Vec<TokenStream>>();
+
     let message_enums = quote! {
         #[derive(Debug, Clone, PartialEq)]
         #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
         pub enum Messages {
             #(#message_enums)*
+        }
+
+        impl Messages {
+            pub fn inner<T: 'static>(&self) -> Option<&T> {
+                match self {
+                    #(#message_enums_inner)*
+                }
+            }
         }
     };
 
