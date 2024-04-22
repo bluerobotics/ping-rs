@@ -1121,6 +1121,86 @@
 <a href="#1119" id="1119">1119</a>
 <a href="#1120" id="1120">1120</a>
 <a href="#1121" id="1121">1121</a>
+<a href="#1122" id="1122">1122</a>
+<a href="#1123" id="1123">1123</a>
+<a href="#1124" id="1124">1124</a>
+<a href="#1125" id="1125">1125</a>
+<a href="#1126" id="1126">1126</a>
+<a href="#1127" id="1127">1127</a>
+<a href="#1128" id="1128">1128</a>
+<a href="#1129" id="1129">1129</a>
+<a href="#1130" id="1130">1130</a>
+<a href="#1131" id="1131">1131</a>
+<a href="#1132" id="1132">1132</a>
+<a href="#1133" id="1133">1133</a>
+<a href="#1134" id="1134">1134</a>
+<a href="#1135" id="1135">1135</a>
+<a href="#1136" id="1136">1136</a>
+<a href="#1137" id="1137">1137</a>
+<a href="#1138" id="1138">1138</a>
+<a href="#1139" id="1139">1139</a>
+<a href="#1140" id="1140">1140</a>
+<a href="#1141" id="1141">1141</a>
+<a href="#1142" id="1142">1142</a>
+<a href="#1143" id="1143">1143</a>
+<a href="#1144" id="1144">1144</a>
+<a href="#1145" id="1145">1145</a>
+<a href="#1146" id="1146">1146</a>
+<a href="#1147" id="1147">1147</a>
+<a href="#1148" id="1148">1148</a>
+<a href="#1149" id="1149">1149</a>
+<a href="#1150" id="1150">1150</a>
+<a href="#1151" id="1151">1151</a>
+<a href="#1152" id="1152">1152</a>
+<a href="#1153" id="1153">1153</a>
+<a href="#1154" id="1154">1154</a>
+<a href="#1155" id="1155">1155</a>
+<a href="#1156" id="1156">1156</a>
+<a href="#1157" id="1157">1157</a>
+<a href="#1158" id="1158">1158</a>
+<a href="#1159" id="1159">1159</a>
+<a href="#1160" id="1160">1160</a>
+<a href="#1161" id="1161">1161</a>
+<a href="#1162" id="1162">1162</a>
+<a href="#1163" id="1163">1163</a>
+<a href="#1164" id="1164">1164</a>
+<a href="#1165" id="1165">1165</a>
+<a href="#1166" id="1166">1166</a>
+<a href="#1167" id="1167">1167</a>
+<a href="#1168" id="1168">1168</a>
+<a href="#1169" id="1169">1169</a>
+<a href="#1170" id="1170">1170</a>
+<a href="#1171" id="1171">1171</a>
+<a href="#1172" id="1172">1172</a>
+<a href="#1173" id="1173">1173</a>
+<a href="#1174" id="1174">1174</a>
+<a href="#1175" id="1175">1175</a>
+<a href="#1176" id="1176">1176</a>
+<a href="#1177" id="1177">1177</a>
+<a href="#1178" id="1178">1178</a>
+<a href="#1179" id="1179">1179</a>
+<a href="#1180" id="1180">1180</a>
+<a href="#1181" id="1181">1181</a>
+<a href="#1182" id="1182">1182</a>
+<a href="#1183" id="1183">1183</a>
+<a href="#1184" id="1184">1184</a>
+<a href="#1185" id="1185">1185</a>
+<a href="#1186" id="1186">1186</a>
+<a href="#1187" id="1187">1187</a>
+<a href="#1188" id="1188">1188</a>
+<a href="#1189" id="1189">1189</a>
+<a href="#1190" id="1190">1190</a>
+<a href="#1191" id="1191">1191</a>
+<a href="#1192" id="1192">1192</a>
+<a href="#1193" id="1193">1193</a>
+<a href="#1194" id="1194">1194</a>
+<a href="#1195" id="1195">1195</a>
+<a href="#1196" id="1196">1196</a>
+<a href="#1197" id="1197">1197</a>
+<a href="#1198" id="1198">1198</a>
+<a href="#1199" id="1199">1199</a>
+<a href="#1200" id="1200">1200</a>
+<a href="#1201" id="1201">1201</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::message::DeserializeGenericMessage;
 <span class="kw">use </span><span class="kw">crate</span>::message::DeserializePayload;
 <span class="kw">use </span><span class="kw">crate</span>::message::MessageInfo;
@@ -1138,96 +1218,112 @@
 <span class="attr">#[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>Messages {
-    SetDeviceId(SetDeviceIdStruct),
-    SetRange(SetRangeStruct),
     Profile(ProfileStruct),
-    ModeAuto(ModeAutoStruct),
+    PingEnable(PingEnableStruct),
+    DeviceId(DeviceIdStruct),
+    Voltage5(Voltage5Struct),
+    Range(RangeStruct),
     PcbTemperature(PcbTemperatureStruct),
     Distance(DistanceStruct),
     GainSetting(GainSettingStruct),
-    GotoBootloader(GotoBootloaderStruct),
-    SetGainSetting(SetGainSettingStruct),
-    PingInterval(PingIntervalStruct),
-    ContinuousStop(ContinuousStopStruct),
-    DistanceSimple(DistanceSimpleStruct),
-    SetPingEnable(SetPingEnableStruct),
-    PingEnable(PingEnableStruct),
+    ModeAuto(ModeAutoStruct),
     TransmitDuration(TransmitDurationStruct),
     ContinuousStart(ContinuousStartStruct),
+    ContinuousStop(ContinuousStopStruct),
+    SetPingEnable(SetPingEnableStruct),
     ProcessorTemperature(ProcessorTemperatureStruct),
-    FirmwareVersion(FirmwareVersionStruct),
+    SpeedOfSound(SpeedOfSoundStruct),
+    SetGainSetting(SetGainSettingStruct),
+    PingInterval(PingIntervalStruct),
+    GeneralInfo(GeneralInfoStruct),
+    SetDeviceId(SetDeviceIdStruct),
+    SetModeAuto(SetModeAutoStruct),
+    SetRange(SetRangeStruct),
+    DistanceSimple(DistanceSimpleStruct),
+    GotoBootloader(GotoBootloaderStruct),
     SetSpeedOfSound(SetSpeedOfSoundStruct),
     SetPingInterval(SetPingIntervalStruct),
-    Voltage5(Voltage5Struct),
-    SpeedOfSound(SpeedOfSoundStruct),
-    SetModeAuto(SetModeAutoStruct),
-    Range(RangeStruct),
-    GeneralInfo(GeneralInfoStruct),
-    DeviceId(DeviceIdStruct),
+    FirmwareVersion(FirmwareVersionStruct),
 }
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Set the device ID."</span>]
-</span><span class="kw">pub struct </span>SetDeviceIdStruct {
-    <span class="attr">#[doc = <span class="string">"Device ID (0-254). 255 is reserved for broadcast messages."</span>]
-    </span><span class="kw">pub </span>device_id: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetDeviceIdStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_id.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetDeviceIdStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            device_id: payload[<span class="number">0usize</span>].into(),
+<span class="kw">impl </span>Messages {
+    <span class="kw">pub fn </span>inner&lt;T: <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>T&gt; {
+        <span class="kw">match </span><span class="self">self </span>{
+            <span class="self">Self</span>::Profile(inner_struct) =&gt; (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;(),
+            <span class="self">Self</span>::PingEnable(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::DeviceId(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::Voltage5(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::Range(inner_struct) =&gt; (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;(),
+            <span class="self">Self</span>::PcbTemperature(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::Distance(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::GainSetting(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::ModeAuto(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::TransmitDuration(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::ContinuousStart(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::ContinuousStop(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::SetPingEnable(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::ProcessorTemperature(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::SpeedOfSound(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::SetGainSetting(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::PingInterval(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::GeneralInfo(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::SetDeviceId(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::SetModeAuto(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::SetRange(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::DistanceSimple(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::GotoBootloader(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::SetSpeedOfSound(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::SetPingInterval(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::FirmwareVersion(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
         }
     }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetDeviceIdStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1000u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Set the scan range for acoustic measurements."</span>]
-</span><span class="kw">pub struct </span>SetRangeStruct {
-    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
-    </span><span class="kw">pub </span>scan_start: u32,
-    <span class="attr">#[doc = <span class="string">"The length of the scan range."</span>]
-    </span><span class="kw">pub </span>scan_length: u32,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetRangeStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_start.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_length.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetRangeStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            scan_start: u32::from_le_bytes(
-                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">4usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-            scan_length: u32::from_le_bytes(
-                payload[<span class="number">4usize</span>..<span class="number">4usize </span>+ <span class="number">4usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetRangeStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1001u16
-    </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
@@ -1318,28 +1414,122 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"The current operating mode of the device. Manual mode allows for manual selection of the gain and scan range."</span>]
-</span><span class="kw">pub struct </span>ModeAutoStruct {
-    <span class="attr">#[doc = <span class="string">"0: manual mode, 1: auto mode"</span>]
-    </span><span class="kw">pub </span>mode_auto: u8,
+#[doc = <span class="string">"Acoustic output enabled state."</span>]
+</span><span class="kw">pub struct </span>PingEnableStruct {
+    <span class="attr">#[doc = <span class="string">"The state of the acoustic output. 0: disabled, 1:enabled"</span>]
+    </span><span class="kw">pub </span>ping_enabled: u8,
 }
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>ModeAutoStruct {
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>PingEnableStruct {
     <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode_auto.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.ping_enabled.to_le_bytes());
         buffer
     }
 }
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>ModeAutoStruct {
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>PingEnableStruct {
     <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            mode_auto: payload[<span class="number">0usize</span>].into(),
+            ping_enabled: payload[<span class="number">0usize</span>].into(),
         }
     }
 }
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>ModeAutoStruct {
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>PingEnableStruct {
     <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1205u16
+        <span class="number">1215u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"The device ID."</span>]
+</span><span class="kw">pub struct </span>DeviceIdStruct {
+    <span class="attr">#[doc = <span class="string">"The device ID (0-254). 255 is reserved for broadcast messages."</span>]
+    </span><span class="kw">pub </span>device_id: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>DeviceIdStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_id.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>DeviceIdStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            device_id: payload[<span class="number">0usize</span>].into(),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>DeviceIdStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">1201u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"The 5V rail voltage."</span>]
+</span><span class="kw">pub struct </span>Voltage5Struct {
+    <span class="attr">#[doc = <span class="string">"The 5V rail voltage."</span>]
+    </span><span class="kw">pub </span>voltage_5: u16,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>Voltage5Struct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.voltage_5.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>Voltage5Struct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            voltage_5: u16::from_le_bytes(
+                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>Voltage5Struct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">1202u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"The scan range for acoustic measurements. Measurements returned by the device will lie in the range (scan_start, scan_start + scan_length)."</span>]
+</span><span class="kw">pub struct </span>RangeStruct {
+    <span class="attr">#[doc = <span class="string">"The beginning of the scan range in mm from the transducer."</span>]
+    </span><span class="kw">pub </span>scan_start: u32,
+    <span class="attr">#[doc = <span class="string">"The length of the scan range."</span>]
+    </span><span class="kw">pub </span>scan_length: u32,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>RangeStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_start.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_length.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>RangeStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            scan_start: u32::from_le_bytes(
+                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+            scan_length: u32::from_le_bytes(
+                payload[<span class="number">4usize</span>..<span class="number">4usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>RangeStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">1204u16
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
@@ -1482,194 +1672,28 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Send the device into the bootloader. This is useful for firmware updates."</span>]
-</span><span class="kw">pub struct </span>GotoBootloaderStruct {}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>GotoBootloaderStruct {
+#[doc = <span class="string">"The current operating mode of the device. Manual mode allows for manual selection of the gain and scan range."</span>]
+</span><span class="kw">pub struct </span>ModeAutoStruct {
+    <span class="attr">#[doc = <span class="string">"0: manual mode, 1: auto mode"</span>]
+    </span><span class="kw">pub </span>mode_auto: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>ModeAutoStruct {
     <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode_auto.to_le_bytes());
         buffer
     }
 }
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>GotoBootloaderStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{}
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>GotoBootloaderStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1100u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Set the current gain setting."</span>]
-</span><span class="kw">pub struct </span>SetGainSettingStruct {
-    <span class="attr">#[doc = <span class="string">"The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144"</span>]
-    </span><span class="kw">pub </span>gain_setting: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetGainSettingStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetGainSettingStruct {
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>ModeAutoStruct {
     <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            gain_setting: payload[<span class="number">0usize</span>].into(),
+            mode_auto: payload[<span class="number">0usize</span>].into(),
         }
     }
 }
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetGainSettingStruct {
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>ModeAutoStruct {
     <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1005u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"The interval between acoustic measurements."</span>]
-</span><span class="kw">pub struct </span>PingIntervalStruct {
-    <span class="attr">#[doc = <span class="string">"The minimum interval between acoustic measurements. The actual interval may be longer."</span>]
-    </span><span class="kw">pub </span>ping_interval: u16,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>PingIntervalStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.ping_interval.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>PingIntervalStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            ping_interval: u16::from_le_bytes(
-                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>PingIntervalStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1206u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Command to stop the continuous data stream of profile messages."</span>]
-</span><span class="kw">pub struct </span>ContinuousStopStruct {
-    <span class="attr">#[doc = <span class="string">"The message id to stop streaming. 1300: profile"</span>]
-    </span><span class="kw">pub </span>id: u16,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>ContinuousStopStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.id.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>ContinuousStopStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            id: u16::from_le_bytes(
-                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>ContinuousStopStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1401u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"The distance to target with confidence estimate."</span>]
-</span><span class="kw">pub struct </span>DistanceSimpleStruct {
-    <span class="attr">#[doc = <span class="string">"Distance to the target."</span>]
-    </span><span class="kw">pub </span>distance: u32,
-    <span class="attr">#[doc = <span class="string">"Confidence in the distance measurement."</span>]
-    </span><span class="kw">pub </span>confidence: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>DistanceSimpleStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.distance.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.confidence.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>DistanceSimpleStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            distance: u32::from_le_bytes(
-                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">4usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-            confidence: payload[<span class="number">4usize</span>].into(),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>DistanceSimpleStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1211u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Enable or disable acoustic measurements."</span>]
-</span><span class="kw">pub struct </span>SetPingEnableStruct {
-    <span class="attr">#[doc = <span class="string">"0: Disable, 1: Enable."</span>]
-    </span><span class="kw">pub </span>ping_enabled: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetPingEnableStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.ping_enabled.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetPingEnableStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            ping_enabled: payload[<span class="number">0usize</span>].into(),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetPingEnableStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1006u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Acoustic output enabled state."</span>]
-</span><span class="kw">pub struct </span>PingEnableStruct {
-    <span class="attr">#[doc = <span class="string">"The state of the acoustic output. 0: disabled, 1:enabled"</span>]
-    </span><span class="kw">pub </span>ping_enabled: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>PingEnableStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.ping_enabled.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>PingEnableStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            ping_enabled: payload[<span class="number">0usize</span>].into(),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>PingEnableStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1215u16
+        <span class="number">1205u16
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
@@ -1734,6 +1758,62 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Command to stop the continuous data stream of profile messages."</span>]
+</span><span class="kw">pub struct </span>ContinuousStopStruct {
+    <span class="attr">#[doc = <span class="string">"The message id to stop streaming. 1300: profile"</span>]
+    </span><span class="kw">pub </span>id: u16,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>ContinuousStopStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.id.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>ContinuousStopStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            id: u16::from_le_bytes(
+                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>ContinuousStopStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">1401u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Enable or disable acoustic measurements."</span>]
+</span><span class="kw">pub struct </span>SetPingEnableStruct {
+    <span class="attr">#[doc = <span class="string">"0: Disable, 1: Enable."</span>]
+    </span><span class="kw">pub </span>ping_enabled: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetPingEnableStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.ping_enabled.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetPingEnableStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            ping_enabled: payload[<span class="number">0usize</span>].into(),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetPingEnableStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">1006u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 #[doc = <span class="string">"Temperature of the device cpu."</span>]
 </span><span class="kw">pub struct </span>ProcessorTemperatureStruct {
     <span class="attr">#[doc = <span class="string">"The temperature in centi-degrees Centigrade (100 * degrees C)."</span>]
@@ -1760,142 +1840,6 @@
 <span class="kw">impl </span>MessageInfo <span class="kw">for </span>ProcessorTemperatureStruct {
     <span class="kw">fn </span>id() -&gt; u16 {
         <span class="number">1213u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Device information"</span>]
-</span><span class="kw">pub struct </span>FirmwareVersionStruct {
-    <span class="attr">#[doc = <span class="string">"Device type. 0: Unknown; 1: Echosounder"</span>]
-    </span><span class="kw">pub </span>device_type: u8,
-    <span class="attr">#[doc = <span class="string">"Device model. 0: Unknown; 1: Ping1D"</span>]
-    </span><span class="kw">pub </span>device_model: u8,
-    <span class="attr">#[doc = <span class="string">"Firmware version major number."</span>]
-    </span><span class="kw">pub </span>firmware_version_major: u16,
-    <span class="attr">#[doc = <span class="string">"Firmware version minor number."</span>]
-    </span><span class="kw">pub </span>firmware_version_minor: u16,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>FirmwareVersionStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_type.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_model.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.firmware_version_major.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.firmware_version_minor.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>FirmwareVersionStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            device_type: payload[<span class="number">0usize</span>].into(),
-            device_model: payload[<span class="number">1usize</span>].into(),
-            firmware_version_major: u16::from_le_bytes(
-                payload[<span class="number">2usize</span>..<span class="number">2usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-            firmware_version_minor: u16::from_le_bytes(
-                payload[<span class="number">4usize</span>..<span class="number">4usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>FirmwareVersionStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1200u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Set the speed of sound used for distance calculations."</span>]
-</span><span class="kw">pub struct </span>SetSpeedOfSoundStruct {
-    <span class="attr">#[doc = <span class="string">"The speed of sound in the measurement medium. ~1,500,000 mm/s for water."</span>]
-    </span><span class="kw">pub </span>speed_of_sound: u32,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetSpeedOfSoundStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.speed_of_sound.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetSpeedOfSoundStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            speed_of_sound: u32::from_le_bytes(
-                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">4usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetSpeedOfSoundStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1002u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"The interval between acoustic measurements."</span>]
-</span><span class="kw">pub struct </span>SetPingIntervalStruct {
-    <span class="attr">#[doc = <span class="string">"The interval between acoustic measurements."</span>]
-    </span><span class="kw">pub </span>ping_interval: u16,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetPingIntervalStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.ping_interval.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetPingIntervalStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            ping_interval: u16::from_le_bytes(
-                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetPingIntervalStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1004u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"The 5V rail voltage."</span>]
-</span><span class="kw">pub struct </span>Voltage5Struct {
-    <span class="attr">#[doc = <span class="string">"The 5V rail voltage."</span>]
-    </span><span class="kw">pub </span>voltage_5: u16,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>Voltage5Struct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.voltage_5.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>Voltage5Struct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            voltage_5: u16::from_le_bytes(
-                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>Voltage5Struct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1202u16
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
@@ -1930,66 +1874,58 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Set automatic or manual mode. Manual mode allows for manual selection of the gain and scan range."</span>]
-</span><span class="kw">pub struct </span>SetModeAutoStruct {
-    <span class="attr">#[doc = <span class="string">"0: manual mode. 1: auto mode."</span>]
-    </span><span class="kw">pub </span>mode_auto: u8,
+#[doc = <span class="string">"Set the current gain setting."</span>]
+</span><span class="kw">pub struct </span>SetGainSettingStruct {
+    <span class="attr">#[doc = <span class="string">"The current gain setting. 0: 0.6, 1: 1.8, 2: 5.5, 3: 12.9, 4: 30.2, 5: 66.1, 6: 144"</span>]
+    </span><span class="kw">pub </span>gain_setting: u8,
 }
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetModeAutoStruct {
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetGainSettingStruct {
     <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode_auto.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_setting.to_le_bytes());
         buffer
     }
 }
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetModeAutoStruct {
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetGainSettingStruct {
     <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            mode_auto: payload[<span class="number">0usize</span>].into(),
+            gain_setting: payload[<span class="number">0usize</span>].into(),
         }
     }
 }
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetModeAutoStruct {
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetGainSettingStruct {
     <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1003u16
+        <span class="number">1005u16
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"The scan range for acoustic measurements. Measurements returned by the device will lie in the range (scan_start, scan_start + scan_length)."</span>]
-</span><span class="kw">pub struct </span>RangeStruct {
-    <span class="attr">#[doc = <span class="string">"The beginning of the scan range in mm from the transducer."</span>]
-    </span><span class="kw">pub </span>scan_start: u32,
-    <span class="attr">#[doc = <span class="string">"The length of the scan range."</span>]
-    </span><span class="kw">pub </span>scan_length: u32,
+#[doc = <span class="string">"The interval between acoustic measurements."</span>]
+</span><span class="kw">pub struct </span>PingIntervalStruct {
+    <span class="attr">#[doc = <span class="string">"The minimum interval between acoustic measurements. The actual interval may be longer."</span>]
+    </span><span class="kw">pub </span>ping_interval: u16,
 }
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>RangeStruct {
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>PingIntervalStruct {
     <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_start.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_length.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.ping_interval.to_le_bytes());
         buffer
     }
 }
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>RangeStruct {
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>PingIntervalStruct {
     <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            scan_start: u32::from_le_bytes(
-                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">4usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-            scan_length: u32::from_le_bytes(
-                payload[<span class="number">4usize</span>..<span class="number">4usize </span>+ <span class="number">4usize</span>]
+            ping_interval: u16::from_le_bytes(
+                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">2usize</span>]
                     .try_into()
                     .expect(<span class="string">"Wrong slice length"</span>),
             ),
         }
     }
 }
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>RangeStruct {
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>PingIntervalStruct {
     <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1204u16
+        <span class="number">1206u16
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
@@ -2056,119 +1992,343 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"The device ID."</span>]
-</span><span class="kw">pub struct </span>DeviceIdStruct {
-    <span class="attr">#[doc = <span class="string">"The device ID (0-254). 255 is reserved for broadcast messages."</span>]
+#[doc = <span class="string">"Set the device ID."</span>]
+</span><span class="kw">pub struct </span>SetDeviceIdStruct {
+    <span class="attr">#[doc = <span class="string">"Device ID (0-254). 255 is reserved for broadcast messages."</span>]
     </span><span class="kw">pub </span>device_id: u8,
 }
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>DeviceIdStruct {
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetDeviceIdStruct {
     <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
         buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_id.to_le_bytes());
         buffer
     }
 }
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>DeviceIdStruct {
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetDeviceIdStruct {
     <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             device_id: payload[<span class="number">0usize</span>].into(),
         }
     }
 }
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>DeviceIdStruct {
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetDeviceIdStruct {
     <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1201u16
+        <span class="number">1000u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Set automatic or manual mode. Manual mode allows for manual selection of the gain and scan range."</span>]
+</span><span class="kw">pub struct </span>SetModeAutoStruct {
+    <span class="attr">#[doc = <span class="string">"0: manual mode. 1: auto mode."</span>]
+    </span><span class="kw">pub </span>mode_auto: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetModeAutoStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.mode_auto.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetModeAutoStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            mode_auto: payload[<span class="number">0usize</span>].into(),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetModeAutoStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">1003u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Set the scan range for acoustic measurements."</span>]
+</span><span class="kw">pub struct </span>SetRangeStruct {
+    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
+    </span><span class="kw">pub </span>scan_start: u32,
+    <span class="attr">#[doc = <span class="string">"The length of the scan range."</span>]
+    </span><span class="kw">pub </span>scan_length: u32,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetRangeStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_start.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.scan_length.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetRangeStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            scan_start: u32::from_le_bytes(
+                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+            scan_length: u32::from_le_bytes(
+                payload[<span class="number">4usize</span>..<span class="number">4usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetRangeStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">1001u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"The distance to target with confidence estimate."</span>]
+</span><span class="kw">pub struct </span>DistanceSimpleStruct {
+    <span class="attr">#[doc = <span class="string">"Distance to the target."</span>]
+    </span><span class="kw">pub </span>distance: u32,
+    <span class="attr">#[doc = <span class="string">"Confidence in the distance measurement."</span>]
+    </span><span class="kw">pub </span>confidence: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>DistanceSimpleStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.distance.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.confidence.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>DistanceSimpleStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            distance: u32::from_le_bytes(
+                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+            confidence: payload[<span class="number">4usize</span>].into(),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>DistanceSimpleStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">1211u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Send the device into the bootloader. This is useful for firmware updates."</span>]
+</span><span class="kw">pub struct </span>GotoBootloaderStruct {}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>GotoBootloaderStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>GotoBootloaderStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{}
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>GotoBootloaderStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">1100u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Set the speed of sound used for distance calculations."</span>]
+</span><span class="kw">pub struct </span>SetSpeedOfSoundStruct {
+    <span class="attr">#[doc = <span class="string">"The speed of sound in the measurement medium. ~1,500,000 mm/s for water."</span>]
+    </span><span class="kw">pub </span>speed_of_sound: u32,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetSpeedOfSoundStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.speed_of_sound.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetSpeedOfSoundStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            speed_of_sound: u32::from_le_bytes(
+                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetSpeedOfSoundStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">1002u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"The interval between acoustic measurements."</span>]
+</span><span class="kw">pub struct </span>SetPingIntervalStruct {
+    <span class="attr">#[doc = <span class="string">"The interval between acoustic measurements."</span>]
+    </span><span class="kw">pub </span>ping_interval: u16,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetPingIntervalStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.ping_interval.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetPingIntervalStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            ping_interval: u16::from_le_bytes(
+                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetPingIntervalStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">1004u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Device information"</span>]
+</span><span class="kw">pub struct </span>FirmwareVersionStruct {
+    <span class="attr">#[doc = <span class="string">"Device type. 0: Unknown; 1: Echosounder"</span>]
+    </span><span class="kw">pub </span>device_type: u8,
+    <span class="attr">#[doc = <span class="string">"Device model. 0: Unknown; 1: Ping1D"</span>]
+    </span><span class="kw">pub </span>device_model: u8,
+    <span class="attr">#[doc = <span class="string">"Firmware version major number."</span>]
+    </span><span class="kw">pub </span>firmware_version_major: u16,
+    <span class="attr">#[doc = <span class="string">"Firmware version minor number."</span>]
+    </span><span class="kw">pub </span>firmware_version_minor: u16,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>FirmwareVersionStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_type.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_model.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.firmware_version_major.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.firmware_version_minor.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>FirmwareVersionStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            device_type: payload[<span class="number">0usize</span>].into(),
+            device_model: payload[<span class="number">1usize</span>].into(),
+            firmware_version_major: u16::from_le_bytes(
+                payload[<span class="number">2usize</span>..<span class="number">2usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+            firmware_version_minor: u16::from_le_bytes(
+                payload[<span class="number">4usize</span>..<span class="number">4usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>FirmwareVersionStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">1200u16
     </span>}
 }
 <span class="kw">impl </span>PingMessage <span class="kw">for </span>Messages {
     <span class="kw">fn </span>message_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::SetDeviceId(..) =&gt; <span class="string">"set_device_id"</span>,
-            Messages::SetRange(..) =&gt; <span class="string">"set_range"</span>,
             Messages::Profile(..) =&gt; <span class="string">"profile"</span>,
-            Messages::ModeAuto(..) =&gt; <span class="string">"mode_auto"</span>,
+            Messages::PingEnable(..) =&gt; <span class="string">"ping_enable"</span>,
+            Messages::DeviceId(..) =&gt; <span class="string">"device_id"</span>,
+            Messages::Voltage5(..) =&gt; <span class="string">"voltage_5"</span>,
+            Messages::Range(..) =&gt; <span class="string">"range"</span>,
             Messages::PcbTemperature(..) =&gt; <span class="string">"pcb_temperature"</span>,
             Messages::Distance(..) =&gt; <span class="string">"distance"</span>,
             Messages::GainSetting(..) =&gt; <span class="string">"gain_setting"</span>,
-            Messages::GotoBootloader(..) =&gt; <span class="string">"goto_bootloader"</span>,
-            Messages::SetGainSetting(..) =&gt; <span class="string">"set_gain_setting"</span>,
-            Messages::PingInterval(..) =&gt; <span class="string">"ping_interval"</span>,
-            Messages::ContinuousStop(..) =&gt; <span class="string">"continuous_stop"</span>,
-            Messages::DistanceSimple(..) =&gt; <span class="string">"distance_simple"</span>,
-            Messages::SetPingEnable(..) =&gt; <span class="string">"set_ping_enable"</span>,
-            Messages::PingEnable(..) =&gt; <span class="string">"ping_enable"</span>,
+            Messages::ModeAuto(..) =&gt; <span class="string">"mode_auto"</span>,
             Messages::TransmitDuration(..) =&gt; <span class="string">"transmit_duration"</span>,
             Messages::ContinuousStart(..) =&gt; <span class="string">"continuous_start"</span>,
+            Messages::ContinuousStop(..) =&gt; <span class="string">"continuous_stop"</span>,
+            Messages::SetPingEnable(..) =&gt; <span class="string">"set_ping_enable"</span>,
             Messages::ProcessorTemperature(..) =&gt; <span class="string">"processor_temperature"</span>,
-            Messages::FirmwareVersion(..) =&gt; <span class="string">"firmware_version"</span>,
+            Messages::SpeedOfSound(..) =&gt; <span class="string">"speed_of_sound"</span>,
+            Messages::SetGainSetting(..) =&gt; <span class="string">"set_gain_setting"</span>,
+            Messages::PingInterval(..) =&gt; <span class="string">"ping_interval"</span>,
+            Messages::GeneralInfo(..) =&gt; <span class="string">"general_info"</span>,
+            Messages::SetDeviceId(..) =&gt; <span class="string">"set_device_id"</span>,
+            Messages::SetModeAuto(..) =&gt; <span class="string">"set_mode_auto"</span>,
+            Messages::SetRange(..) =&gt; <span class="string">"set_range"</span>,
+            Messages::DistanceSimple(..) =&gt; <span class="string">"distance_simple"</span>,
+            Messages::GotoBootloader(..) =&gt; <span class="string">"goto_bootloader"</span>,
             Messages::SetSpeedOfSound(..) =&gt; <span class="string">"set_speed_of_sound"</span>,
             Messages::SetPingInterval(..) =&gt; <span class="string">"set_ping_interval"</span>,
-            Messages::Voltage5(..) =&gt; <span class="string">"voltage_5"</span>,
-            Messages::SpeedOfSound(..) =&gt; <span class="string">"speed_of_sound"</span>,
-            Messages::SetModeAuto(..) =&gt; <span class="string">"set_mode_auto"</span>,
-            Messages::Range(..) =&gt; <span class="string">"range"</span>,
-            Messages::GeneralInfo(..) =&gt; <span class="string">"general_info"</span>,
-            Messages::DeviceId(..) =&gt; <span class="string">"device_id"</span>,
+            Messages::FirmwareVersion(..) =&gt; <span class="string">"firmware_version"</span>,
         }
     }
     <span class="kw">fn </span>message_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::SetDeviceId(..) =&gt; <span class="number">1000u16</span>,
-            Messages::SetRange(..) =&gt; <span class="number">1001u16</span>,
             Messages::Profile(..) =&gt; <span class="number">1300u16</span>,
-            Messages::ModeAuto(..) =&gt; <span class="number">1205u16</span>,
+            Messages::PingEnable(..) =&gt; <span class="number">1215u16</span>,
+            Messages::DeviceId(..) =&gt; <span class="number">1201u16</span>,
+            Messages::Voltage5(..) =&gt; <span class="number">1202u16</span>,
+            Messages::Range(..) =&gt; <span class="number">1204u16</span>,
             Messages::PcbTemperature(..) =&gt; <span class="number">1214u16</span>,
             Messages::Distance(..) =&gt; <span class="number">1212u16</span>,
             Messages::GainSetting(..) =&gt; <span class="number">1207u16</span>,
-            Messages::GotoBootloader(..) =&gt; <span class="number">1100u16</span>,
-            Messages::SetGainSetting(..) =&gt; <span class="number">1005u16</span>,
-            Messages::PingInterval(..) =&gt; <span class="number">1206u16</span>,
-            Messages::ContinuousStop(..) =&gt; <span class="number">1401u16</span>,
-            Messages::DistanceSimple(..) =&gt; <span class="number">1211u16</span>,
-            Messages::SetPingEnable(..) =&gt; <span class="number">1006u16</span>,
-            Messages::PingEnable(..) =&gt; <span class="number">1215u16</span>,
+            Messages::ModeAuto(..) =&gt; <span class="number">1205u16</span>,
             Messages::TransmitDuration(..) =&gt; <span class="number">1208u16</span>,
             Messages::ContinuousStart(..) =&gt; <span class="number">1400u16</span>,
+            Messages::ContinuousStop(..) =&gt; <span class="number">1401u16</span>,
+            Messages::SetPingEnable(..) =&gt; <span class="number">1006u16</span>,
             Messages::ProcessorTemperature(..) =&gt; <span class="number">1213u16</span>,
-            Messages::FirmwareVersion(..) =&gt; <span class="number">1200u16</span>,
+            Messages::SpeedOfSound(..) =&gt; <span class="number">1203u16</span>,
+            Messages::SetGainSetting(..) =&gt; <span class="number">1005u16</span>,
+            Messages::PingInterval(..) =&gt; <span class="number">1206u16</span>,
+            Messages::GeneralInfo(..) =&gt; <span class="number">1210u16</span>,
+            Messages::SetDeviceId(..) =&gt; <span class="number">1000u16</span>,
+            Messages::SetModeAuto(..) =&gt; <span class="number">1003u16</span>,
+            Messages::SetRange(..) =&gt; <span class="number">1001u16</span>,
+            Messages::DistanceSimple(..) =&gt; <span class="number">1211u16</span>,
+            Messages::GotoBootloader(..) =&gt; <span class="number">1100u16</span>,
             Messages::SetSpeedOfSound(..) =&gt; <span class="number">1002u16</span>,
             Messages::SetPingInterval(..) =&gt; <span class="number">1004u16</span>,
-            Messages::Voltage5(..) =&gt; <span class="number">1202u16</span>,
-            Messages::SpeedOfSound(..) =&gt; <span class="number">1203u16</span>,
-            Messages::SetModeAuto(..) =&gt; <span class="number">1003u16</span>,
-            Messages::Range(..) =&gt; <span class="number">1204u16</span>,
-            Messages::GeneralInfo(..) =&gt; <span class="number">1210u16</span>,
-            Messages::DeviceId(..) =&gt; <span class="number">1201u16</span>,
+            Messages::FirmwareVersion(..) =&gt; <span class="number">1200u16</span>,
         }
     }
     <span class="kw">fn </span>message_id_from_name(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;u16, String&gt; {
         <span class="kw">match </span>name {
-            <span class="string">"set_device_id" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1000u16</span>),
-            <span class="string">"set_range" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1001u16</span>),
             <span class="string">"profile" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1300u16</span>),
-            <span class="string">"mode_auto" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1205u16</span>),
+            <span class="string">"ping_enable" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1215u16</span>),
+            <span class="string">"device_id" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1201u16</span>),
+            <span class="string">"voltage_5" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1202u16</span>),
+            <span class="string">"range" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1204u16</span>),
             <span class="string">"pcb_temperature" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1214u16</span>),
             <span class="string">"distance" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1212u16</span>),
             <span class="string">"gain_setting" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1207u16</span>),
-            <span class="string">"goto_bootloader" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1100u16</span>),
-            <span class="string">"set_gain_setting" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1005u16</span>),
-            <span class="string">"ping_interval" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1206u16</span>),
-            <span class="string">"continuous_stop" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1401u16</span>),
-            <span class="string">"distance_simple" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1211u16</span>),
-            <span class="string">"set_ping_enable" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1006u16</span>),
-            <span class="string">"ping_enable" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1215u16</span>),
+            <span class="string">"mode_auto" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1205u16</span>),
             <span class="string">"transmit_duration" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1208u16</span>),
             <span class="string">"continuous_start" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1400u16</span>),
+            <span class="string">"continuous_stop" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1401u16</span>),
+            <span class="string">"set_ping_enable" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1006u16</span>),
             <span class="string">"processor_temperature" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1213u16</span>),
-            <span class="string">"firmware_version" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1200u16</span>),
+            <span class="string">"speed_of_sound" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1203u16</span>),
+            <span class="string">"set_gain_setting" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1005u16</span>),
+            <span class="string">"ping_interval" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1206u16</span>),
+            <span class="string">"general_info" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1210u16</span>),
+            <span class="string">"set_device_id" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1000u16</span>),
+            <span class="string">"set_mode_auto" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1003u16</span>),
+            <span class="string">"set_range" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1001u16</span>),
+            <span class="string">"distance_simple" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1211u16</span>),
+            <span class="string">"goto_bootloader" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1100u16</span>),
             <span class="string">"set_speed_of_sound" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1002u16</span>),
             <span class="string">"set_ping_interval" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1004u16</span>),
-            <span class="string">"voltage_5" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1202u16</span>),
-            <span class="string">"speed_of_sound" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1203u16</span>),
-            <span class="string">"set_mode_auto" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1003u16</span>),
-            <span class="string">"range" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1204u16</span>),
-            <span class="string">"general_info" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1210u16</span>),
-            <span class="string">"device_id" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1201u16</span>),
+            <span class="string">"firmware_version" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1200u16</span>),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">"Failed to find message ID from name: {name}."</span>)),
         }
     }
@@ -2176,66 +2336,66 @@
 <span class="kw">impl </span>SerializePayload <span class="kw">for </span>Messages {
     <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::SetDeviceId(content) =&gt; content.serialize(),
-            Messages::SetRange(content) =&gt; content.serialize(),
             Messages::Profile(content) =&gt; content.serialize(),
-            Messages::ModeAuto(content) =&gt; content.serialize(),
+            Messages::PingEnable(content) =&gt; content.serialize(),
+            Messages::DeviceId(content) =&gt; content.serialize(),
+            Messages::Voltage5(content) =&gt; content.serialize(),
+            Messages::Range(content) =&gt; content.serialize(),
             Messages::PcbTemperature(content) =&gt; content.serialize(),
             Messages::Distance(content) =&gt; content.serialize(),
             Messages::GainSetting(content) =&gt; content.serialize(),
-            Messages::GotoBootloader(content) =&gt; content.serialize(),
-            Messages::SetGainSetting(content) =&gt; content.serialize(),
-            Messages::PingInterval(content) =&gt; content.serialize(),
-            Messages::ContinuousStop(content) =&gt; content.serialize(),
-            Messages::DistanceSimple(content) =&gt; content.serialize(),
-            Messages::SetPingEnable(content) =&gt; content.serialize(),
-            Messages::PingEnable(content) =&gt; content.serialize(),
+            Messages::ModeAuto(content) =&gt; content.serialize(),
             Messages::TransmitDuration(content) =&gt; content.serialize(),
             Messages::ContinuousStart(content) =&gt; content.serialize(),
+            Messages::ContinuousStop(content) =&gt; content.serialize(),
+            Messages::SetPingEnable(content) =&gt; content.serialize(),
             Messages::ProcessorTemperature(content) =&gt; content.serialize(),
-            Messages::FirmwareVersion(content) =&gt; content.serialize(),
+            Messages::SpeedOfSound(content) =&gt; content.serialize(),
+            Messages::SetGainSetting(content) =&gt; content.serialize(),
+            Messages::PingInterval(content) =&gt; content.serialize(),
+            Messages::GeneralInfo(content) =&gt; content.serialize(),
+            Messages::SetDeviceId(content) =&gt; content.serialize(),
+            Messages::SetModeAuto(content) =&gt; content.serialize(),
+            Messages::SetRange(content) =&gt; content.serialize(),
+            Messages::DistanceSimple(content) =&gt; content.serialize(),
+            Messages::GotoBootloader(content) =&gt; content.serialize(),
             Messages::SetSpeedOfSound(content) =&gt; content.serialize(),
             Messages::SetPingInterval(content) =&gt; content.serialize(),
-            Messages::Voltage5(content) =&gt; content.serialize(),
-            Messages::SpeedOfSound(content) =&gt; content.serialize(),
-            Messages::SetModeAuto(content) =&gt; content.serialize(),
-            Messages::Range(content) =&gt; content.serialize(),
-            Messages::GeneralInfo(content) =&gt; content.serialize(),
-            Messages::DeviceId(content) =&gt; content.serialize(),
+            Messages::FirmwareVersion(content) =&gt; content.serialize(),
         }
     }
 }
 <span class="kw">impl </span>DeserializeGenericMessage <span class="kw">for </span>Messages {
     <span class="kw">fn </span>deserialize(message_id: u16, payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt; {
         <span class="prelude-val">Ok</span>(<span class="kw">match </span>message_id {
-            <span class="number">1000u16 </span>=&gt; Messages::SetDeviceId(SetDeviceIdStruct::deserialize(payload)),
-            <span class="number">1001u16 </span>=&gt; Messages::SetRange(SetRangeStruct::deserialize(payload)),
             <span class="number">1300u16 </span>=&gt; Messages::Profile(ProfileStruct::deserialize(payload)),
-            <span class="number">1205u16 </span>=&gt; Messages::ModeAuto(ModeAutoStruct::deserialize(payload)),
+            <span class="number">1215u16 </span>=&gt; Messages::PingEnable(PingEnableStruct::deserialize(payload)),
+            <span class="number">1201u16 </span>=&gt; Messages::DeviceId(DeviceIdStruct::deserialize(payload)),
+            <span class="number">1202u16 </span>=&gt; Messages::Voltage5(Voltage5Struct::deserialize(payload)),
+            <span class="number">1204u16 </span>=&gt; Messages::Range(RangeStruct::deserialize(payload)),
             <span class="number">1214u16 </span>=&gt; Messages::PcbTemperature(PcbTemperatureStruct::deserialize(payload)),
             <span class="number">1212u16 </span>=&gt; Messages::Distance(DistanceStruct::deserialize(payload)),
             <span class="number">1207u16 </span>=&gt; Messages::GainSetting(GainSettingStruct::deserialize(payload)),
-            <span class="number">1100u16 </span>=&gt; Messages::GotoBootloader(GotoBootloaderStruct::deserialize(payload)),
-            <span class="number">1005u16 </span>=&gt; Messages::SetGainSetting(SetGainSettingStruct::deserialize(payload)),
-            <span class="number">1206u16 </span>=&gt; Messages::PingInterval(PingIntervalStruct::deserialize(payload)),
-            <span class="number">1401u16 </span>=&gt; Messages::ContinuousStop(ContinuousStopStruct::deserialize(payload)),
-            <span class="number">1211u16 </span>=&gt; Messages::DistanceSimple(DistanceSimpleStruct::deserialize(payload)),
-            <span class="number">1006u16 </span>=&gt; Messages::SetPingEnable(SetPingEnableStruct::deserialize(payload)),
-            <span class="number">1215u16 </span>=&gt; Messages::PingEnable(PingEnableStruct::deserialize(payload)),
+            <span class="number">1205u16 </span>=&gt; Messages::ModeAuto(ModeAutoStruct::deserialize(payload)),
             <span class="number">1208u16 </span>=&gt; Messages::TransmitDuration(TransmitDurationStruct::deserialize(payload)),
             <span class="number">1400u16 </span>=&gt; Messages::ContinuousStart(ContinuousStartStruct::deserialize(payload)),
+            <span class="number">1401u16 </span>=&gt; Messages::ContinuousStop(ContinuousStopStruct::deserialize(payload)),
+            <span class="number">1006u16 </span>=&gt; Messages::SetPingEnable(SetPingEnableStruct::deserialize(payload)),
             <span class="number">1213u16 </span>=&gt; {
                 Messages::ProcessorTemperature(ProcessorTemperatureStruct::deserialize(payload))
             }
-            <span class="number">1200u16 </span>=&gt; Messages::FirmwareVersion(FirmwareVersionStruct::deserialize(payload)),
+            <span class="number">1203u16 </span>=&gt; Messages::SpeedOfSound(SpeedOfSoundStruct::deserialize(payload)),
+            <span class="number">1005u16 </span>=&gt; Messages::SetGainSetting(SetGainSettingStruct::deserialize(payload)),
+            <span class="number">1206u16 </span>=&gt; Messages::PingInterval(PingIntervalStruct::deserialize(payload)),
+            <span class="number">1210u16 </span>=&gt; Messages::GeneralInfo(GeneralInfoStruct::deserialize(payload)),
+            <span class="number">1000u16 </span>=&gt; Messages::SetDeviceId(SetDeviceIdStruct::deserialize(payload)),
+            <span class="number">1003u16 </span>=&gt; Messages::SetModeAuto(SetModeAutoStruct::deserialize(payload)),
+            <span class="number">1001u16 </span>=&gt; Messages::SetRange(SetRangeStruct::deserialize(payload)),
+            <span class="number">1211u16 </span>=&gt; Messages::DistanceSimple(DistanceSimpleStruct::deserialize(payload)),
+            <span class="number">1100u16 </span>=&gt; Messages::GotoBootloader(GotoBootloaderStruct::deserialize(payload)),
             <span class="number">1002u16 </span>=&gt; Messages::SetSpeedOfSound(SetSpeedOfSoundStruct::deserialize(payload)),
             <span class="number">1004u16 </span>=&gt; Messages::SetPingInterval(SetPingIntervalStruct::deserialize(payload)),
-            <span class="number">1202u16 </span>=&gt; Messages::Voltage5(Voltage5Struct::deserialize(payload)),
-            <span class="number">1203u16 </span>=&gt; Messages::SpeedOfSound(SpeedOfSoundStruct::deserialize(payload)),
-            <span class="number">1003u16 </span>=&gt; Messages::SetModeAuto(SetModeAutoStruct::deserialize(payload)),
-            <span class="number">1204u16 </span>=&gt; Messages::Range(RangeStruct::deserialize(payload)),
-            <span class="number">1210u16 </span>=&gt; Messages::GeneralInfo(GeneralInfoStruct::deserialize(payload)),
-            <span class="number">1201u16 </span>=&gt; Messages::DeviceId(DeviceIdStruct::deserialize(payload)),
+            <span class="number">1200u16 </span>=&gt; Messages::FirmwareVersion(FirmwareVersionStruct::deserialize(payload)),
             <span class="kw">_ </span>=&gt; {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="kw-2">&amp;</span><span class="string">"Unknown message id"</span>);
             }
