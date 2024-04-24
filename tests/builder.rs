@@ -1,7 +1,7 @@
 use std::convert::TryFrom;
 
-use ping_rs::common::Messages as common_messages;
-use ping_rs::{common, Messages};
+use bluerobotics_ping::common::Messages as common_messages;
+use bluerobotics_ping::{common, Messages};
 
 #[test]
 fn test_inner() {

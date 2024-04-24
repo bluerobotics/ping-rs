@@ -1,9 +1,17 @@
 [package]
-name = "ping-rs"
-version = "0.1.0"
-authors = ["Patrick José Pereira <patrickelectric@gmail.com>"]
-edition = "2018"
+name = "bluerobotics-ping"
+version = "0.0.0"
+authors = ["Patrick José Pereira <patrickelectric@gmail.com>, Raul Victor Trombin <raulvtrombin@gmail.com>"]
+edition = "2021"
 build = "build/main.rs"
+license = "MIT"
+description = "This crate serves as the entry point for embedding applications using Rust on Blue Robotics's Ping devices family"
+homepage = "https://bluerobotics.com/store/sonars/echosounders/ping-sonar-r2-rp/"
+documentation = "https://docs.bluerobotics.com/ping-rs/bluerobotics_ping/"
+repository = "https://github.com/bluerobotics/ping-rs"
+categories = ["BlueRobotics", "Embedded development", "Science"]
+keywords = ["BlueRobotics", "embedded", "sonar", "robotics", "ROV"]
+readme = "README.md"
 
 [dependencies]
 bytes = "1.3.0"

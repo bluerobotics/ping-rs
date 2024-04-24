@@ -1,8 +1,8 @@
 use std::convert::TryFrom;
 
-use ping_rs::common::Messages as common_messages;
-use ping_rs::decoder::*;
-use ping_rs::{common, Messages};
+use bluerobotics_ping::common::Messages as common_messages;
+use bluerobotics_ping::decoder::*;
+use bluerobotics_ping::{common, Messages};
 use tracing::info;
 use tracing_test::traced_test;
 
