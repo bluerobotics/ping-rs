@@ -1,6 +1,8 @@
 use ping_rs::common;
 use ping_rs::message::SerializePayload;
+use tracing_test::traced_test;
 
+#[traced_test]
 #[test]
 fn test_simple_serialization() {
     let general_request = common::GeneralRequestStruct { requested_id: 5 };

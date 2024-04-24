@@ -1,6 +1,8 @@
 use ping_rs::common::{self, Messages as common_messages};
 use ping_rs::message::{MessageInfo, PingMessage, ProtocolMessage};
+use tracing_test::traced_test;
 
+#[traced_test]
 #[test]
 fn test_same_packer() {
     let mut packer = ProtocolMessage::new();

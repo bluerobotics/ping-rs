@@ -3,7 +3,10 @@ use std::convert::TryFrom;
 use ping_rs::common::Messages as common_messages;
 use ping_rs::decoder::*;
 use ping_rs::{common, Messages};
+use tracing::info;
+use tracing_test::traced_test;
 
+#[traced_test]
 #[test]
 fn test_simple_deserialization() {
     let mut decoder = Decoder::new();
@@ -24,7 +27,7 @@ fn test_simple_deserialization() {
     assert_eq!(general_request, parsed);
 
     for byte in &buffer[0..buffer.len() - 2] {
-        dbg!(byte, &decoder.state);
+        info!("byte : {byte}, {:?}", &decoder.state);
         assert!(matches!(
             decoder.parse_byte(byte.clone()),
             DecoderResult::InProgress
@@ -35,7 +38,7 @@ fn test_simple_deserialization() {
         DecoderResult::InProgress
     ));
     let DecoderResult::Success(_message) = decoder.parse_byte(buffer[buffer.len() - 1]) else {
-        dbg!(decoder.state);
+        info!("Decoder state: {:?}", decoder.state);
         panic!("Failed to use decoder with valid message");
     };
 
