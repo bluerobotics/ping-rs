@@ -1,6 +1,6 @@
+use bluerobotics_ping::codec::PingCodec;
+use bluerobotics_ping::{common, message::ProtocolMessage, ping1d, Messages};
 use futures::{SinkExt, StreamExt};
-use ping_rs::codec::PingCodec;
-use ping_rs::{common, message::ProtocolMessage, ping1d, Messages};
 use std::convert::TryFrom;
 use tokio::time::{sleep, Duration};
 use tokio_serial::SerialPortBuilderExt;

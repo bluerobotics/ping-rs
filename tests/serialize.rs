@@ -1,5 +1,5 @@
-use ping_rs::common;
-use ping_rs::message::SerializePayload;
+use bluerobotics_ping::common;
+use bluerobotics_ping::message::SerializePayload;
 use tracing_test::traced_test;
 
 #[traced_test]

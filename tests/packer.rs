@@ -1,5 +1,5 @@
-use ping_rs::common::{self, Messages as common_messages};
-use ping_rs::message::{MessageInfo, PingMessage, ProtocolMessage};
+use bluerobotics_ping::common::{self, Messages as common_messages};
+use bluerobotics_ping::message::{MessageInfo, PingMessage, ProtocolMessage};
 use tracing_test::traced_test;
 
 #[traced_test]
