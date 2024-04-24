@@ -109,7 +109,15 @@
 <a href="#107" id="107">107</a>
 <a href="#108" id="108">108</a>
 <a href="#109" id="109">109</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::message::{ProtocolMessage, HEADER};
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
+<a href="#115" id="115">115</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>tracing::info;
+
+<span class="kw">use </span><span class="kw">crate</span>::message::{ProtocolMessage, HEADER};
 
 <span class="attr">#[derive(Debug, PartialEq)]
 </span><span class="kw">pub enum </span>ParseError {
@@ -188,7 +196,11 @@
             }
             DecoderState::ReadingPayload =&gt; {
                 <span class="self">self</span>.buffer.push(byte);
-                <span class="macro">dbg!</span>(<span class="self">self</span>.buffer.len(), <span class="self">self</span>.message.payload_length);
+                <span class="macro">info!</span>(
+                    <span class="string">"DecoderState : ReadingPayload {:?} {:?}"</span>,
+                    <span class="self">self</span>.buffer.len(),
+                    <span class="self">self</span>.message.payload_length
+                );
                 <span class="kw">if </span><span class="self">self</span>.buffer.len() == <span class="self">self</span>.message.payload_length <span class="kw">as </span>usize {
                     <span class="self">self</span>.message.payload = <span class="self">self</span>.buffer.clone();
                     <span class="self">self</span>.state = DecoderState::ReadingChecksum;
