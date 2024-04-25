@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Sends values to the associated `Receiver`."><title>Sender in tokio::sync::mpsc - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="tokio" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.2 (25ef9e3d8 2024-04-09)" data-channel="1.77.2" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../tokio/index.html">tokio</a><span class="version">1.37.0</span></h2></div><h2 class="location"><a href="#">Sender</a></h2><div class="sidebar-elems"><section><h3><a href="#implementations">Methods</a></h3><ul class="block method"><li><a href="#method.blocking_send">blocking_send</a></li><li><a href="#method.capacity">capacity</a></li><li><a href="#method.closed">closed</a></li><li><a href="#method.downgrade">downgrade</a></li><li><a href="#method.is_closed">is_closed</a></li><li><a href="#method.max_capacity">max_capacity</a></li><li><a href="#method.reserve">reserve</a></li><li><a href="#method.reserve_many">reserve_many</a></li><li><a href="#method.reserve_owned">reserve_owned</a></li><li><a href="#method.same_channel">same_channel</a></li><li><a href="#method.send">send</a></li><li><a href="#method.send_timeout">send_timeout</a></li><li><a href="#method.strong_count">strong_count</a></li><li><a href="#method.try_reserve">try_reserve</a></li><li><a href="#method.try_reserve_many">try_reserve_many</a></li><li><a href="#method.try_reserve_owned">try_reserve_owned</a></li><li><a href="#method.try_send">try_send</a></li><li><a href="#method.weak_count">weak_count</a></li></ul><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block trait-implementation"><li><a href="#impl-Clone-for-Sender%3CT%3E">Clone</a></li><li><a href="#impl-Debug-for-Sender%3CT%3E">Debug</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block synthetic-implementation"><li><a href="#impl-RefUnwindSafe-for-Sender%3CT%3E">!RefUnwindSafe</a></li><li><a href="#impl-UnwindSafe-for-Sender%3CT%3E">!UnwindSafe</a></li><li><a href="#impl-Send-for-Sender%3CT%3E">Send</a></li><li><a href="#impl-Sync-for-Sender%3CT%3E">Sync</a></li><li><a href="#impl-Unpin-for-Sender%3CT%3E">Unpin</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block blanket-implementation"><li><a href="#impl-Any-for-T">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-T">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-T">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-From%3CT%3E-for-T">From&lt;T&gt;</a></li><li><a href="#impl-Into%3CU%3E-for-T">Into&lt;U&gt;</a></li><li><a href="#impl-ToOwned-for-T">ToOwned</a></li><li><a href="#impl-TryFrom%3CU%3E-for-T">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-T">TryInto&lt;U&gt;</a></li></ul></section><h2><a href="index.html">In tokio::sync::mpsc</a></h2></div></nav><div class="sidebar-resizer"></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Sends values to the associated `Receiver`."><title>Sender in tokio::sync::mpsc - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-5bc39a1768837dd0.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="tokio" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.2 (25ef9e3d8 2024-04-09)" data-channel="1.77.2" data-search-js="search-dd67cee4cfa65049.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../../static.files/main-48f368f3872407c8.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc struct"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../tokio/index.html">tokio</a><span class="version">1.37.0</span></h2></div><h2 class="location"><a href="#">Sender</a></h2><div class="sidebar-elems"><section><h3><a href="#implementations">Methods</a></h3><ul class="block method"><li><a href="#method.blocking_send">blocking_send</a></li><li><a href="#method.capacity">capacity</a></li><li><a href="#method.closed">closed</a></li><li><a href="#method.downgrade">downgrade</a></li><li><a href="#method.is_closed">is_closed</a></li><li><a href="#method.max_capacity">max_capacity</a></li><li><a href="#method.reserve">reserve</a></li><li><a href="#method.reserve_many">reserve_many</a></li><li><a href="#method.reserve_owned">reserve_owned</a></li><li><a href="#method.same_channel">same_channel</a></li><li><a href="#method.send">send</a></li><li><a href="#method.strong_count">strong_count</a></li><li><a href="#method.try_reserve">try_reserve</a></li><li><a href="#method.try_reserve_many">try_reserve_many</a></li><li><a href="#method.try_reserve_owned">try_reserve_owned</a></li><li><a href="#method.try_send">try_send</a></li><li><a href="#method.weak_count">weak_count</a></li></ul><h3><a href="#trait-implementations">Trait Implementations</a></h3><ul class="block trait-implementation"><li><a href="#impl-Clone-for-Sender%3CT%3E">Clone</a></li><li><a href="#impl-Debug-for-Sender%3CT%3E">Debug</a></li></ul><h3><a href="#synthetic-implementations">Auto Trait Implementations</a></h3><ul class="block synthetic-implementation"><li><a href="#impl-RefUnwindSafe-for-Sender%3CT%3E">!RefUnwindSafe</a></li><li><a href="#impl-UnwindSafe-for-Sender%3CT%3E">!UnwindSafe</a></li><li><a href="#impl-Send-for-Sender%3CT%3E">Send</a></li><li><a href="#impl-Sync-for-Sender%3CT%3E">Sync</a></li><li><a href="#impl-Unpin-for-Sender%3CT%3E">Unpin</a></li></ul><h3><a href="#blanket-implementations">Blanket Implementations</a></h3><ul class="block blanket-implementation"><li><a href="#impl-Any-for-T">Any</a></li><li><a href="#impl-Borrow%3CT%3E-for-T">Borrow&lt;T&gt;</a></li><li><a href="#impl-BorrowMut%3CT%3E-for-T">BorrowMut&lt;T&gt;</a></li><li><a href="#impl-From%3CT%3E-for-T">From&lt;T&gt;</a></li><li><a href="#impl-Into%3CU%3E-for-T">Into&lt;U&gt;</a></li><li><a href="#impl-ToOwned-for-T">ToOwned</a></li><li><a href="#impl-TryFrom%3CU%3E-for-T">TryFrom&lt;U&gt;</a></li><li><a href="#impl-TryInto%3CU%3E-for-T">TryInto&lt;U&gt;</a></li></ul></section><h2><a href="index.html">In tokio::sync::mpsc</a></h2></div></nav><div class="sidebar-resizer"></div>
     <main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../tokio/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Struct <a href="../../index.html">tokio</a>::<wbr><a href="../index.html">sync</a>::<wbr><a href="index.html">mpsc</a>::<wbr><a class="struct" href="#">Sender</a><button id="copy-path" title="Copy item path to clipboard"><img src="../../../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../../../src/tokio/sync/mpsc/bounded.rs.html#22-24">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><pre class="rust item-decl"><code>pub struct Sender&lt;T&gt; { <span class="comment">/* private fields */</span> }</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Sends values to the associated <code>Receiver</code>.</p>
 <p>Instances are created by the <a href="fn.channel.html" title="fn tokio::sync::mpsc::channel"><code>channel</code></a> function.</p>
 <p>To convert the <code>Sender</code> into a <code>Sink</code> or use it in a poll function, you can
@@ -16,7 +16,7 @@ this function returns <code>Ok</code>.</p>
 being called or the <a href="struct.Receiver.html" title="struct tokio::sync::mpsc::Receiver"><code>Receiver</code></a> handle dropping, the function returns
 an error. The error includes the value passed to <code>send</code>.</p>
 <h5 id="cancel-safety"><a class="doc-anchor" href="#cancel-safety">§</a>Cancel safety</h5>
-<p>If <code>send</code> is used as the event in a <a href="../../macro.select.html" title="macro tokio::select"><code>tokio::select!</code></a>
+<p>If <code>send</code> is used as the event in a <a href="crate::select"><code>tokio::select!</code></a>
 statement and some other branch completes first, then it is guaranteed
 that the message was not sent. <strong>However, in that case, the message
 is dropped and will be lost.</strong></p>
@@ -123,54 +123,14 @@ an error. The error includes the value passed to <code>send</code>.</p>
         <span class="prelude-val">None </span>=&gt; <span class="macro">println!</span>(<span class="string">"the third message was never sent"</span>),
     }
 }</code></pre></div>
-</div></details><details class="toggle method-toggle" open><summary><section id="method.send_timeout" class="method"><a class="src rightside" href="../../../src/tokio/sync/mpsc/bounded.rs.html#882-899">source</a><h4 class="code-header">pub async fn <a href="#method.send_timeout" class="fn">send_timeout</a>(
-    &amp;self,
-    value: T,
-    timeout: <a class="struct" href="https://doc.rust-lang.org/1.77.2/core/time/struct.Duration.html" title="struct core::time::Duration">Duration</a>
-) -&gt; <a class="enum" href="https://doc.rust-lang.org/1.77.2/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.77.2/std/primitive.unit.html">()</a>, <a class="enum" href="error/enum.SendTimeoutError.html" title="enum tokio::sync::mpsc::error::SendTimeoutError">SendTimeoutError</a>&lt;T&gt;&gt;</h4></section></summary><div class="docblock"><p>Sends a value, waiting until there is capacity, but only for a limited time.</p>
-<p>Shares the same success and error conditions as <a href="struct.Sender.html#method.send" title="method tokio::sync::mpsc::Sender::send"><code>send</code></a>, adding one more
-condition for an unsuccessful send, which is when the provided timeout has
-elapsed, and there is no capacity available.</p>
-<h5 id="errors-2"><a class="doc-anchor" href="#errors-2">§</a>Errors</h5>
-<p>If the receive half of the channel is closed, either due to <a href="struct.Receiver.html#method.close" title="method tokio::sync::mpsc::Receiver::close"><code>close</code></a>
-being called or the <a href="struct.Receiver.html" title="struct tokio::sync::mpsc::Receiver"><code>Receiver</code></a> having been dropped,
-the function returns an error. The error includes the value passed to <code>send</code>.</p>
-<h5 id="panics"><a class="doc-anchor" href="#panics">§</a>Panics</h5>
-<p>This function panics if it is called outside the context of a Tokio
-runtime <a href="../../runtime/struct.Builder.html#method.enable_time" title="method tokio::runtime::Builder::enable_time">with time enabled</a>.</p>
-<h5 id="examples-3"><a class="doc-anchor" href="#examples-3">§</a>Examples</h5>
-<p>In the following example, each call to <code>send_timeout</code> will block until the
-previously sent value was received, unless the timeout has elapsed.</p>
-
-<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::sync::mpsc;
-<span class="kw">use </span>tokio::time::{sleep, Duration};
-
-<span class="attr">#[tokio::main]
-</span><span class="kw">async fn </span>main() {
-    <span class="kw">let </span>(tx, <span class="kw-2">mut </span>rx) = mpsc::channel(<span class="number">1</span>);
-
-    tokio::spawn(<span class="kw">async move </span>{
-        <span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..<span class="number">10 </span>{
-            <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = tx.send_timeout(i, Duration::from_millis(<span class="number">100</span>)).<span class="kw">await </span>{
-                <span class="macro">println!</span>(<span class="string">"send error: #{:?}"</span>, e);
-                <span class="kw">return</span>;
-            }
-        }
-    });
-
-    <span class="kw">while let </span><span class="prelude-val">Some</span>(i) = rx.recv().<span class="kw">await </span>{
-        <span class="macro">println!</span>(<span class="string">"got = {}"</span>, i);
-        sleep(Duration::from_millis(<span class="number">200</span>)).<span class="kw">await</span>;
-    }
-}</code></pre></div>
 </div></details><details class="toggle method-toggle" open><summary><section id="method.blocking_send" class="method"><a class="src rightside" href="../../../src/tokio/sync/mpsc/bounded.rs.html#937-939">source</a><h4 class="code-header">pub fn <a href="#method.blocking_send" class="fn">blocking_send</a>(&amp;self, value: T) -&gt; <a class="enum" href="https://doc.rust-lang.org/1.77.2/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.77.2/std/primitive.unit.html">()</a>, <a class="struct" href="error/struct.SendError.html" title="struct tokio::sync::mpsc::error::SendError">SendError</a>&lt;T&gt;&gt;</h4></section></summary><div class="docblock"><p>Blocking send to call outside of asynchronous contexts.</p>
 <p>This method is intended for use cases where you are sending from
 synchronous code to asynchronous code, and will work even if the
 receiver is not using <a href="struct.Receiver.html#method.blocking_recv" title="method tokio::sync::mpsc::Receiver::blocking_recv"><code>blocking_recv</code></a> to receive the message.</p>
-<h5 id="panics-1"><a class="doc-anchor" href="#panics-1">§</a>Panics</h5>
+<h5 id="panics"><a class="doc-anchor" href="#panics">§</a>Panics</h5>
 <p>This function panics if called within an asynchronous execution
 context.</p>
-<h5 id="examples-4"><a class="doc-anchor" href="#examples-4">§</a>Examples</h5>
+<h5 id="examples-3"><a class="doc-anchor" href="#examples-3">§</a>Examples</h5>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::thread;
 <span class="kw">use </span>tokio::runtime::Runtime;
 <span class="kw">use </span>tokio::sync::mpsc;
@@ -213,7 +173,7 @@ to the channel.</p>
 <p>This channel uses a queue to ensure that calls to <code>send</code> and <code>reserve</code>
 complete in the order they were requested.  Cancelling a call to
 <code>reserve</code> makes you lose your place in the queue.</p>
-<h5 id="examples-5"><a class="doc-anchor" href="#examples-5">§</a>Examples</h5>
+<h5 id="examples-4"><a class="doc-anchor" href="#examples-4">§</a>Examples</h5>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::sync::mpsc;
 
 <span class="attr">#[tokio::main]
@@ -252,7 +212,7 @@ permits back to the channel.</p>
 <p>This channel uses a queue to ensure that calls to <code>send</code> and <code>reserve_many</code>
 complete in the order they were requested. Cancelling a call to
 <code>reserve_many</code> makes you lose your place in the queue.</p>
-<h5 id="examples-6"><a class="doc-anchor" href="#examples-6">§</a>Examples</h5>
+<h5 id="examples-5"><a class="doc-anchor" href="#examples-5">§</a>Examples</h5>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::sync::mpsc;
 
 <span class="attr">#[tokio::main]
@@ -298,7 +258,7 @@ capacity back to the channel.</p>
 <p>This channel uses a queue to ensure that calls to <code>send</code> and <code>reserve</code>
 complete in the order they were requested.  Cancelling a call to
 <code>reserve_owned</code> makes you lose your place in the queue.</p>
-<h5 id="examples-7"><a class="doc-anchor" href="#examples-7">§</a>Examples</h5>
+<h5 id="examples-6"><a class="doc-anchor" href="#examples-6">§</a>Examples</h5>
 <p>Sending a message using an <a href="struct.OwnedPermit.html" title="struct tokio::sync::mpsc::OwnedPermit"><code>OwnedPermit</code></a>:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::sync::mpsc;
@@ -350,7 +310,7 @@ to <a href="struct.Permit.html#method.send" title="method tokio::sync::mpsc::Per
 <a href="struct.Sender.html#method.reserve" title="method tokio::sync::mpsc::Sender::reserve"><code>reserve</code></a> except it does not await for the slot to become available.</p>
 <p>Dropping <a href="struct.Permit.html" title="struct tokio::sync::mpsc::Permit"><code>Permit</code></a> without sending a message releases the capacity back
 to the channel.</p>
-<h5 id="examples-8"><a class="doc-anchor" href="#examples-8">§</a>Examples</h5>
+<h5 id="examples-7"><a class="doc-anchor" href="#examples-7">§</a>Examples</h5>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::sync::mpsc;
 
 <span class="attr">#[tokio::main]
@@ -389,7 +349,7 @@ this function will return a <a href="error/enum.TrySendError.html#variant.Full" 
 this function will return a <a href="error/enum.TrySendError.html#variant.Closed" title="variant tokio::sync::mpsc::error::TrySendError::Closed"><code>TrySendError::Closed</code></a>.</p>
 <p>Dropping <a href="struct.PermitIterator.html" title="struct tokio::sync::mpsc::PermitIterator"><code>PermitIterator</code></a> without consuming it entirely releases the remaining
 permits back to the channel.</p>
-<h5 id="examples-9"><a class="doc-anchor" href="#examples-9">§</a>Examples</h5>
+<h5 id="examples-8"><a class="doc-anchor" href="#examples-8">§</a>Examples</h5>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::sync::mpsc;
 
 <span class="attr">#[tokio::main]
@@ -453,7 +413,7 @@ This function is similar to  <a href="struct.Sender.html#method.reserve_owned" t
 for the slot to become available.</p>
 <p>Dropping the <a href="struct.OwnedPermit.html" title="struct tokio::sync::mpsc::OwnedPermit"><code>OwnedPermit</code></a> without sending a message releases the capacity back
 to the channel.</p>
-<h5 id="examples-10"><a class="doc-anchor" href="#examples-10">§</a>Examples</h5>
+<h5 id="examples-9"><a class="doc-anchor" href="#examples-9">§</a>Examples</h5>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::sync::mpsc;
 
 <span class="attr">#[tokio::main]
@@ -479,7 +439,7 @@ to the channel.</p>
 
 }</code></pre></div>
 </div></details><details class="toggle method-toggle" open><summary><section id="method.same_channel" class="method"><a class="src rightside" href="../../../src/tokio/sync/mpsc/bounded.rs.html#1392-1394">source</a><h4 class="code-header">pub fn <a href="#method.same_channel" class="fn">same_channel</a>(&amp;self, other: <a class="primitive" href="https://doc.rust-lang.org/1.77.2/std/primitive.reference.html">&amp;Self</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/1.77.2/std/primitive.bool.html">bool</a></h4></section></summary><div class="docblock"><p>Returns <code>true</code> if senders belong to the same channel.</p>
-<h5 id="examples-11"><a class="doc-anchor" href="#examples-11">§</a>Examples</h5>
+<h5 id="examples-10"><a class="doc-anchor" href="#examples-10">§</a>Examples</h5>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">let </span>(tx, rx) = tokio::sync::mpsc::channel::&lt;()&gt;(<span class="number">1</span>);
 <span class="kw">let  </span>tx2 = tx.clone();
 <span class="macro">assert!</span>(tx.same_channel(<span class="kw-2">&amp;</span>tx2));
@@ -491,7 +451,7 @@ to the channel.</p>
 with <a href="struct.Sender.html#method.reserve" title="method tokio::sync::mpsc::Sender::reserve"><code>reserve</code></a>. The capacity goes up when values are received by the <a href="struct.Receiver.html" title="struct tokio::sync::mpsc::Receiver"><code>Receiver</code></a>.
 This is distinct from <a href="struct.Sender.html#method.max_capacity" title="method tokio::sync::mpsc::Sender::max_capacity"><code>max_capacity</code></a>, which always returns buffer capacity initially
 specified when calling <a href="fn.channel.html" title="fn tokio::sync::mpsc::channel"><code>channel</code></a></p>
-<h5 id="examples-12"><a class="doc-anchor" href="#examples-12">§</a>Examples</h5>
+<h5 id="examples-11"><a class="doc-anchor" href="#examples-11">§</a>Examples</h5>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::sync::mpsc;
 
 <span class="attr">#[tokio::main]
@@ -519,7 +479,7 @@ the channel is closed.</p>
 available buffer capacity: as messages are sent and received, the
 value returned by <a href="struct.Sender.html#method.capacity" title="method tokio::sync::mpsc::Sender::capacity"><code>capacity</code></a> will go up or down, whereas the value
 returned by <code>max_capacity</code> will remain constant.</p>
-<h5 id="examples-13"><a class="doc-anchor" href="#examples-13">§</a>Examples</h5>
+<h5 id="examples-12"><a class="doc-anchor" href="#examples-12">§</a>Examples</h5>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>tokio::sync::mpsc;
 
 <span class="attr">#[tokio::main]
