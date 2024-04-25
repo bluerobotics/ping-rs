@@ -18,6 +18,7 @@
 <a href="#16" id="16">16</a>
 <a href="#17" id="17">17</a>
 <a href="#18" id="18">18</a>
+<a href="#19" id="19">19</a>
 </pre></div><pre class="rust"><code><span class="macro">include!</span>(<span class="macro">concat!</span>(<span class="macro">env!</span>(<span class="string">"OUT_DIR"</span>), <span class="string">"/mod.rs"</span>));
 
 <span class="kw">use </span>message::ProtocolMessage;
@@ -28,6 +29,7 @@
 
 <span class="kw">pub mod </span>codec;
 <span class="kw">pub mod </span>decoder;
+<span class="kw">pub mod </span>device;
 <span class="kw">pub mod </span>error;
 <span class="kw">pub mod </span>message;
 

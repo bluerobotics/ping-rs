@@ -45,9 +45,9 @@ computation.</p>
     </span><span class="kw">let </span>res = rx.<span class="kw">await</span>.unwrap();
 }</code></pre></div>
 <p>Note, if the task produces a computation result as its final
-action before terminating, the <a href="crate::task::JoinHandle"><code>JoinHandle</code></a> can be used to
+action before terminating, the <a href="../task/struct.JoinHandle.html" title="struct tokio::task::JoinHandle"><code>JoinHandle</code></a> can be used to
 receive that value instead of allocating resources for the
-<code>oneshot</code> channel. Awaiting on <a href="crate::task::JoinHandle"><code>JoinHandle</code></a> returns <code>Result</code>. If
+<code>oneshot</code> channel. Awaiting on <a href="../task/struct.JoinHandle.html" title="struct tokio::task::JoinHandle"><code>JoinHandle</code></a> returns <code>Result</code>. If
 the task panics, the <code>Joinhandle</code> yields <code>Err</code> with the panic
 cause.</p>
 <p><strong>Example:</strong></p>
