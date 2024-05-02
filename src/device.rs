@@ -17,8 +17,12 @@ use crate::{
     common,
     error::PingError,
     message::{self, MessageInfo, ProtocolMessage},
-    ping1d, Messages,
+    Messages,
 };
+
+// Make devices available, each device uses Common and PingDevice.
+pub use crate::ping1d::Device as Ping1D;
+pub use crate::ping360::Device as Ping360;
 
 pub struct Common {
     tx: mpsc::Sender<ProtocolMessage>,
@@ -88,6 +92,8 @@ impl Common {
 }
 
 pub trait PingDevice {
+    fn new(port: tokio_serial::SerialStream) -> Self;
+
     fn get_common(&self) -> &Common;
 
     fn get_mut_common(&mut self) -> &mut Common;
@@ -209,64 +215,5 @@ pub trait PingDevice {
         &self,
     ) -> Result<crate::common::ProtocolVersionStruct, PingError> {
         self.request().await
-    }
-}
-
-pub struct Ping1D {
-    common: Common,
-}
-
-impl Ping1D {
-    pub fn new(port: tokio_serial::SerialStream) -> Self {
-        Self {
-            common: Common::new(port),
-        }
-    }
-
-    pub async fn get_device_id(&self) -> Result<crate::ping1d::DeviceIdStruct, PingError> {
-        self.request().await
-    }
-
-    pub async fn set_mode_auto(&self, mode_auto: u8) -> Result<(), PingError> {
-        let request = ping1d::Messages::SetModeAuto(ping1d::SetModeAutoStruct { mode_auto });
-        let mut package = ProtocolMessage::new();
-        package.set_message(&request);
-
-        let receiver = self.subscribe();
-
-        self.get_common().send_message(package).await?;
-
-        self.wait_for_ack(receiver, ping1d::SetModeAutoStruct::id())
-            .await
-    }
-
-    pub async fn continuous_start(&self, id: u16) -> Result<(), PingError> {
-        let request = ping1d::Messages::ContinuousStart(ping1d::ContinuousStartStruct { id });
-        let mut package = ProtocolMessage::new();
-        package.set_message(&request);
-
-        self.get_common().send_message(package).await?;
-
-        Ok(())
-    }
-
-    pub async fn continuous_stop(&self, id: u16) -> Result<(), PingError> {
-        let request = ping1d::Messages::ContinuousStop(ping1d::ContinuousStopStruct { id });
-        let mut package = ProtocolMessage::new();
-        package.set_message(&request);
-
-        self.get_common().send_message(package).await?;
-
-        Ok(())
-    }
-}
-
-impl PingDevice for Ping1D {
-    fn get_common(&self) -> &Common {
-        &self.common
-    }
-
-    fn get_mut_common(&mut self) -> &mut Common {
-        &mut self.common
     }
 }
