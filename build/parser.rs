@@ -579,10 +579,34 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
         use crate::message::SerializePayload;
         use crate::message::DeserializePayload;
         use crate::message::DeserializeGenericMessage;
+        use crate::device::Common;
+        use crate::device::PingDevice;
+        use crate::error::PingError;
+        use crate::message::ProtocolMessage;
         use std::convert::TryInto;
 
         #[cfg(feature = "serde")]
         use serde::{Deserialize, Serialize};
+
+        pub struct Device {
+            pub common: Common,
+        }
+
+        impl PingDevice for Device {
+            fn new(port: tokio_serial::SerialStream) -> Self {
+                Self {
+                    common: Common::new(port),
+                }
+            }
+
+            fn get_common(&self) -> &Common {
+                &self.common
+            }
+
+            fn get_mut_common(&mut self) -> &mut Common {
+                &mut self.common
+            }
+        }
 
         #protocol_wrapper
 
