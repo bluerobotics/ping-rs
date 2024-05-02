@@ -73,7 +73,10 @@ impl PayloadType {
             PayloadType::I16 => quote! {i16},
             PayloadType::I32 => quote! {i32},
             PayloadType::F32 => quote! {f32},
-            PayloadType::VECTOR(_vector) => panic!("Can't convert vector to rust."),
+            PayloadType::VECTOR(vector) => {
+                let data_type = vector.data_type.to_rust();
+                quote! {Vec<#data_type>}
+            }
         }
     }
 
