@@ -187,6 +187,71 @@ impl MessageDefinition {
         }
     }
 
+    pub fn emit_fn(&self) -> TokenStream {
+        let struct_name = quote::format_ident!("{}Struct", self.name.to_case(Case::Pascal));
+        let pascal_message_name = ident!(self.name.to_case(Case::Pascal));
+
+        let function_name = quote::format_ident!("{}", self.name.to_case(Case::Snake));
+        let function_description = &self.description;
+        let function_parameters = self.payload.iter().map(|variable| {
+            let name = ident!(variable.name);
+            let typ = variable.typ.to_rust();
+            quote! { #name: #typ }
+        });
+        let function_assignments = self.payload.iter().map(|variable| {
+            let name = ident!(variable.name);
+            quote! { #name }
+        });
+
+        let function_token = match self.category {
+            MessageDefinitionCategory::Set | MessageDefinitionCategory::Control => {
+                let result = if self.category == MessageDefinitionCategory::Set {
+                    quote! {
+                        let receiver = self.subscribe();
+
+                        self.get_common().send_message(package).await?;
+
+                        self.wait_for_ack(receiver, #struct_name::id()).await
+                    }
+                } else {
+                    quote! {
+                        self.get_common().send_message(package).await?;
+
+                        Ok(())
+                    }
+                };
+
+                quote! {
+                        #[doc = #function_description]
+                        pub async fn #function_name(&self, #(#function_parameters),*) -> Result<(), PingError> {
+                            let request = Messages::#pascal_message_name(#struct_name {
+                                #(#function_assignments,)*
+                            });
+
+                            let mut package = ProtocolMessage::new();
+                            package.set_message(&request);
+
+                            #result
+                        }
+
+                }
+            }
+            MessageDefinitionCategory::Get => {
+                quote! {
+                        #[doc = #function_description]
+                        pub async fn #function_name(&self) -> Result<#struct_name, PingError> {
+                            self.request().await
+                    }
+
+                }
+            }
+            MessageDefinitionCategory::General => quote! {},
+        };
+
+        quote! {
+            #function_token
+        }
+    }
     pub fn emit_struct(&self) -> TokenStream {
         let comment = &self.description;
         let struct_name = quote::format_ident!("{}Struct", self.name.to_case(Case::Pascal));
@@ -499,6 +564,11 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
         .map(|(_name, message)| message.emit_struct())
         .collect::<Vec<TokenStream>>();
 
+    let fn_tokens = messages
+        .iter()
+        .map(|(_name, message)| message.emit_fn())
+        .collect::<Vec<TokenStream>>();
+
     let protocol_wrapper = emit_protocol_wrapper();
 
     let ping_message = emit_ping_message(messages);
@@ -519,6 +589,19 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
         #message_enums
 
         #(#message_tokens)*
+
+        impl Device{
+            pub fn new<T>(io: T) -> Self
+            where
+            T: AsyncRead + AsyncWrite + Unpin + Send + 'static,
+            {
+                Self {
+                    common: Common::new(io),
+                }
+            }
+
+            #(#fn_tokens)*
+        }
 
         #ping_message
     };
