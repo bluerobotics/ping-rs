@@ -142,10 +142,11 @@ struct MessageDefinition {
     id: u16,
     description: String,
     payload: Vec<Payload>,
+    category: String,
 }
 
 impl MessageDefinition {
-    pub fn from_json(name: &String, value: &serde_json::Value) -> Self {
+    pub fn from_json(name: &String, value: &serde_json::Value, category: String) -> Self {
         MessageDefinition {
             name: name.clone(),
             id: value.get("id").unwrap().as_u64().unwrap() as u16,
@@ -158,6 +159,7 @@ impl MessageDefinition {
                 .iter()
                 .map(|element| Payload::from_json(element))
                 .collect(),
+            category,
         }
     }
 
@@ -525,7 +527,7 @@ fn parse_description(
                         .map(|(message_name, value)| {
                             (
                                 message_name.clone(),
-                                MessageDefinition::from_json(message_name, value),
+                                MessageDefinition::from_json(message_name, value, category.clone()),
                             )
                         })
                         .collect::<HashMap<String, MessageDefinition>>(),
