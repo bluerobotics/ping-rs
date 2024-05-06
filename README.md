@@ -23,8 +23,14 @@ Testing set/get device id: 3
 Testing set/get device id: 2
 Testing set/get device id: 1
 Set gain to auto: true
+Test set & get with a new speed of sound: 343.0 m/s
+Test set & get with default speed of sound: 1500.0 m/s
 Protocol version is: 1.0.0
 Device id is: 1
+Gain setting is: 6
+Processor temperature is: 42.63 °C
+Voltage at 5V lane is: 5.006 V
+The distance to target is: 4538 mm
 Waiting for 30 profiles...
 Received 30 profiles
 Turning-off the continuous messages stream from Ping1D
