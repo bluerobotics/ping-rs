@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Common","Ping1D"],"trait":["PingDevice"]};
+window.SIDEBAR_ITEMS = {"struct":["Common"],"trait":["PingDevice"]};

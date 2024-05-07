@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Messages"],"struct":["AutoDeviceDataStruct","AutoTransmitStruct","DeviceDataStruct","DeviceIdStruct","MotorOffStruct","PingProtocolHead","ResetStruct","TransducerStruct"]};
+window.SIDEBAR_ITEMS = {"enum":["Messages"],"struct":["AutoDeviceDataStruct","AutoTransmitStruct","Device","DeviceDataStruct","DeviceIdStruct","MotorOffStruct","PingProtocolHead","ResetStruct","TransducerStruct"]};
