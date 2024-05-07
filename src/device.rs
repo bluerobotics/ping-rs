@@ -4,11 +4,11 @@ use futures::{
     stream::{SplitSink, SplitStream},
     SinkExt, StreamExt,
 };
+use tokio::io::{AsyncRead, AsyncWrite};
 use tokio::sync::{
     broadcast::{self, Sender},
     mpsc::{self, Receiver},
 };
-use tokio_serial::SerialStream;
 use tokio_util::codec::{Decoder, Framed};
 use tracing::error;
 
@@ -30,9 +30,12 @@ pub struct Common {
 }
 
 impl Common {
-    pub fn new(port: tokio_serial::SerialStream) -> Self {
+    pub fn new<T>(io: T) -> Self
+    where
+        T: AsyncRead + AsyncWrite + Unpin + Send + 'static,
+    {
         // Prepare Serial sink and stream modules
-        let serial: Framed<tokio_serial::SerialStream, PingCodec> = PingCodec::new().framed(port);
+        let serial: Framed<T, PingCodec> = PingCodec::new().framed(io);
         let (serial_sink, serial_stream) = serial.split();
 
         // Prepare Serial receiver broadcast and sender
@@ -47,8 +50,8 @@ impl Common {
         }
     }
 
-    async fn sink(
-        mut sink: SplitSink<Framed<SerialStream, PingCodec>, ProtocolMessage>,
+    async fn sink<T: AsyncRead + AsyncWrite + Unpin + Send + 'static>(
+        mut sink: SplitSink<Framed<T, PingCodec>, ProtocolMessage>,
         mut sender_rx: Receiver<ProtocolMessage>,
     ) {
         while let Some(item) = sender_rx.recv().await {
@@ -58,8 +61,8 @@ impl Common {
         }
     }
 
-    async fn stream(
-        mut serial_stream: SplitStream<Framed<SerialStream, PingCodec>>,
+    async fn stream<T: AsyncRead + AsyncWrite + Unpin + Send + 'static>(
+        mut serial_stream: SplitStream<Framed<T, PingCodec>>,
         broadcast_tx: Sender<ProtocolMessage>,
     ) {
         'outside_loop: loop {
@@ -92,8 +95,6 @@ impl Common {
 }
 
 pub trait PingDevice {
-    fn new(port: tokio_serial::SerialStream) -> Self;
-
     fn get_common(&self) -> &Common;
 
     fn get_mut_common(&mut self) -> &mut Common;

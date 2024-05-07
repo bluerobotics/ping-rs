@@ -584,6 +584,7 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
         use crate::error::PingError;
         use crate::message::ProtocolMessage;
         use std::convert::TryInto;
+        use tokio::io::{AsyncRead, AsyncWrite};
 
         #[cfg(feature = "serde")]
         use serde::{Deserialize, Serialize};
@@ -593,12 +594,6 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
         }
 
         impl PingDevice for Device {
-            fn new(port: tokio_serial::SerialStream) -> Self {
-                Self {
-                    common: Common::new(port),
-                }
-            }
-
             fn get_common(&self) -> &Common {
                 &self.common
             }
