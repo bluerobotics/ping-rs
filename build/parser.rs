@@ -198,6 +198,24 @@ impl MessageDefinition {
             let typ = variable.typ.to_rust();
             quote! { #name: #typ }
         });
+        let function_parameters_description = self.payload.iter().map(|variable| {
+            let comment = variable
+                .description
+                .clone()
+                .unwrap_or("Not documented".to_string());
+            let name = ident!(&variable.name);
+            let units = variable.units.clone();
+
+            let description = if let Some(units) = units {
+                format!(r"* `{name}` \[{units}\] - {comment}")
+            } else {
+                format!(r"* `{name}` - {comment}")
+            };
+
+            quote! {
+                #[doc = #description]
+            }
+        });
         let function_assignments = self.payload.iter().map(|variable| {
             let name = ident!(variable.name);
             quote! { #name }
@@ -223,6 +241,8 @@ impl MessageDefinition {
 
                 quote! {
                         #[doc = #function_description]
+                        #[doc = "# Arguments"]
+                        #(#function_parameters_description)*
                         pub async fn #function_name(&self, #(#function_parameters),*) -> Result<(), PingError> {
                             let request = Messages::#pascal_message_name(#struct_name {
                                 #(#function_assignments,)*
