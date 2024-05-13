@@ -6,7 +6,7 @@ https://docs.bluerobotics.com/ping-rs/bluerobotics_ping/
 To run examples use:
 
 ```shell
-cargo run --example ping_1d -- --port-name /dev/ttyUSB0
+cargo run --example ping_1d -- --serial-port /dev/ttyUSB0
 ```
 
 Should output:
@@ -35,3 +35,19 @@ Waiting for 30 profiles...
 Received 30 profiles
 Turning-off the continuous messages stream from Ping1D
 ```
+### **Pro tip** :grey_exclamation:
+For external use via UDP, consider using [bridges](https://github.com/patrickelectric/bridges) to share your serial device to the network. Detailed instructions can be found [here](https://github.com/patrickelectric/bridges?tab=readme-ov-file#install-zap).
+
+#### On the host :satellite: (Where ping device is connected):
+
+```shell
+bridges --port /dev/ttyUSB0:115200 -u 0.0.0.0:8080
+```
+
+#### On the client :computer::
+
+```shell
+cargo run --example ping_1d -- --udp-address 192.168.0.191 --udp-port 8080
+```
+
+Enjoy exploring with ping-rs! :ocean:
