@@ -24,6 +24,7 @@ clap = { version = "4.5.4", features = ["derive"] }
 
 [dev-dependencies]
 tracing-test = "0.2.4"
+udp-stream = "0.0.11"
 
 [build-dependencies]
 convert_case = "0.6.0"
