@@ -1,3 +1,6 @@
+#![doc(html_logo_url = "https://upload.wikimedia.org/wikipedia/commons/1/12/Bluerobotics-logo.svg")]
+#![doc = include_str!("../README.md")]
+
 include!(concat!(env!("OUT_DIR"), "/mod.rs"));
 
 use message::ProtocolMessage;
