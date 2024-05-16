@@ -102,6 +102,18 @@
 <a href="#100" id="100">100</a>
 <a href="#101" id="101">101</a>
 <a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a>
+<a href="#108" id="108">108</a>
+<a href="#109" id="109">109</a>
+<a href="#110" id="110">110</a>
+<a href="#111" id="111">111</a>
+<a href="#112" id="112">112</a>
+<a href="#113" id="113">113</a>
+<a href="#114" id="114">114</a>
 </pre></div><pre class="rust"><code><span class="kw">pub mod </span>ping1d {
     <span class="macro">include!</span>(<span class="string">"ping1d.rs"</span>);
 }
@@ -159,10 +171,22 @@
 <span class="kw">impl </span>TryFrom&lt;<span class="kw-2">&amp;</span>Vec&lt;u8&gt;&gt; <span class="kw">for </span>Messages {
     <span class="kw">type </span>Error = String;
     <span class="kw">fn </span>try_from(buffer: <span class="kw-2">&amp;</span>Vec&lt;u8&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Error&gt; {
+        <span class="kw">const </span>MIN_MSG_SIZE: usize = <span class="number">10</span>;
         <span class="kw">if </span>!((buffer[<span class="number">0</span>] == HEADER[<span class="number">0</span>]) &amp;&amp; (buffer[<span class="number">1</span>] == HEADER[<span class="number">1</span>])) {
             <span class="kw">return </span><span class="prelude-val">Err </span>(format ! (<span class="string">"Message should start with \"BR\" ASCII sequence, received: [{0}({:0x}), {1}({:0x})]" </span>, buffer [<span class="number">0</span>] , buffer [<span class="number">1</span>])) ;
         }
+        <span class="kw">if </span>buffer.len() &lt; MIN_MSG_SIZE {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(
+                <span class="macro">format!</span>(<span class="string">"Message is too short, should be at least {MIN_MSG_SIZE} bytes"</span>).into(),
+            );
+        }
         <span class="kw">let </span>payload_length = u16::from_le_bytes([buffer[<span class="number">2</span>], buffer[<span class="number">3</span>]]);
+        <span class="kw">if </span>payload_length <span class="kw">as </span>usize + MIN_MSG_SIZE != buffer.len() {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">format!</span>(
+                <span class="string">"Payload length does not match, expected: {payload_length}, received: {}"</span>,
+                buffer.len() - MIN_MSG_SIZE
+            ));
+        }
         <span class="kw">let </span>protocol_message = ProtocolMessage {
             payload_length,
             message_id: u16::from_le_bytes([buffer[<span class="number">4</span>], buffer[<span class="number">5</span>]]),
