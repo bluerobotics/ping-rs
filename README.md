@@ -9,6 +9,27 @@ The open source [Ping Protocol](https://docs.bluerobotics.com/ping-protocol) all
 
 This library provides access to all capabilities of **ping** family devices, with all the benefits of the Rust development ecosystem!
 
+Here is a minimal example:
+```rs
+use bluerobotics_ping::{
+    device::{Ping1D, PingDevice},
+    error::PingError,
+};
+use tokio_serial::{SerialPort, SerialPortBuilderExt};
+
+#[tokio::main]
+async fn main() -> Result<(), PingError> {
+    let port = tokio_serial::new("/dev/ttyUSB0", 115200).open_native_async()?;
+    port.clear(tokio_serial::ClearBuffer::All)?;
+    let ping1d = Ping1D::new(port);
+
+    println!("{:#?}", ping1d.device_information().await?);
+    println!("{:#?}", ping1d.general_info().await?);
+    println!("{:#?}", ping1d.distance().await?);
+    Ok(())
+}
+```
+
 Try **ping** today!
 
 # 📖 Documentation:
