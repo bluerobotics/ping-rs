@@ -91,7 +91,7 @@ async fn main() -> Result<(), PingError> {
         voltage5_struct,
         distance_struct,
     ) = tokio::try_join!(
-        ping1d.get_protocol_version(),
+        ping1d.protocol_version(),
         ping1d.device_id(),
         ping1d.gain_setting(),
         ping1d.processor_temperature(),
