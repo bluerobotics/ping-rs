@@ -1,4 +1,4 @@
-# :crab: Ping Library :sound:
+# 🦀 Ping Library 🔊
 
 [SONARs](https://en.wikipedia.org/wiki/Sonar), or **So**und **N**avigation **A**nd **R**anging devices, transmit sound waves and measure their reflections to detect surrounding obstacles and objects.
 
@@ -13,18 +13,18 @@ Try **ping** today!
 
 # 📖 Documentation:
 * [Ping Echosounder](https://bluerobotics.com/store/sonars/echosounders/ping-sonar-r2-rp/)
-    * :blue_book: [Operating Principles and Usage Guide](https://bluerobotics.com/learn/ping-sonar-technical-guide/)
-    * :wrench: [BlueROV2 Installation Guide](https://bluerobotics.com/learn/ping-installation-guide-for-the-bluerov2/)
-    * :wrench: [BlueBoat Integration Guide](https://bluerobotics.com/learn/ping2-integration-kit-for-blueboat-installation-guide/)
+    * 📘 [Operating Principles and Usage Guide](https://bluerobotics.com/learn/ping-sonar-technical-guide/)
+    * 🔧 [BlueROV2 Installation Guide](https://bluerobotics.com/learn/ping-installation-guide-for-the-bluerov2/)
+    * 🔧 [BlueBoat Integration Guide](https://bluerobotics.com/learn/ping2-integration-kit-for-blueboat-installation-guide/)
 * [Ping360 Scanning Imaging Sonar](https://bluerobotics.com/store/sonars/imaging-sonars/ping360-sonar-r1-rp/)
-    * :blue_book: [Understanding and Usage Guide](https://bluerobotics.com/learn/understanding-and-using-scanning-sonars/)
-    * :wrench: [BlueROV2 Installation Guide](https://bluerobotics.com/learn/ping360-installation-guide-for-the-bluerov2/)
-* :crab: Getting started with [Rust](https://doc.rust-lang.org/book/ch01-00-getting-started.html)
-* :ocean: Getting started with [BlueOS](https://blueos.cloud/docs/blueos/latest/overview/)
-* :books: **Ping** library [docs.](https://docs.bluerobotics.com/ping-rs/bluerobotics_ping/)
-* :clipboard: Check the [examples](https://github.com/bluerobotics/ping-rs/tree/master/examples) folder for a quick start guide
+    * 📘 [Understanding and Usage Guide](https://bluerobotics.com/learn/understanding-and-using-scanning-sonars/)
+    * 🔧 [BlueROV2 Installation Guide](https://bluerobotics.com/learn/ping360-installation-guide-for-the-bluerov2/)
+* 🦀 Getting started with [Rust](https://doc.rust-lang.org/book/ch01-00-getting-started.html)
+* 🌊 Getting started with [BlueOS](https://blueos.cloud/docs/blueos/latest/overview/)
+* 📚 **Ping** library [docs.](https://docs.bluerobotics.com/ping-rs/bluerobotics_ping/)
+* 📋 Check the [examples](https://github.com/bluerobotics/ping-rs/tree/master/examples) folder for a quick start guide
 
-# :whale: How to Use This Crate:
+# 🐳 How to Use This Crate:
 
 To harness the capabilities of a [Ping1D](https://docs.bluerobotics.com/ping-rs/bluerobotics_ping/ping1d/index.html) or [Ping360](https://docs.bluerobotics.com/ping-rs/bluerobotics_ping/ping360/index.html) type device, instantiate the corresponding object provided by this library.
 
@@ -75,7 +75,7 @@ Turning-off the continuous messages stream from Ping1D
 </details>
 
 
-### :star: **Pro tip**
+### ⭐ **Pro tip**
 For external use via UDP, consider using [bridges](https://github.com/patrickelectric/bridges) to share your serial device to the network. Detailed instructions can be found [here](https://github.com/patrickelectric/bridges?tab=readme-ov-file#install-zap).
 <details>
   <summary>Setting up a host and client</summary>
@@ -93,4 +93,4 @@ cargo run --example ping_1d -- --udp-address 192.168.0.191 --udp-port 8080
 ```
 </details>
 
-Enjoy exploring with ping-rs! :ocean:
+Enjoy exploring with ping-rs! 🌊
