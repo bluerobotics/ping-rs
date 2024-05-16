@@ -199,22 +199,24 @@ pub trait PingDevice {
         self.wait_for_message(receiver).await
     }
 
+    #[doc = "Device information"]
+    async fn device_information(&self) -> Result<common::DeviceInformationStruct, PingError> {
+        self.request().await
+    }
+    #[doc = "The protocol version"]
+    async fn protocol_version(&self) -> Result<common::ProtocolVersionStruct, PingError> {
+        self.request().await
+    }
+    #[doc = "Set the device ID."]
+    #[doc = "# Arguments"]
+    #[doc = "* `device_id` - Device ID (1-254). 0 is unknown and 255 is reserved for broadcast messages."]
     async fn set_device_id(&self, device_id: u8) -> Result<(), PingError> {
         let request = common::Messages::SetDeviceId(common::SetDeviceIdStruct { device_id });
         let mut package = ProtocolMessage::new();
         package.set_message(&request);
-
         let receiver = self.subscribe();
-
         self.get_common().send_message(package).await?;
-
         self.wait_for_ack(receiver, common::SetDeviceIdStruct::id())
             .await
-    }
-
-    async fn get_protocol_version(
-        &self,
-    ) -> Result<crate::common::ProtocolVersionStruct, PingError> {
-        self.request().await
     }
 }
