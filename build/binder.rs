@@ -105,12 +105,25 @@ pub fn generate<W: Write>(modules: Vec<String>, out: &mut W) {
             type Error = String; // TODO: define error types for each kind of failure
 
             fn try_from(buffer: &Vec<u8>) -> Result<Self, Self::Error> {
+                const MIN_MSG_SIZE: usize = 10;
+
                 // Parse start1 and start2
                 if !((buffer[0] == HEADER[0]) && (buffer[1] == HEADER[1])) {
                     return Err(format!("Message should start with \"BR\" ASCII sequence, received: [{0}({:0x}), {1}({:0x})]", buffer[0], buffer[1]));
                 }
 
+                if buffer.len() < MIN_MSG_SIZE {
+                    return Err(format!("Message is too short, should be at least {MIN_MSG_SIZE} bytes").into());
+                }
+
                 let payload_length = u16::from_le_bytes([buffer[2], buffer[3]]);
+                if payload_length as usize + MIN_MSG_SIZE != buffer.len() {
+                    return Err(format!(
+                        "Payload length does not match, expected: {payload_length}, received: {}",
+                        buffer.len() - MIN_MSG_SIZE
+                    ));
+                }
+
                 let protocol_message = ProtocolMessage {
                     payload_length,
                     message_id: u16::from_le_bytes([buffer[4], buffer[5]]),
