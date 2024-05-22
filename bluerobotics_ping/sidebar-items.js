@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Messages"],"fn":["calculate_crc"],"mod":["bluebps","codec","common","decoder","device","error","message","ping1d","ping360"]};
+window.SIDEBAR_ITEMS = {"enum":["Messages"],"fn":["calculate_crc"],"mod":["bluebps","codec","common","decoder","device","error","message","omniscan450","ping1d","ping360"]};
