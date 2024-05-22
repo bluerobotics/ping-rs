@@ -140,7 +140,7 @@ impl Payload {
 struct MessageDefinition {
     name: String,
     id: u16,
-    description: String,
+    description: Option<String>,
     payload: Vec<Payload>,
     category: MessageDefinitionCategory,
 }
@@ -174,7 +174,17 @@ impl MessageDefinition {
         MessageDefinition {
             name: name.clone(),
             id: value.get("id").unwrap().as_u64().unwrap() as u16,
-            description: value.get("description").unwrap().as_str().unwrap().into(),
+            description: match value.get("description") {
+                Some(description) => {
+                    let description = description.as_str().unwrap();
+                    if description.is_empty() {
+                        None
+                    } else {
+                        Some(description.into())
+                    }
+                }
+                None => None,
+            },
             payload: value
                 .get("payload")
                 .unwrap()
@@ -192,7 +202,10 @@ impl MessageDefinition {
         let pascal_message_name = ident!(self.name.to_case(Case::Pascal));
 
         let function_name = quote::format_ident!("{}", self.name.to_case(Case::Snake));
-        let function_description = &self.description;
+        let function_description = self
+            .description
+            .clone()
+            .unwrap_or("No documentation provided.".into());
         let function_parameters = self.payload.iter().map(|variable| {
             let name = ident!(variable.name);
             let typ = variable.typ.to_rust();
@@ -273,7 +286,10 @@ impl MessageDefinition {
         }
     }
     pub fn emit_struct(&self) -> TokenStream {
-        let comment = &self.description;
+        let comment = self
+            .description
+            .clone()
+            .unwrap_or("No documentation provided.".into());
         let struct_name = quote::format_ident!("{}Struct", self.name.to_case(Case::Pascal));
         let variables: Vec<TokenStream> = self
             .payload
