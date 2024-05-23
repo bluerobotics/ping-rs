@@ -493,7 +493,7 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
         .iter()
         .map(|(name, _message)| {
             let pascal_message_name = ident!(name.to_case(Case::Pascal));
-            quote!(Messages::#pascal_message_name(content) => content.serialize(),)
+            quote!(Messages::#pascal_message_name(content) => (content as &dyn SerializePayload).serialize(),)
         })
         .collect::<Vec<TokenStream>>();
 
@@ -505,7 +505,7 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
             let id = message.id;
 
             quote! {
-                #id => Messages::#pascal_message_name(#struct_name::deserialize(payload)),
+                #id => Messages::#pascal_message_name(<#struct_name as DeserializePayload>::deserialize(payload)),
             }
         })
         .collect::<Vec<TokenStream>>();
