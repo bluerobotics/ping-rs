@@ -104,7 +104,7 @@ For external use via UDP, consider using [bridges](https://github.com/patrickele
 #### On the host :satellite: (Where ping device is connected):
 
 ```shell
-bridges --port /dev/ttyUSB0:115200 -u 0.0.0.0:8080
+bridges --port /dev/ttyUSB0:3000000 -u 0.0.0.0:8080 --no-udp-disconnection --abr
 ```
 
 #### On the client :computer::
