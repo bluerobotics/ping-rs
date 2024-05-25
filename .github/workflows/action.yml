@@ -17,6 +17,8 @@ jobs:
       run: cargo test --verbose -- --nocapture
     - name: Build
       run: cargo build
+    - name: Build w/Serde
+      run: cargo build --features serde
 
   build:
     needs: quick-tests
