@@ -15,10 +15,13 @@ jobs:
       run: cargo fmt -- --check
     - name: Run internal tests
       run: cargo test --verbose -- --nocapture
+      # Specifying serde explicitly in test to avoid local-runner feature
+    - name: Run internal tests including serde
+      run: cargo test --features serde --verbose -- --nocapture
     - name: Build
       run: cargo build
-    - name: Build w/Serde
-      run: cargo build --features serde
+    - name: Build with all features
+      run: cargo build --all-features
 
   build:
     needs: quick-tests
@@ -30,7 +33,7 @@ jobs:
         toolchain: stable
         override: true
     - name: Build docs
-      run: cargo doc
+      run: cargo doc --all-features
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       if: ${{ github.ref == 'refs/heads/master' }}
