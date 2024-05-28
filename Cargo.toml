@@ -1,6 +1,6 @@
 [package]
 name = "bluerobotics-ping"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["Patrick José Pereira <patrickelectric@gmail.com>, Raul Victor Trombin <raulvtrombin@gmail.com>"]
 edition = "2021"
 build = "build/main.rs"
@@ -21,7 +21,7 @@ tokio = { version = "1.37.0", features = ["full"] }
 tokio-serial = "5.4.4"
 futures = "0.3.30"
 clap = { version = "4.5.4", features = ["derive"] }
-serde = { version = "1.0", features = ["derive"], optional = true}
+serde = { version = "1.0", features = ["derive"], optional = true }
 
 [dev-dependencies]
 tracing-test = "0.2.4"
