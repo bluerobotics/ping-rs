@@ -1,8 +1,11 @@
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
 use std::io::Write;
 
 pub const HEADER: [u8; 2] = ['B' as u8, 'R' as u8];
 
 #[derive(Clone, Debug, Default, PartialEq)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct ProtocolMessage {
     pub payload_length: u16,
     pub message_id: u16,
