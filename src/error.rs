@@ -1,11 +1,14 @@
-use crate::{common::NackStruct, decoder, message::ProtocolMessage};
+use crate::{decoder, message::ProtocolMessage};
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum PingError {
-    Io(std::io::Error),
+    Io(String),
     ParseError(decoder::ParseError),
-    TokioBroadcastError(tokio::sync::broadcast::error::RecvError),
-    TokioMpscError(tokio::sync::mpsc::error::SendError<ProtocolMessage>),
+    TokioBroadcastError(String),
+    TokioMpscError(String),
     JoinError,
     TimeoutError,
     TryFromError(ProtocolMessage),
@@ -14,12 +17,18 @@ pub enum PingError {
 
 impl From<std::io::Error> for PingError {
     fn from(err: std::io::Error) -> PingError {
-        PingError::Io(err)
+        PingError::Io(err.to_string())
     }
 }
 
-impl From<tokio_serial::Error> for PingError {
-    fn from(err: tokio_serial::Error) -> PingError {
-        PingError::Io(std::io::Error::new(std::io::ErrorKind::Other, err))
+impl From<tokio::sync::mpsc::error::SendError<ProtocolMessage>> for PingError {
+    fn from(err: tokio::sync::mpsc::error::SendError<ProtocolMessage>) -> PingError {
+        PingError::TokioMpscError(err.to_string())
+    }
+}
+
+impl From<tokio::sync::broadcast::error::RecvError> for PingError {
+    fn from(err: tokio::sync::broadcast::error::RecvError) -> PingError {
+        PingError::TokioBroadcastError(err.to_string())
     }
 }
