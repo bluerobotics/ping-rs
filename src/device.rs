@@ -83,10 +83,7 @@ impl Common {
     }
 
     pub async fn send_message(&self, message: ProtocolMessage) -> Result<(), PingError> {
-        match self.tx.send(message).await {
-            Ok(msg) => Ok(msg),
-            Err(err) => Err(PingError::TokioMpscError(err)),
-        }
+        self.tx.send(message).await.map_err(|err| err.into())
     }
 
     fn subscribe(&self) -> tokio::sync::broadcast::Receiver<ProtocolMessage> {
@@ -135,7 +132,7 @@ pub trait PingDevice {
                         return Ok(message.inner::<T>().unwrap().clone());
                     }
                     Err(broadcast::error::RecvError::Lagged(_)) => continue,
-                    Err(e) => return Err(PingError::TokioBroadcastError(e)),
+                    Err(e) => return Err(e.into()),
                 };
             }
         };
@@ -177,7 +174,7 @@ pub trait PingDevice {
                         };
                     }
                     Err(broadcast::error::RecvError::Lagged(_)) => continue,
-                    Err(e) => return Err(PingError::TokioBroadcastError(e)),
+                    Err(e) => return Err(e.into()),
                 };
             }
         };
