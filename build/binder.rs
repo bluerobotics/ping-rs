@@ -39,7 +39,7 @@ pub fn generate<W: Write>(modules: Vec<String>, out: &mut W) {
         let module_ident = quote::format_ident!("{module}");
         quote! {
             if let Ok(message) =
-                #module_ident::Messages::deserialize(protocol_message.message_id, &protocol_message.payload)
+                <#module_ident::Messages as DeserializeGenericMessage>::deserialize(protocol_message.message_id, &protocol_message.payload)
             {
                 return Ok(Messages::#pascal_case_ident(message));
             }
@@ -50,7 +50,7 @@ pub fn generate<W: Write>(modules: Vec<String>, out: &mut W) {
         let pascal_case_ident = quote::format_ident!("{}", module.to_case(Case::Pascal));
         let module_ident = quote::format_ident!("{module}");
         quote! {
-            if let Ok(message) = #module_ident::Messages::deserialize(message.message_id, &message.payload) {
+            if let Ok(message) = <#module_ident::Messages as DeserializeGenericMessage>::deserialize(message.message_id, &message.payload) {
                 return Ok(Messages::#pascal_case_ident(message));
             }
         }
@@ -152,9 +152,13 @@ pub fn generate<W: Write>(modules: Vec<String>, out: &mut W) {
     };
 
     let tokens = quote! {
+        #[cfg(feature = "serde")]
+        use serde::{Deserialize, Serialize};
+
         #(#modules_tokens)*
 
-        #[derive(Debug)]
+        #[derive(Debug, Clone)]
+        #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
         #enum_ident
 
         #try_from_ident

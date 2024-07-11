@@ -1,8 +1,11 @@
 use tracing::info;
 
 use crate::message::{ProtocolMessage, HEADER};
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum ParseError {
     InvalidStartByte,
     IncompleteData,
