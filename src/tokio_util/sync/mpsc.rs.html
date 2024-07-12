@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-util-0.6.10/src/sync/mpsc.rs`."><title>mpsc.rs - source</title><script> if (window.location.protocol !== "file:") document.write(`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2">`)</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e935ef01ae1c1829.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="tokio_util" data-themes="" data-resource-suffix="" data-rustdoc-version="1.78.0 (9b00956e5 2024-04-29)" data-channel="1.78.0" data-search-js="search-42d8da7a6b9792c2.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-4c98445ec4002617.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-12cf3b4f4f9dc36d.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title">
-            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
-    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../tokio_util/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/tokio-util-0.7.11/src/sync/mpsc.rs`."><title>mpsc.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="tokio_util" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../tokio_util/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -221,224 +219,432 @@
 <a href="#219" id="219">219</a>
 <a href="#220" id="220">220</a>
 <a href="#221" id="221">221</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>futures_core::ready;
-<span class="kw">use </span>futures_sink::Sink;
+<a href="#222" id="222">222</a>
+<a href="#223" id="223">223</a>
+<a href="#224" id="224">224</a>
+<a href="#225" id="225">225</a>
+<a href="#226" id="226">226</a>
+<a href="#227" id="227">227</a>
+<a href="#228" id="228">228</a>
+<a href="#229" id="229">229</a>
+<a href="#230" id="230">230</a>
+<a href="#231" id="231">231</a>
+<a href="#232" id="232">232</a>
+<a href="#233" id="233">233</a>
+<a href="#234" id="234">234</a>
+<a href="#235" id="235">235</a>
+<a href="#236" id="236">236</a>
+<a href="#237" id="237">237</a>
+<a href="#238" id="238">238</a>
+<a href="#239" id="239">239</a>
+<a href="#240" id="240">240</a>
+<a href="#241" id="241">241</a>
+<a href="#242" id="242">242</a>
+<a href="#243" id="243">243</a>
+<a href="#244" id="244">244</a>
+<a href="#245" id="245">245</a>
+<a href="#246" id="246">246</a>
+<a href="#247" id="247">247</a>
+<a href="#248" id="248">248</a>
+<a href="#249" id="249">249</a>
+<a href="#250" id="250">250</a>
+<a href="#251" id="251">251</a>
+<a href="#252" id="252">252</a>
+<a href="#253" id="253">253</a>
+<a href="#254" id="254">254</a>
+<a href="#255" id="255">255</a>
+<a href="#256" id="256">256</a>
+<a href="#257" id="257">257</a>
+<a href="#258" id="258">258</a>
+<a href="#259" id="259">259</a>
+<a href="#260" id="260">260</a>
+<a href="#261" id="261">261</a>
+<a href="#262" id="262">262</a>
+<a href="#263" id="263">263</a>
+<a href="#264" id="264">264</a>
+<a href="#265" id="265">265</a>
+<a href="#266" id="266">266</a>
+<a href="#267" id="267">267</a>
+<a href="#268" id="268">268</a>
+<a href="#269" id="269">269</a>
+<a href="#270" id="270">270</a>
+<a href="#271" id="271">271</a>
+<a href="#272" id="272">272</a>
+<a href="#273" id="273">273</a>
+<a href="#274" id="274">274</a>
+<a href="#275" id="275">275</a>
+<a href="#276" id="276">276</a>
+<a href="#277" id="277">277</a>
+<a href="#278" id="278">278</a>
+<a href="#279" id="279">279</a>
+<a href="#280" id="280">280</a>
+<a href="#281" id="281">281</a>
+<a href="#282" id="282">282</a>
+<a href="#283" id="283">283</a>
+<a href="#284" id="284">284</a>
+<a href="#285" id="285">285</a>
+<a href="#286" id="286">286</a>
+<a href="#287" id="287">287</a>
+<a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
+<a href="#294" id="294">294</a>
+<a href="#295" id="295">295</a>
+<a href="#296" id="296">296</a>
+<a href="#297" id="297">297</a>
+<a href="#298" id="298">298</a>
+<a href="#299" id="299">299</a>
+<a href="#300" id="300">300</a>
+<a href="#301" id="301">301</a>
+<a href="#302" id="302">302</a>
+<a href="#303" id="303">303</a>
+<a href="#304" id="304">304</a>
+<a href="#305" id="305">305</a>
+<a href="#306" id="306">306</a>
+<a href="#307" id="307">307</a>
+<a href="#308" id="308">308</a>
+<a href="#309" id="309">309</a>
+<a href="#310" id="310">310</a>
+<a href="#311" id="311">311</a>
+<a href="#312" id="312">312</a>
+<a href="#313" id="313">313</a>
+<a href="#314" id="314">314</a>
+<a href="#315" id="315">315</a>
+<a href="#316" id="316">316</a>
+<a href="#317" id="317">317</a>
+<a href="#318" id="318">318</a>
+<a href="#319" id="319">319</a>
+<a href="#320" id="320">320</a>
+<a href="#321" id="321">321</a>
+<a href="#322" id="322">322</a>
+<a href="#323" id="323">323</a>
+<a href="#324" id="324">324</a>
+<a href="#325" id="325">325</a>
+</pre></div><pre class="rust"><code><span class="kw">use </span>futures_sink::Sink;
 <span class="kw">use </span>std::pin::Pin;
-<span class="kw">use </span>std::sync::Arc;
 <span class="kw">use </span>std::task::{Context, Poll};
-<span class="kw">use </span>tokio::sync::mpsc::{error::SendError, Sender};
+<span class="kw">use </span>std::{fmt, mem};
+<span class="kw">use </span>tokio::sync::mpsc::OwnedPermit;
+<span class="kw">use </span>tokio::sync::mpsc::Sender;
 
 <span class="kw">use </span><span class="kw">super</span>::ReusableBoxFuture;
 
-<span class="comment">// This implementation was chosen over something based on permits because to get a
-// `tokio::sync::mpsc::Permit` out of the `inner` future, you must transmute the
-// lifetime on the permit to `'static`.
+<span class="doccomment">/// Error returned by the `PollSender` when the channel is closed.
+</span><span class="attr">#[derive(Debug)]
+</span><span class="kw">pub struct </span>PollSendError&lt;T&gt;(<span class="prelude-ty">Option</span>&lt;T&gt;);
 
-</span><span class="doccomment">/// A wrapper around [`mpsc::Sender`] that can be polled.
+<span class="kw">impl</span>&lt;T&gt; PollSendError&lt;T&gt; {
+    <span class="doccomment">/// Consumes the stored value, if any.
+    ///
+    /// If this error was encountered when calling `start_send`/`send_item`, this will be the item
+    /// that the caller attempted to send.  Otherwise, it will be `None`.
+    </span><span class="kw">pub fn </span>into_inner(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt; {
+        <span class="self">self</span>.<span class="number">0
+    </span>}
+}
+
+<span class="kw">impl</span>&lt;T&gt; fmt::Display <span class="kw">for </span>PollSendError&lt;T&gt; {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, fmt: <span class="kw-2">&amp;mut </span>fmt::Formatter&lt;<span class="lifetime">'_</span>&gt;) -&gt; fmt::Result {
+        <span class="macro">write!</span>(fmt, <span class="string">"channel closed"</span>)
+    }
+}
+
+<span class="kw">impl</span>&lt;T: fmt::Debug&gt; std::error::Error <span class="kw">for </span>PollSendError&lt;T&gt; {}
+
+<span class="attr">#[derive(Debug)]
+</span><span class="kw">enum </span>State&lt;T&gt; {
+    Idle(Sender&lt;T&gt;),
+    Acquiring,
+    ReadyToSend(OwnedPermit&lt;T&gt;),
+    Closed,
+}
+
+<span class="doccomment">/// A wrapper around [`mpsc::Sender`] that can be polled.
 ///
 /// [`mpsc::Sender`]: tokio::sync::mpsc::Sender
 </span><span class="attr">#[derive(Debug)]
 </span><span class="kw">pub struct </span>PollSender&lt;T&gt; {
-    <span class="doccomment">/// is none if closed
-    </span>sender: <span class="prelude-ty">Option</span>&lt;Arc&lt;Sender&lt;T&gt;&gt;&gt;,
-    is_sending: bool,
-    inner: ReusableBoxFuture&lt;<span class="prelude-ty">Result</span>&lt;(), SendError&lt;T&gt;&gt;&gt;,
+    sender: <span class="prelude-ty">Option</span>&lt;Sender&lt;T&gt;&gt;,
+    state: State&lt;T&gt;,
+    acquire: PollSenderFuture&lt;T&gt;,
 }
 
-<span class="comment">// By reusing the same async fn for both Some and None, we make sure every
-// future passed to ReusableBoxFuture has the same underlying type, and hence
-// the same size and alignment.
-</span><span class="kw">async fn </span>make_future&lt;T&gt;(data: <span class="prelude-ty">Option</span>&lt;(Arc&lt;Sender&lt;T&gt;&gt;, T)&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;(), SendError&lt;T&gt;&gt; {
+<span class="comment">// Creates a future for acquiring a permit from the underlying channel.  This is used to ensure
+// there's capacity for a send to complete.
+//
+// By reusing the same async fn for both `Some` and `None`, we make sure every future passed to
+// ReusableBoxFuture has the same underlying type, and hence the same size and alignment.
+</span><span class="kw">async fn </span>make_acquire_future&lt;T&gt;(
+    data: <span class="prelude-ty">Option</span>&lt;Sender&lt;T&gt;&gt;,
+) -&gt; <span class="prelude-ty">Result</span>&lt;OwnedPermit&lt;T&gt;, PollSendError&lt;T&gt;&gt; {
     <span class="kw">match </span>data {
-        <span class="prelude-val">Some</span>((sender, value)) =&gt; sender.send(value).<span class="kw">await</span>,
-        <span class="prelude-val">None </span>=&gt; <span class="macro">unreachable!</span>(
-            <span class="string">"This future should not be pollable, as is_sending should be set to false."
-        </span>),
+        <span class="prelude-val">Some</span>(sender) =&gt; sender
+            .reserve_owned()
+            .<span class="kw">await
+            </span>.map_err(|<span class="kw">_</span>| PollSendError(<span class="prelude-val">None</span>)),
+        <span class="prelude-val">None </span>=&gt; <span class="macro">unreachable!</span>(<span class="string">"this future should not be pollable in this state"</span>),
     }
 }
 
-<span class="kw">impl</span>&lt;T: Send + <span class="lifetime">'static</span>&gt; PollSender&lt;T&gt; {
-    <span class="doccomment">/// Create a new `PollSender`.
+<span class="kw">type </span>InnerFuture&lt;<span class="lifetime">'a</span>, T&gt; = ReusableBoxFuture&lt;<span class="lifetime">'a</span>, <span class="prelude-ty">Result</span>&lt;OwnedPermit&lt;T&gt;, PollSendError&lt;T&gt;&gt;&gt;;
+
+<span class="attr">#[derive(Debug)]
+</span><span class="comment">// TODO: This should be replace with a type_alias_impl_trait to eliminate `'static` and all the transmutes
+</span><span class="kw">struct </span>PollSenderFuture&lt;T&gt;(InnerFuture&lt;<span class="lifetime">'static</span>, T&gt;);
+
+<span class="kw">impl</span>&lt;T&gt; PollSenderFuture&lt;T&gt; {
+    <span class="doccomment">/// Create with an empty inner future with no `Send` bound.
+    </span><span class="kw">fn </span>empty() -&gt; <span class="self">Self </span>{
+        <span class="comment">// We don't use `make_acquire_future` here because our relaxed bounds on `T` are not
+        // compatible with the transitive bounds required by `Sender&lt;T&gt;`.
+        </span><span class="self">Self</span>(ReusableBoxFuture::new(<span class="kw">async </span>{ <span class="macro">unreachable!</span>() }))
+    }
+}
+
+<span class="kw">impl</span>&lt;T: Send&gt; PollSenderFuture&lt;T&gt; {
+    <span class="doccomment">/// Create with an empty inner future.
+    </span><span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
+        <span class="kw">let </span>v = InnerFuture::new(make_acquire_future(<span class="prelude-val">None</span>));
+        <span class="comment">// This is safe because `make_acquire_future(None)` is actually `'static`
+        </span><span class="self">Self</span>(<span class="kw">unsafe </span>{ mem::transmute::&lt;InnerFuture&lt;<span class="lifetime">'_</span>, T&gt;, InnerFuture&lt;<span class="lifetime">'static</span>, T&gt;&gt;(v) })
+    }
+
+    <span class="doccomment">/// Poll the inner future.
+    </span><span class="kw">fn </span>poll(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;OwnedPermit&lt;T&gt;, PollSendError&lt;T&gt;&gt;&gt; {
+        <span class="self">self</span>.<span class="number">0</span>.poll(cx)
+    }
+
+    <span class="doccomment">/// Replace the inner future.
+    </span><span class="kw">fn </span>set(<span class="kw-2">&amp;mut </span><span class="self">self</span>, sender: <span class="prelude-ty">Option</span>&lt;Sender&lt;T&gt;&gt;) {
+        <span class="kw">let </span>inner: <span class="kw-2">*mut </span>InnerFuture&lt;<span class="lifetime">'static</span>, T&gt; = <span class="kw-2">&amp;mut </span><span class="self">self</span>.<span class="number">0</span>;
+        <span class="kw">let </span>inner: <span class="kw-2">*mut </span>InnerFuture&lt;<span class="lifetime">'_</span>, T&gt; = inner.cast();
+        <span class="comment">// SAFETY: The `make_acquire_future(sender)` future must not exist after the type `T`
+        // becomes invalid, and this casts away the type-level lifetime check for that. However, the
+        // inner future is never moved out of this `PollSenderFuture&lt;T&gt;`, so the future will not
+        // live longer than the `PollSenderFuture&lt;T&gt;` lives. A `PollSenderFuture&lt;T&gt;` is guaranteed
+        // to not exist after the type `T` becomes invalid, because it is annotated with a `T`, so
+        // this is ok.
+        </span><span class="kw">let </span>inner = <span class="kw">unsafe </span>{ <span class="kw-2">&amp;mut *</span>inner };
+        inner.set(make_acquire_future(sender));
+    }
+}
+
+<span class="kw">impl</span>&lt;T: Send&gt; PollSender&lt;T&gt; {
+    <span class="doccomment">/// Creates a new `PollSender`.
     </span><span class="kw">pub fn </span>new(sender: Sender&lt;T&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            sender: <span class="prelude-val">Some</span>(Arc::new(sender)),
-            is_sending: <span class="bool-val">false</span>,
-            inner: ReusableBoxFuture::new(make_future(<span class="prelude-val">None</span>)),
+            sender: <span class="prelude-val">Some</span>(sender.clone()),
+            state: State::Idle(sender),
+            acquire: PollSenderFuture::new(),
         }
     }
 
-    <span class="doccomment">/// Start sending a new item.
+    <span class="kw">fn </span>take_state(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; State&lt;T&gt; {
+        mem::replace(<span class="kw-2">&amp;mut </span><span class="self">self</span>.state, State::Closed)
+    }
+
+    <span class="doccomment">/// Attempts to prepare the sender to receive a value.
     ///
-    /// This method panics if a send is currently in progress. To ensure that no
-    /// send is in progress, call `poll_send_done` first until it returns
-    /// `Poll::Ready`.
+    /// This method must be called and return `Poll::Ready(Ok(()))` prior to each call to
+    /// `send_item`.
     ///
-    /// If this method returns an error, that indicates that the channel is
-    /// closed. Note that this method is not guaranteed to return an error if
-    /// the channel is closed, but in that case the error would be reported by
-    /// the first call to `poll_send_done`.
-    </span><span class="kw">pub fn </span>start_send(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: T) -&gt; <span class="prelude-ty">Result</span>&lt;(), SendError&lt;T&gt;&gt; {
-        <span class="kw">if </span><span class="self">self</span>.is_sending {
-            <span class="macro">panic!</span>(<span class="string">"start_send called while not ready."</span>);
-        }
-        <span class="kw">match </span><span class="self">self</span>.sender.clone() {
-            <span class="prelude-val">Some</span>(sender) =&gt; {
-                <span class="self">self</span>.inner.set(make_future(<span class="prelude-val">Some</span>((sender, value))));
-                <span class="self">self</span>.is_sending = <span class="bool-val">true</span>;
-                <span class="prelude-val">Ok</span>(())
+    /// This method returns `Poll::Ready` once the underlying channel is ready to receive a value,
+    /// by reserving a slot in the channel for the item to be sent. If this method returns
+    /// `Poll::Pending`, the current task is registered to be notified (via
+    /// `cx.waker().wake_by_ref()`) when `poll_reserve` should be called again.
+    ///
+    /// # Errors
+    ///
+    /// If the channel is closed, an error will be returned.  This is a permanent state.
+    </span><span class="kw">pub fn </span>poll_reserve(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;(), PollSendError&lt;T&gt;&gt;&gt; {
+        <span class="kw">loop </span>{
+            <span class="kw">let </span>(result, next_state) = <span class="kw">match </span><span class="self">self</span>.take_state() {
+                State::Idle(sender) =&gt; {
+                    <span class="comment">// Start trying to acquire a permit to reserve a slot for our send, and
+                    // immediately loop back around to poll it the first time.
+                    </span><span class="self">self</span>.acquire.set(<span class="prelude-val">Some</span>(sender));
+                    (<span class="prelude-val">None</span>, State::Acquiring)
+                }
+                State::Acquiring =&gt; <span class="kw">match </span><span class="self">self</span>.acquire.poll(cx) {
+                    <span class="comment">// Channel has capacity.
+                    </span>Poll::Ready(<span class="prelude-val">Ok</span>(permit)) =&gt; {
+                        (<span class="prelude-val">Some</span>(Poll::Ready(<span class="prelude-val">Ok</span>(()))), State::ReadyToSend(permit))
+                    }
+                    <span class="comment">// Channel is closed.
+                    </span>Poll::Ready(<span class="prelude-val">Err</span>(e)) =&gt; (<span class="prelude-val">Some</span>(Poll::Ready(<span class="prelude-val">Err</span>(e))), State::Closed),
+                    <span class="comment">// Channel doesn't have capacity yet, so we need to wait.
+                    </span>Poll::Pending =&gt; (<span class="prelude-val">Some</span>(Poll::Pending), State::Acquiring),
+                },
+                <span class="comment">// We're closed, either by choice or because the underlying sender was closed.
+                </span>s @ State::Closed =&gt; (<span class="prelude-val">Some</span>(Poll::Ready(<span class="prelude-val">Err</span>(PollSendError(<span class="prelude-val">None</span>)))), s),
+                <span class="comment">// We're already ready to send an item.
+                </span>s @ State::ReadyToSend(<span class="kw">_</span>) =&gt; (<span class="prelude-val">Some</span>(Poll::Ready(<span class="prelude-val">Ok</span>(()))), s),
+            };
+
+            <span class="self">self</span>.state = next_state;
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(result) = result {
+                <span class="kw">return </span>result;
             }
-            <span class="prelude-val">None </span>=&gt; <span class="prelude-val">Err</span>(SendError(value)),
         }
     }
 
-    <span class="doccomment">/// If a send is in progress, poll for its completion. If no send is in progress,
-    /// this method returns `Poll::Ready(Ok(()))`.
+    <span class="doccomment">/// Sends an item to the channel.
     ///
-    /// This method can return the following values:
+    /// Before calling `send_item`, `poll_reserve` must be called with a successful return
+    /// value of `Poll::Ready(Ok(()))`.
     ///
-    ///  - `Poll::Ready(Ok(()))` if the in-progress send has been completed, or there is
-    ///    no send in progress (even if the channel is closed).
-    ///  - `Poll::Ready(Err(err))` if the in-progress send failed because the channel has
-    ///    been closed.
-    ///  - `Poll::Pending` if a send is in progress, but it could not complete now.
+    /// # Errors
     ///
-    /// When this method returns `Poll::Pending`, the current task is scheduled
-    /// to receive a wakeup when the message is sent, or when the entire channel
-    /// is closed (but not if just this sender is closed by
-    /// `close_this_sender`). Note that on multiple calls to `poll_send_done`,
-    /// only the `Waker` from the `Context` passed to the most recent call is
-    /// scheduled to receive a wakeup.
+    /// If the channel is closed, an error will be returned.  This is a permanent state.
     ///
-    /// If this method returns `Poll::Ready`, then `start_send` is guaranteed to
-    /// not panic.
-    </span><span class="kw">pub fn </span>poll_send_done(<span class="kw-2">&amp;mut </span><span class="self">self</span>, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;(), SendError&lt;T&gt;&gt;&gt; {
-        <span class="kw">if </span>!<span class="self">self</span>.is_sending {
-            <span class="kw">return </span>Poll::Ready(<span class="prelude-val">Ok</span>(()));
-        }
+    /// # Panics
+    ///
+    /// If `poll_reserve` was not successfully called prior to calling `send_item`, then this method
+    /// will panic.
+    </span><span class="attr">#[track_caller]
+    </span><span class="kw">pub fn </span>send_item(<span class="kw-2">&amp;mut </span><span class="self">self</span>, value: T) -&gt; <span class="prelude-ty">Result</span>&lt;(), PollSendError&lt;T&gt;&gt; {
+        <span class="kw">let </span>(result, next_state) = <span class="kw">match </span><span class="self">self</span>.take_state() {
+            State::Idle(<span class="kw">_</span>) | State::Acquiring =&gt; {
+                <span class="macro">panic!</span>(<span class="string">"`send_item` called without first calling `poll_reserve`"</span>)
+            }
+            <span class="comment">// We have a permit to send our item, so go ahead, which gets us our sender back.
+            </span>State::ReadyToSend(permit) =&gt; (<span class="prelude-val">Ok</span>(()), State::Idle(permit.send(value))),
+            <span class="comment">// We're closed, either by choice or because the underlying sender was closed.
+            </span>State::Closed =&gt; (<span class="prelude-val">Err</span>(PollSendError(<span class="prelude-val">Some</span>(value))), State::Closed),
+        };
 
-        <span class="kw">let </span>result = <span class="self">self</span>.inner.poll(cx);
-        <span class="kw">if </span>result.is_ready() {
-            <span class="self">self</span>.is_sending = <span class="bool-val">false</span>;
-        }
-        <span class="kw">if let </span>Poll::Ready(<span class="prelude-val">Err</span>(<span class="kw">_</span>)) = <span class="kw-2">&amp;</span>result {
-            <span class="self">self</span>.sender = <span class="prelude-val">None</span>;
-        }
+        <span class="comment">// Handle deferred closing if `close` was called between `poll_reserve` and `send_item`.
+        </span><span class="self">self</span>.state = <span class="kw">if </span><span class="self">self</span>.sender.is_some() {
+            next_state
+        } <span class="kw">else </span>{
+            State::Closed
+        };
         result
     }
 
-    <span class="doccomment">/// Check whether the channel is ready to send more messages now.
+    <span class="doccomment">/// Checks whether this sender is been closed.
     ///
-    /// If this method returns `true`, then `start_send` is guaranteed to not
-    /// panic.
-    ///
-    /// If the channel is closed, this method returns `true`.
-    </span><span class="kw">pub fn </span>is_ready(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        !<span class="self">self</span>.is_sending
+    /// The underlying channel that this sender was wrapping may still be open.
+    </span><span class="kw">pub fn </span>is_closed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+        <span class="macro">matches!</span>(<span class="self">self</span>.state, State::Closed) || <span class="self">self</span>.sender.is_none()
     }
 
-    <span class="doccomment">/// Check whether the channel has been closed.
-    </span><span class="kw">pub fn </span>is_closed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="kw">match </span><span class="kw-2">&amp;</span><span class="self">self</span>.sender {
-            <span class="prelude-val">Some</span>(sender) =&gt; sender.is_closed(),
-            <span class="prelude-val">None </span>=&gt; <span class="bool-val">true</span>,
+    <span class="doccomment">/// Gets a reference to the `Sender` of the underlying channel.
+    ///
+    /// If `PollSender` has been closed, `None` is returned. The underlying channel that this sender
+    /// was wrapping may still be open.
+    </span><span class="kw">pub fn </span>get_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Sender&lt;T&gt;&gt; {
+        <span class="self">self</span>.sender.as_ref()
+    }
+
+    <span class="doccomment">/// Closes this sender.
+    ///
+    /// No more messages will be able to be sent from this sender, but the underlying channel will
+    /// remain open until all senders have dropped, or until the [`Receiver`] closes the channel.
+    ///
+    /// If a slot was previously reserved by calling `poll_reserve`, then a final call can be made
+    /// to `send_item` in order to consume the reserved slot.  After that, no further sends will be
+    /// possible.  If you do not intend to send another item, you can release the reserved slot back
+    /// to the underlying sender by calling [`abort_send`].
+    ///
+    /// [`abort_send`]: crate::sync::PollSender::abort_send
+    /// [`Receiver`]: tokio::sync::mpsc::Receiver
+    </span><span class="kw">pub fn </span>close(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
+        <span class="comment">// Mark ourselves officially closed by dropping our main sender.
+        </span><span class="self">self</span>.sender = <span class="prelude-val">None</span>;
+
+        <span class="comment">// If we're already idle, closed, or we haven't yet reserved a slot, we can quickly
+        // transition to the closed state.  Otherwise, leave the existing permit in place for the
+        // caller if they want to complete the send.
+        </span><span class="kw">match </span><span class="self">self</span>.state {
+            State::Idle(<span class="kw">_</span>) =&gt; <span class="self">self</span>.state = State::Closed,
+            State::Acquiring =&gt; {
+                <span class="self">self</span>.acquire.set(<span class="prelude-val">None</span>);
+                <span class="self">self</span>.state = State::Closed;
+            }
+            <span class="kw">_ </span>=&gt; {}
         }
     }
 
-    <span class="doccomment">/// Clone the underlying `Sender`.
+    <span class="doccomment">/// Aborts the current in-progress send, if any.
     ///
-    /// If this method returns `None`, then the channel is closed. (But it is
-    /// not guaranteed to return `None` if the channel is closed.)
-    </span><span class="kw">pub fn </span>clone_inner(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Sender&lt;T&gt;&gt; {
-        <span class="self">self</span>.sender.as_ref().map(|sender| (<span class="kw-2">&amp;**</span>sender).clone())
-    }
-
-    <span class="doccomment">/// Access the underlying `Sender`.
-    ///
-    /// If this method returns `None`, then the channel is closed. (But it is
-    /// not guaranteed to return `None` if the channel is closed.)
-    </span><span class="kw">pub fn </span>inner_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Sender&lt;T&gt;&gt; {
-        <span class="self">self</span>.sender.as_deref()
-    }
-
-    <span class="comment">// This operation is supported because it is required by the Sink trait.
-    </span><span class="doccomment">/// Close this sender. No more messages can be sent from this sender.
-    ///
-    /// Note that this only closes the channel from the view-point of this
-    /// sender. The channel remains open until all senders have gone away, or
-    /// until the [`Receiver`] closes the channel.
-    ///
-    /// If there is a send in progress when this method is called, that send is
-    /// unaffected by this operation, and `poll_send_done` can still be called
-    /// to complete that send.
-    ///
-    /// [`Receiver`]: tokio::sync::mpsc::Receiver
-    </span><span class="kw">pub fn </span>close_this_sender(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
-        <span class="self">self</span>.sender = <span class="prelude-val">None</span>;
-    }
-
-    <span class="doccomment">/// Abort the current in-progress send, if any.
-    ///
-    /// Returns `true` if a send was aborted.
+    /// Returns `true` if a send was aborted.  If the sender was closed prior to calling
+    /// `abort_send`, then the sender will remain in the closed state, otherwise the sender will be
+    /// ready to attempt another send.
     </span><span class="kw">pub fn </span>abort_send(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; bool {
-        <span class="kw">if </span><span class="self">self</span>.is_sending {
-            <span class="self">self</span>.inner.set(make_future(<span class="prelude-val">None</span>));
-            <span class="self">self</span>.is_sending = <span class="bool-val">false</span>;
-            <span class="bool-val">true
-        </span>} <span class="kw">else </span>{
-            <span class="bool-val">false
-        </span>}
+        <span class="comment">// We may have been closed in the meantime, after a call to `poll_reserve` already
+        // succeeded.  We'll check if `self.sender` is `None` to see if we should transition to the
+        // closed state when we actually abort a send, rather than resetting ourselves back to idle.
+
+        </span><span class="kw">let </span>(result, next_state) = <span class="kw">match </span><span class="self">self</span>.take_state() {
+            <span class="comment">// We're currently trying to reserve a slot to send into.
+            </span>State::Acquiring =&gt; {
+                <span class="comment">// Replacing the future drops the in-flight one.
+                </span><span class="self">self</span>.acquire.set(<span class="prelude-val">None</span>);
+
+                <span class="comment">// If we haven't closed yet, we have to clone our stored sender since we have no way
+                // to get it back from the acquire future we just dropped.
+                </span><span class="kw">let </span>state = <span class="kw">match </span><span class="self">self</span>.sender.clone() {
+                    <span class="prelude-val">Some</span>(sender) =&gt; State::Idle(sender),
+                    <span class="prelude-val">None </span>=&gt; State::Closed,
+                };
+                (<span class="bool-val">true</span>, state)
+            }
+            <span class="comment">// We got the permit.  If we haven't closed yet, get the sender back.
+            </span>State::ReadyToSend(permit) =&gt; {
+                <span class="kw">let </span>state = <span class="kw">if </span><span class="self">self</span>.sender.is_some() {
+                    State::Idle(permit.release())
+                } <span class="kw">else </span>{
+                    State::Closed
+                };
+                (<span class="bool-val">true</span>, state)
+            }
+            s =&gt; (<span class="bool-val">false</span>, s),
+        };
+
+        <span class="self">self</span>.state = next_state;
+        result
     }
 }
 
 <span class="kw">impl</span>&lt;T&gt; Clone <span class="kw">for </span>PollSender&lt;T&gt; {
-    <span class="doccomment">/// Clones this `PollSender`. The resulting clone will not have any
-    /// in-progress send operations, even if the current `PollSender` does.
+    <span class="doccomment">/// Clones this `PollSender`.
+    ///
+    /// The resulting `PollSender` will have an initial state identical to calling `PollSender::new`.
     </span><span class="kw">fn </span>clone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; PollSender&lt;T&gt; {
+        <span class="kw">let </span>(sender, state) = <span class="kw">match </span><span class="self">self</span>.sender.clone() {
+            <span class="prelude-val">Some</span>(sender) =&gt; (<span class="prelude-val">Some</span>(sender.clone()), State::Idle(sender)),
+            <span class="prelude-val">None </span>=&gt; (<span class="prelude-val">None</span>, State::Closed),
+        };
+
         <span class="self">Self </span>{
-            sender: <span class="self">self</span>.sender.clone(),
-            is_sending: <span class="bool-val">false</span>,
-            inner: ReusableBoxFuture::new(<span class="kw">async </span>{ <span class="macro">unreachable!</span>() }),
+            sender,
+            state,
+            acquire: PollSenderFuture::empty(),
         }
     }
 }
 
-<span class="kw">impl</span>&lt;T: Send + <span class="lifetime">'static</span>&gt; Sink&lt;T&gt; <span class="kw">for </span>PollSender&lt;T&gt; {
-    <span class="kw">type </span>Error = SendError&lt;T&gt;;
+<span class="kw">impl</span>&lt;T: Send&gt; Sink&lt;T&gt; <span class="kw">for </span>PollSender&lt;T&gt; {
+    <span class="kw">type </span>Error = PollSendError&lt;T&gt;;
 
-    <span class="doccomment">/// This is equivalent to calling [`poll_send_done`].
-    ///
-    /// [`poll_send_done`]: PollSender::poll_send_done
-    </span><span class="kw">fn </span>poll_ready(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt;&gt; {
-        Pin::into_inner(<span class="self">self</span>).poll_send_done(cx)
+    <span class="kw">fn </span>poll_ready(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt;&gt; {
+        Pin::into_inner(<span class="self">self</span>).poll_reserve(cx)
     }
 
-    <span class="doccomment">/// This is equivalent to calling [`poll_send_done`].
-    ///
-    /// [`poll_send_done`]: PollSender::poll_send_done
-    </span><span class="kw">fn </span>poll_flush(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt;&gt; {
-        Pin::into_inner(<span class="self">self</span>).poll_send_done(cx)
+    <span class="kw">fn </span>poll_flush(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, _cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt;&gt; {
+        Poll::Ready(<span class="prelude-val">Ok</span>(()))
     }
 
-    <span class="doccomment">/// This is equivalent to calling [`start_send`].
-    ///
-    /// [`start_send`]: PollSender::start_send
-    </span><span class="kw">fn </span>start_send(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, item: T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
-        Pin::into_inner(<span class="self">self</span>).start_send(item)
+    <span class="kw">fn </span>start_send(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, item: T) -&gt; <span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt; {
+        Pin::into_inner(<span class="self">self</span>).send_item(item)
     }
 
-    <span class="doccomment">/// This method will first flush the `PollSender`, and then close it by
-    /// calling [`close_this_sender`].
-    ///
-    /// If a send fails while flushing because the [`Receiver`] has gone away,
-    /// then this function returns an error. The channel is still successfully
-    /// closed in this situation.
-    ///
-    /// [`close_this_sender`]: PollSender::close_this_sender
-    /// [`Receiver`]: tokio::sync::mpsc::Receiver
-    </span><span class="kw">fn </span>poll_close(<span class="kw-2">mut </span><span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt;&gt; {
-        <span class="macro">ready!</span>(<span class="self">self</span>.as_mut().poll_flush(cx))<span class="question-mark">?</span>;
-
-        Pin::into_inner(<span class="self">self</span>).close_this_sender();
+    <span class="kw">fn </span>poll_close(<span class="self">self</span>: Pin&lt;<span class="kw-2">&amp;mut </span><span class="self">Self</span>&gt;, _cx: <span class="kw-2">&amp;mut </span>Context&lt;<span class="lifetime">'_</span>&gt;) -&gt; Poll&lt;<span class="prelude-ty">Result</span>&lt;(), <span class="self">Self</span>::Error&gt;&gt; {
+        Pin::into_inner(<span class="self">self</span>).close();
         Poll::Ready(<span class="prelude-val">Ok</span>(()))
     }
 }
