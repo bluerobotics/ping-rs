@@ -9,7 +9,7 @@ description = "This crate serves as the entry point for embedding applications u
 homepage = "https://bluerobotics.com/store/sonars/echosounders/ping-sonar-r2-rp/"
 documentation = "https://docs.bluerobotics.com/ping-rs/bluerobotics_ping/"
 repository = "https://github.com/bluerobotics/ping-rs"
-categories = ["BlueRobotics", "Embedded development", "Science"]
+categories = ["science::robotics", "embedded", "hardware-support"]
 keywords = ["BlueRobotics", "embedded", "sonar", "robotics", "ROV"]
 readme = "README.md"
 
