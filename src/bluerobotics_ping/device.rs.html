@@ -218,8 +218,6 @@
 <a href="#218" id="218">218</a>
 <a href="#219" id="219">219</a>
 <a href="#220" id="220">220</a>
-<a href="#221" id="221">221</a>
-<a href="#222" id="222">222</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::convert::TryFrom;
 
 <span class="kw">use </span>futures::{
@@ -246,7 +244,8 @@
 </span><span class="kw">pub use </span><span class="kw">crate</span>::ping1d::Device <span class="kw">as </span>Ping1D;
 <span class="kw">pub use </span><span class="kw">crate</span>::ping360::Device <span class="kw">as </span>Ping360;
 
-<span class="kw">pub struct </span>Common {
+<span class="attr">#[derive(Debug)]
+</span><span class="kw">pub struct </span>Common {
     tx: mpsc::Sender&lt;ProtocolMessage&gt;,
     rx: broadcast::Receiver&lt;ProtocolMessage&gt;,
 }
@@ -305,10 +304,7 @@
     }
 
     <span class="kw">pub async fn </span>send_message(<span class="kw-2">&amp;</span><span class="self">self</span>, message: ProtocolMessage) -&gt; <span class="prelude-ty">Result</span>&lt;(), PingError&gt; {
-        <span class="kw">match </span><span class="self">self</span>.tx.send(message).<span class="kw">await </span>{
-            <span class="prelude-val">Ok</span>(msg) =&gt; <span class="prelude-val">Ok</span>(msg),
-            <span class="prelude-val">Err</span>(err) =&gt; <span class="prelude-val">Err</span>(PingError::TokioMpscError(err)),
-        }
+        <span class="self">self</span>.tx.send(message).<span class="kw">await</span>.map_err(|err| err.into())
     }
 
     <span class="kw">fn </span>subscribe(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; tokio::sync::broadcast::Receiver&lt;ProtocolMessage&gt; {
@@ -357,7 +353,7 @@
                         <span class="kw">return </span><span class="prelude-val">Ok</span>(message.inner::&lt;T&gt;().unwrap().clone());
                     }
                     <span class="prelude-val">Err</span>(broadcast::error::RecvError::Lagged(<span class="kw">_</span>)) =&gt; <span class="kw">continue</span>,
-                    <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(PingError::TokioBroadcastError(e)),
+                    <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e.into()),
                 };
             }
         };
@@ -399,7 +395,7 @@
                         </span>};
                     }
                     <span class="prelude-val">Err</span>(broadcast::error::RecvError::Lagged(<span class="kw">_</span>)) =&gt; <span class="kw">continue</span>,
-                    <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(PingError::TokioBroadcastError(e)),
+                    <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(e.into()),
                 };
             }
         };
