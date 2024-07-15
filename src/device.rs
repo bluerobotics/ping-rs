@@ -24,6 +24,7 @@ use crate::{
 pub use crate::ping1d::Device as Ping1D;
 pub use crate::ping360::Device as Ping360;
 
+#[derive(Debug)]
 pub struct Common {
     tx: mpsc::Sender<ProtocolMessage>,
     rx: broadcast::Receiver<ProtocolMessage>,

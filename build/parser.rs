@@ -625,6 +625,7 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
         #[cfg(feature = "serde")]
         use serde::{Deserialize, Serialize};
 
+        #[derive(Debug)]
         pub struct Device {
             pub common: Common,
         }
