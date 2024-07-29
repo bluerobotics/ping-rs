@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/work/ping-rs/ping-rs/target/debug/build/bluerobotics-ping-f29c5556899a866d/out/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../../../../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../../../../../../../static.files/rustdoc-081576b923113409.css"><meta name="rustdoc-vars" data-root-path="../../../../../../../../../../../../" data-static-root-path="../../../../../../../../../../../../static.files/" data-current-crate="bluerobotics_ping" data-themes="" data-resource-suffix="" data-rustdoc-version="1.79.0 (129f3b996 2024-06-10)" data-channel="1.79.0" data-search-js="search-bf21c90c8c1d92b1.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../../../../../../../../static.files/storage-e32f0c247825364d.js"></script><script defer src="../../../../../../../../../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../../../../../../../../../src-files.js"></script><script defer src="../../../../../../../../../../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../../../../../../../../../../static.files/noscript-09095024cf37855e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../../../../../../../../../../bluerobotics_ping/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Type ‘S’ or ‘/’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../../../../../../../../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../../../../../../../../../settings.html" title="settings">Settings</a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/work/ping-rs/ping-rs/target/debug/build/bluerobotics-ping-c74a82ac31934c5f/out/mod.rs`."><title>mod.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../../../../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../../../../../../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../../../../../../../../../../../" data-static-root-path="../../../../../../../../../../../../static.files/" data-current-crate="bluerobotics_ping" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0 (051478957 2024-07-21)" data-channel="1.80.0" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../../../../../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../../../../../../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../../../../../../../../../src-files.js"></script><script defer src="../../../../../../../../../../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../../../../../../../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -153,35 +153,35 @@
 <span class="kw">pub mod </span>common {
     <span class="macro">include!</span>(<span class="string">"common.rs"</span>);
 }
-<span class="kw">pub mod </span>ping1d {
-    <span class="macro">include!</span>(<span class="string">"ping1d.rs"</span>);
-}
-<span class="kw">pub mod </span>omniscan450 {
-    <span class="macro">include!</span>(<span class="string">"omniscan450.rs"</span>);
+<span class="kw">pub mod </span>ping360 {
+    <span class="macro">include!</span>(<span class="string">"ping360.rs"</span>);
 }
 <span class="kw">pub mod </span>bluebps {
     <span class="macro">include!</span>(<span class="string">"bluebps.rs"</span>);
 }
-<span class="kw">pub mod </span>ping360 {
-    <span class="macro">include!</span>(<span class="string">"ping360.rs"</span>);
+<span class="kw">pub mod </span>omniscan450 {
+    <span class="macro">include!</span>(<span class="string">"omniscan450.rs"</span>);
+}
+<span class="kw">pub mod </span>ping1d {
+    <span class="macro">include!</span>(<span class="string">"ping1d.rs"</span>);
 }
 <span class="attr">#[derive(Debug, Clone)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>Messages {
     Common(common::Messages),
-    Ping1D(ping1d::Messages),
-    Omniscan450(omniscan450::Messages),
-    Bluebps(bluebps::Messages),
     Ping360(ping360::Messages),
+    Bluebps(bluebps::Messages),
+    Omniscan450(omniscan450::Messages),
+    Ping1D(ping1d::Messages),
 }
 <span class="kw">impl </span>Messages {
     <span class="kw">pub fn </span>inner&lt;T: <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>T&gt; {
         <span class="kw">match </span><span class="self">self </span>{
             <span class="self">Self</span>::Common(inner_enum) =&gt; inner_enum.inner(),
-            <span class="self">Self</span>::Ping1D(inner_enum) =&gt; inner_enum.inner(),
-            <span class="self">Self</span>::Omniscan450(inner_enum) =&gt; inner_enum.inner(),
-            <span class="self">Self</span>::Bluebps(inner_enum) =&gt; inner_enum.inner(),
             <span class="self">Self</span>::Ping360(inner_enum) =&gt; inner_enum.inner(),
+            <span class="self">Self</span>::Bluebps(inner_enum) =&gt; inner_enum.inner(),
+            <span class="self">Self</span>::Omniscan450(inner_enum) =&gt; inner_enum.inner(),
+            <span class="self">Self</span>::Ping1D(inner_enum) =&gt; inner_enum.inner(),
         }
     }
 }
@@ -201,17 +201,11 @@
         ) {
             <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Common(message));
         }
-        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = &lt;ping1d::Messages <span class="kw">as </span>DeserializeGenericMessage&gt;::deserialize(
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = &lt;ping360::Messages <span class="kw">as </span>DeserializeGenericMessage&gt;::deserialize(
             message.message_id,
             <span class="kw-2">&amp;</span>message.payload,
         ) {
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping1D(message));
-        }
-        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = &lt;omniscan450::Messages <span class="kw">as </span>DeserializeGenericMessage&gt;::deserialize(
-            message.message_id,
-            <span class="kw-2">&amp;</span>message.payload,
-        ) {
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Omniscan450(message));
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping360(message));
         }
         <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = &lt;bluebps::Messages <span class="kw">as </span>DeserializeGenericMessage&gt;::deserialize(
             message.message_id,
@@ -219,11 +213,17 @@
         ) {
             <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Bluebps(message));
         }
-        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = &lt;ping360::Messages <span class="kw">as </span>DeserializeGenericMessage&gt;::deserialize(
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = &lt;omniscan450::Messages <span class="kw">as </span>DeserializeGenericMessage&gt;::deserialize(
             message.message_id,
             <span class="kw-2">&amp;</span>message.payload,
         ) {
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping360(message));
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Omniscan450(message));
+        }
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = &lt;ping1d::Messages <span class="kw">as </span>DeserializeGenericMessage&gt;::deserialize(
+            message.message_id,
+            <span class="kw-2">&amp;</span>message.payload,
+        ) {
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping1D(message));
         }
         <span class="prelude-val">Err</span>(<span class="string">"Unknown message"</span>.into())
     }
@@ -271,17 +271,11 @@
         ) {
             <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Common(message));
         }
-        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = &lt;ping1d::Messages <span class="kw">as </span>DeserializeGenericMessage&gt;::deserialize(
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = &lt;ping360::Messages <span class="kw">as </span>DeserializeGenericMessage&gt;::deserialize(
             protocol_message.message_id,
             <span class="kw-2">&amp;</span>protocol_message.payload,
         ) {
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping1D(message));
-        }
-        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = &lt;omniscan450::Messages <span class="kw">as </span>DeserializeGenericMessage&gt;::deserialize(
-            protocol_message.message_id,
-            <span class="kw-2">&amp;</span>protocol_message.payload,
-        ) {
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Omniscan450(message));
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping360(message));
         }
         <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = &lt;bluebps::Messages <span class="kw">as </span>DeserializeGenericMessage&gt;::deserialize(
             protocol_message.message_id,
@@ -289,11 +283,17 @@
         ) {
             <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Bluebps(message));
         }
-        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = &lt;ping360::Messages <span class="kw">as </span>DeserializeGenericMessage&gt;::deserialize(
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = &lt;omniscan450::Messages <span class="kw">as </span>DeserializeGenericMessage&gt;::deserialize(
             protocol_message.message_id,
             <span class="kw-2">&amp;</span>protocol_message.payload,
         ) {
-            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping360(message));
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Omniscan450(message));
+        }
+        <span class="kw">if let </span><span class="prelude-val">Ok</span>(message) = &lt;ping1d::Messages <span class="kw">as </span>DeserializeGenericMessage&gt;::deserialize(
+            protocol_message.message_id,
+            <span class="kw-2">&amp;</span>protocol_message.payload,
+        ) {
+            <span class="kw">return </span><span class="prelude-val">Ok</span>(Messages::Ping1D(message));
         }
         <span class="prelude-val">Err</span>(<span class="string">"Unknown message"</span>.into())
     }
