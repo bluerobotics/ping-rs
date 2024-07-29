@@ -406,7 +406,7 @@ impl MessageDefinition {
                         } else {
                             let length = self.payload.len();
                             let field_token = quote! {
-                                #name: String::from_utf8(payload[#b..#b + payload.len()].to_vec()).unwrap(),
+                                #name: String::from_utf8(payload[#b..payload.len()].to_vec()).unwrap(),
                             };
                             b += length;
                             field_token
