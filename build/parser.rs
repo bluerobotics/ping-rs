@@ -143,6 +143,7 @@ struct MessageDefinition {
     description: Option<String>,
     payload: Vec<Payload>,
     category: MessageDefinitionCategory,
+    returns_message: Option<String>,
 }
 
 #[derive(Debug, PartialEq)]
@@ -194,12 +195,22 @@ impl MessageDefinition {
                 .map(|element| Payload::from_json(element))
                 .collect(),
             category,
+            returns_message: value
+                .get("returns_message")
+                .and_then(|v| v.as_str().map(str::to_string)),
         }
     }
 
     pub fn emit_fn(&self) -> TokenStream {
         let struct_name = quote::format_ident!("{}Struct", self.name.to_case(Case::Pascal));
         let pascal_message_name = ident!(self.name.to_case(Case::Pascal));
+        let return_struct_name = match self.returns_message {
+            Some(ref message) => Some(quote::format_ident!(
+                "{}Struct",
+                message.to_case(Case::Pascal)
+            )),
+            None => None,
+        };
 
         let function_name = quote::format_ident!("{}", self.name.to_case(Case::Snake));
         let function_description = self
@@ -236,6 +247,7 @@ impl MessageDefinition {
 
         let function_token = match self.category {
             MessageDefinitionCategory::Set | MessageDefinitionCategory::Control => {
+                let mut return_type = quote! { () };
                 let result = if self.category == MessageDefinitionCategory::Set {
                     quote! {
                         let receiver = self.subscribe();
@@ -245,10 +257,22 @@ impl MessageDefinition {
                         self.wait_for_ack(receiver, #struct_name::id()).await
                     }
                 } else {
-                    quote! {
-                        self.get_common().send_message(package).await?;
+                    // For messages from Config category that returns a structure
+                    if let Some(value) = return_struct_name {
+                        return_type = quote! { #value };
+                        quote! {
+                            let receiver = self.subscribe();
 
-                        Ok(())
+                            self.get_common().send_message(package).await?;
+
+                            self.wait_for_message(receiver).await
+                        }
+                    } else {
+                        quote! {
+                            self.get_common().send_message(package).await?;
+
+                            Ok(())
+                        }
                     }
                 };
 
@@ -256,7 +280,7 @@ impl MessageDefinition {
                         #[doc = #function_description]
                         #[doc = "# Arguments"]
                         #(#function_parameters_description)*
-                        pub async fn #function_name(&self, #(#function_parameters),*) -> Result<(), PingError> {
+                        pub async fn #function_name(&self, #(#function_parameters),*) -> Result<#return_type, PingError> {
                             let request = Messages::#pascal_message_name(#struct_name {
                                 #(#function_assignments,)*
                             });
