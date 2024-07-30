@@ -1,6 +1,6 @@
 [package]
 name = "bluerobotics-ping"
-version = "0.2.4"
+version = "0.3.0"
 authors = ["Patrick José Pereira <patrickelectric@gmail.com>, Raul Victor Trombin <raulvtrombin@gmail.com>"]
 edition = "2021"
 build = "build/main.rs"
