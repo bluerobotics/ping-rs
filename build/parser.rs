@@ -398,6 +398,7 @@ impl MessageDefinition {
                         if let Some(size_type) = &vector.size_type {
                             let length_name = quote::format_ident!("{}_length", field.name);
                             let length_type = size_type.to_rust();
+                            let length_size = size_type.to_size();
                             let length = self.payload.len();
                             let field_token = {
                                 let value = match vector.data_type {
@@ -421,7 +422,7 @@ impl MessageDefinition {
                                 };
 
                                 quote! {
-                                    #length_name: payload.len() as #length_type,
+                                    #length_name: #length_type::from_le_bytes(payload[#b..#b + #length_size].try_into().expect("Wrong slice length")),
                                     #name: #value,
                                 }
                             };
