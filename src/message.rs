@@ -11,6 +11,7 @@ pub struct ProtocolMessage {
     pub message_id: u16,
     pub src_device_id: u8,
     pub dst_device_id: u8,
+    #[serde(with = "serde_bytes")]
     pub payload: Vec<u8>,
     pub checksum: u16,
 }
