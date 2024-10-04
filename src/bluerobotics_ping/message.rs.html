@@ -154,6 +154,7 @@
 <a href="#154" id="154">154</a>
 <a href="#155" id="155">155</a>
 <a href="#156" id="156">156</a>
+<a href="#157" id="157">157</a>
 </pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">"serde"</span>)]
 </span><span class="kw">use </span>serde::{Deserialize, Serialize};
 <span class="kw">use </span>std::io::Write;
@@ -167,7 +168,8 @@
     <span class="kw">pub </span>message_id: u16,
     <span class="kw">pub </span>src_device_id: u8,
     <span class="kw">pub </span>dst_device_id: u8,
-    <span class="kw">pub </span>payload: Vec&lt;u8&gt;,
+    <span class="attr">#[serde(with = <span class="string">"serde_bytes"</span>)]
+    </span><span class="kw">pub </span>payload: Vec&lt;u8&gt;,
     <span class="kw">pub </span>checksum: u16,
 }
 

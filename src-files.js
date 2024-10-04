@@ -40,6 +40,7 @@ var srcIndex = new Map(JSON.parse('[\
 ["quote",["",[],["ext.rs","format.rs","ident_fragment.rs","lib.rs","runtime.rs","spanned.rs","to_tokens.rs"]]],\
 ["scopeguard",["",[],["lib.rs"]]],\
 ["serde",["",[["de",[],["ignored_any.rs","impls.rs","mod.rs","seed.rs","size_hint.rs","value.rs"]],["private",[],["de.rs","doc.rs","mod.rs","ser.rs"]],["ser",[],["fmt.rs","impls.rs","impossible.rs","mod.rs"]]],["format.rs","integer128.rs","lib.rs","macros.rs"]]],\
+["serde_bytes",["",[],["bytearray.rs","bytebuf.rs","bytes.rs","de.rs","lib.rs","ser.rs"]]],\
 ["serde_derive",["",[["internals",[],["ast.rs","attr.rs","case.rs","check.rs","ctxt.rs","mod.rs","receiver.rs","respan.rs","symbol.rs"]]],["bound.rs","de.rs","dummy.rs","fragment.rs","lib.rs","pretend.rs","ser.rs","this.rs"]]],\
 ["serialport",["",[["posix",[],["enumerate.rs","error.rs","ioctl.rs","mod.rs","poll.rs","termios.rs","tty.rs"]]],["lib.rs"]]],\
 ["signal_hook_registry",["",[],["half_lock.rs","lib.rs"]]],\

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/work/ping-rs/ping-rs/target/debug/build/bluerobotics-ping-d3a294239e9b0899/out/ping360.rs`."><title>ping360.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../../../../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../../../../../../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../../../../../../../../../../../" data-static-root-path="../../../../../../../../../../../../static.files/" data-current-crate="bluerobotics_ping" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../../../../../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../../../../../../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../../../../../../../../../src-files.js"></script><script defer src="../../../../../../../../../../../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../../../../../../../../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/work/ping-rs/ping-rs/target/debug/build/bluerobotics-ping-faed39f0a1d41675/out/ping360.rs`."><title>ping360.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../../../../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../../../../../../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../../../../../../../../../../../" data-static-root-path="../../../../../../../../../../../../static.files/" data-current-crate="bluerobotics_ping" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../../../../../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../../../../../../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../../../../../../../../../src-files.js"></script><script defer src="../../../../../../../../../../../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../../../../../../../../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -703,6 +703,14 @@
 <a href="#703" id="703">703</a>
 <a href="#704" id="704">704</a>
 <a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
+<a href="#713" id="713">713</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::device::Common;
 <span class="kw">use </span><span class="kw">crate</span>::device::PingDevice;
 <span class="kw">use </span><span class="kw">crate</span>::error::PingError;
@@ -738,11 +746,11 @@
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>Messages {
     AutoDeviceData(AutoDeviceDataStruct),
-    Reset(ResetStruct),
     Transducer(TransducerStruct),
-    SetDeviceId(SetDeviceIdStruct),
     MotorOff(MotorOffStruct),
+    Reset(ResetStruct),
     AutoTransmit(AutoTransmitStruct),
+    SetDeviceId(SetDeviceIdStruct),
     DeviceData(DeviceDataStruct),
 }
 <span class="kw">impl </span>Messages {
@@ -751,17 +759,17 @@
             <span class="self">Self</span>::AutoDeviceData(inner_struct) =&gt; {
                 (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
             }
-            <span class="self">Self</span>::Reset(inner_struct) =&gt; (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;(),
             <span class="self">Self</span>::Transducer(inner_struct) =&gt; {
-                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
-            }
-            <span class="self">Self</span>::SetDeviceId(inner_struct) =&gt; {
                 (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
             }
             <span class="self">Self</span>::MotorOff(inner_struct) =&gt; {
                 (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
             }
+            <span class="self">Self</span>::Reset(inner_struct) =&gt; (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;(),
             <span class="self">Self</span>::AutoTransmit(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::SetDeviceId(inner_struct) =&gt; {
                 (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
             }
             <span class="self">Self</span>::DeviceData(inner_struct) =&gt; {
@@ -863,7 +871,11 @@
                     .try_into()
                     .expect(<span class="string">"Wrong slice length"</span>),
             ),
-            data_length: payload.len() <span class="kw">as </span>u16,
+            data_length: u16::from_le_bytes(
+                payload[<span class="number">18usize</span>..<span class="number">18usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
             data: payload[<span class="number">18usize</span>..payload.len()].to_vec(),
         }
     }
@@ -871,36 +883,6 @@
 <span class="kw">impl </span>MessageInfo <span class="kw">for </span>AutoDeviceDataStruct {
     <span class="kw">fn </span>id() -&gt; u16 {
         <span class="number">2301u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Reset the sonar. The bootloader may run depending on the selection according to the `bootloader` payload field. When the bootloader runs, the external LED flashes at 5Hz. If the bootloader is not contacted within 5 seconds, it will run the current program. If there is no program, then the bootloader will wait forever for a connection. Note that if you issue a reset then you will have to close all your open comm ports and go back to issuing either a discovery message for UDP or go through the break sequence for serial comms before you can talk to the sonar again."</span>]
-</span><span class="kw">pub struct </span>ResetStruct {
-    <span class="attr">#[doc = <span class="string">"0 = skip bootloader; 1 = run bootloader"</span>]
-    </span><span class="kw">pub </span>bootloader: u8,
-    <span class="attr">#[doc = <span class="string">"reserved"</span>]
-    </span><span class="kw">pub </span>reserved: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>ResetStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.bootloader.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>ResetStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            bootloader: payload[<span class="number">0usize</span>].into(),
-            reserved: payload[<span class="number">1usize</span>].into(),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>ResetStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">2600u16
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
@@ -983,36 +965,6 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Change the device id"</span>]
-</span><span class="kw">pub struct </span>SetDeviceIdStruct {
-    <span class="attr">#[doc = <span class="string">"Device ID (1-254). 0 and 255 are reserved."</span>]
-    </span><span class="kw">pub </span>id: u8,
-    <span class="attr">#[doc = <span class="string">"reserved"</span>]
-    </span><span class="kw">pub </span>reserved: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetDeviceIdStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.id.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetDeviceIdStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            id: payload[<span class="number">0usize</span>].into(),
-            reserved: payload[<span class="number">1usize</span>].into(),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetDeviceIdStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">2000u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 #[doc = <span class="string">"The sonar switches the current through the stepper motor windings off to save power. The sonar will send an ack message in response. The command timeout should be set to 50 msec. If the sonar is idle (not scanning) for more than 30 seconds then the motor current will automatically turn off. When the user sends any command that involves moving the transducer then the motor current is automatically re-enabled."</span>]
 </span><span class="kw">pub struct </span>MotorOffStruct {}
 <span class="kw">impl </span>SerializePayload <span class="kw">for </span>MotorOffStruct {
@@ -1029,6 +981,36 @@
 <span class="kw">impl </span>MessageInfo <span class="kw">for </span>MotorOffStruct {
     <span class="kw">fn </span>id() -&gt; u16 {
         <span class="number">2903u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Reset the sonar. The bootloader may run depending on the selection according to the `bootloader` payload field. When the bootloader runs, the external LED flashes at 5Hz. If the bootloader is not contacted within 5 seconds, it will run the current program. If there is no program, then the bootloader will wait forever for a connection. Note that if you issue a reset then you will have to close all your open comm ports and go back to issuing either a discovery message for UDP or go through the break sequence for serial comms before you can talk to the sonar again."</span>]
+</span><span class="kw">pub struct </span>ResetStruct {
+    <span class="attr">#[doc = <span class="string">"0 = skip bootloader; 1 = run bootloader"</span>]
+    </span><span class="kw">pub </span>bootloader: u8,
+    <span class="attr">#[doc = <span class="string">"reserved"</span>]
+    </span><span class="kw">pub </span>reserved: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>ResetStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.bootloader.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>ResetStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            bootloader: payload[<span class="number">0usize</span>].into(),
+            reserved: payload[<span class="number">1usize</span>].into(),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>ResetStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">2600u16
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
@@ -1119,6 +1101,36 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Change the device id"</span>]
+</span><span class="kw">pub struct </span>SetDeviceIdStruct {
+    <span class="attr">#[doc = <span class="string">"Device ID (1-254). 0 and 255 are reserved."</span>]
+    </span><span class="kw">pub </span>id: u8,
+    <span class="attr">#[doc = <span class="string">"reserved"</span>]
+    </span><span class="kw">pub </span>reserved: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetDeviceIdStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.id.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetDeviceIdStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            id: payload[<span class="number">0usize</span>].into(),
+            reserved: payload[<span class="number">1usize</span>].into(),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetDeviceIdStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">2000u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 #[doc = <span class="string">"This message is used to communicate the current sonar state. If the data field is populated, the other fields indicate the sonar state when the data was captured. The time taken before the response to the command is sent depends on the difference between the last angle scanned and the new angle in the parameters as well as the number of samples and sample interval (range). To allow for the worst case reponse time the command timeout should be set to 4000 msec."</span>]
 </span><span class="kw">pub struct </span>DeviceDataStruct {
     <span class="attr">#[doc = <span class="string">"Operating mode (1 for Ping360)"</span>]
@@ -1186,7 +1198,11 @@
                     .try_into()
                     .expect(<span class="string">"Wrong slice length"</span>),
             ),
-            data_length: payload.len() <span class="kw">as </span>u16,
+            data_length: u16::from_le_bytes(
+                payload[<span class="number">12usize</span>..<span class="number">12usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
             data: payload[<span class="number">12usize</span>..payload.len()].to_vec(),
         }
     }
@@ -1209,20 +1225,6 @@
     </span><span class="kw">pub async fn </span>auto_device_data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;AutoDeviceDataStruct, PingError&gt; {
         <span class="self">self</span>.request().<span class="kw">await
     </span>}
-    <span class="attr">#[doc = <span class="string">"Reset the sonar. The bootloader may run depending on the selection according to the `bootloader` payload field. When the bootloader runs, the external LED flashes at 5Hz. If the bootloader is not contacted within 5 seconds, it will run the current program. If there is no program, then the bootloader will wait forever for a connection. Note that if you issue a reset then you will have to close all your open comm ports and go back to issuing either a discovery message for UDP or go through the break sequence for serial comms before you can talk to the sonar again."</span>]
-    #[doc = <span class="string">"# Arguments"</span>]
-    #[doc = <span class="string">"* `bootloader` - 0 = skip bootloader; 1 = run bootloader"</span>]
-    #[doc = <span class="string">"* `reserved` - reserved"</span>]
-    </span><span class="kw">pub async fn </span>reset(<span class="kw-2">&amp;</span><span class="self">self</span>, bootloader: u8, reserved: u8) -&gt; <span class="prelude-ty">Result</span>&lt;(), PingError&gt; {
-        <span class="kw">let </span>request = Messages::Reset(ResetStruct {
-            bootloader,
-            reserved,
-        });
-        <span class="kw">let </span><span class="kw-2">mut </span>package = ProtocolMessage::new();
-        package.set_message(<span class="kw-2">&amp;</span>request);
-        <span class="self">self</span>.get_common().send_message(package).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(())
-    }
     <span class="attr">#[doc = <span class="string">"The transducer will apply the commanded settings. The sonar will reply with a `device_data` message. If the `transmit` field is 0, the sonar will not transmit after locating the transducer, and the `data` field in the `device_data` message reply will be empty. If the `transmit` field is 1, the sonar will make an acoustic transmission after locating the transducer, and the resulting data will be uploaded in the `data` field of the `device_data` message reply. To allow for the worst case response time the command timeout should be set to 4000 msec."</span>]
     #[doc = <span class="string">"# Arguments"</span>]
     #[doc = <span class="string">"* `mode` - Operating mode (1 for Ping360)"</span>]
@@ -1263,22 +1265,24 @@
         <span class="self">self</span>.get_common().send_message(package).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="self">self</span>.wait_for_message(receiver).<span class="kw">await
     </span>}
-    <span class="attr">#[doc = <span class="string">"Change the device id"</span>]
-    #[doc = <span class="string">"# Arguments"</span>]
-    #[doc = <span class="string">"* `id` - Device ID (1-254). 0 and 255 are reserved."</span>]
-    #[doc = <span class="string">"* `reserved` - reserved"</span>]
-    </span><span class="kw">pub async fn </span>set_device_id(<span class="kw-2">&amp;</span><span class="self">self</span>, id: u8, reserved: u8) -&gt; <span class="prelude-ty">Result</span>&lt;(), PingError&gt; {
-        <span class="kw">let </span>request = Messages::SetDeviceId(SetDeviceIdStruct { id, reserved });
-        <span class="kw">let </span><span class="kw-2">mut </span>package = ProtocolMessage::new();
-        package.set_message(<span class="kw-2">&amp;</span>request);
-        <span class="kw">let </span>receiver = <span class="self">self</span>.subscribe();
-        <span class="self">self</span>.get_common().send_message(package).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="self">self</span>.wait_for_ack(receiver, SetDeviceIdStruct::id()).<span class="kw">await
-    </span>}
     <span class="attr">#[doc = <span class="string">"The sonar switches the current through the stepper motor windings off to save power. The sonar will send an ack message in response. The command timeout should be set to 50 msec. If the sonar is idle (not scanning) for more than 30 seconds then the motor current will automatically turn off. When the user sends any command that involves moving the transducer then the motor current is automatically re-enabled."</span>]
     #[doc = <span class="string">"# Arguments"</span>]
     </span><span class="kw">pub async fn </span>motor_off(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), PingError&gt; {
         <span class="kw">let </span>request = Messages::MotorOff(MotorOffStruct {});
+        <span class="kw">let </span><span class="kw-2">mut </span>package = ProtocolMessage::new();
+        package.set_message(<span class="kw-2">&amp;</span>request);
+        <span class="self">self</span>.get_common().send_message(package).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(())
+    }
+    <span class="attr">#[doc = <span class="string">"Reset the sonar. The bootloader may run depending on the selection according to the `bootloader` payload field. When the bootloader runs, the external LED flashes at 5Hz. If the bootloader is not contacted within 5 seconds, it will run the current program. If there is no program, then the bootloader will wait forever for a connection. Note that if you issue a reset then you will have to close all your open comm ports and go back to issuing either a discovery message for UDP or go through the break sequence for serial comms before you can talk to the sonar again."</span>]
+    #[doc = <span class="string">"# Arguments"</span>]
+    #[doc = <span class="string">"* `bootloader` - 0 = skip bootloader; 1 = run bootloader"</span>]
+    #[doc = <span class="string">"* `reserved` - reserved"</span>]
+    </span><span class="kw">pub async fn </span>reset(<span class="kw-2">&amp;</span><span class="self">self</span>, bootloader: u8, reserved: u8) -&gt; <span class="prelude-ty">Result</span>&lt;(), PingError&gt; {
+        <span class="kw">let </span>request = Messages::Reset(ResetStruct {
+            bootloader,
+            reserved,
+        });
         <span class="kw">let </span><span class="kw-2">mut </span>package = ProtocolMessage::new();
         package.set_message(<span class="kw-2">&amp;</span>request);
         <span class="self">self</span>.get_common().send_message(package).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -1326,6 +1330,18 @@
         <span class="self">self</span>.get_common().send_message(package).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
+    <span class="attr">#[doc = <span class="string">"Change the device id"</span>]
+    #[doc = <span class="string">"# Arguments"</span>]
+    #[doc = <span class="string">"* `id` - Device ID (1-254). 0 and 255 are reserved."</span>]
+    #[doc = <span class="string">"* `reserved` - reserved"</span>]
+    </span><span class="kw">pub async fn </span>set_device_id(<span class="kw-2">&amp;</span><span class="self">self</span>, id: u8, reserved: u8) -&gt; <span class="prelude-ty">Result</span>&lt;(), PingError&gt; {
+        <span class="kw">let </span>request = Messages::SetDeviceId(SetDeviceIdStruct { id, reserved });
+        <span class="kw">let </span><span class="kw-2">mut </span>package = ProtocolMessage::new();
+        package.set_message(<span class="kw-2">&amp;</span>request);
+        <span class="kw">let </span>receiver = <span class="self">self</span>.subscribe();
+        <span class="self">self</span>.get_common().send_message(package).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="self">self</span>.wait_for_ack(receiver, SetDeviceIdStruct::id()).<span class="kw">await
+    </span>}
     <span class="attr">#[doc = <span class="string">"This message is used to communicate the current sonar state. If the data field is populated, the other fields indicate the sonar state when the data was captured. The time taken before the response to the command is sent depends on the difference between the last angle scanned and the new angle in the parameters as well as the number of samples and sample interval (range). To allow for the worst case reponse time the command timeout should be set to 4000 msec."</span>]
     </span><span class="kw">pub async fn </span>device_data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;DeviceDataStruct, PingError&gt; {
         <span class="self">self</span>.request().<span class="kw">await
@@ -1335,33 +1351,33 @@
     <span class="kw">fn </span>message_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
         <span class="kw">match </span><span class="self">self </span>{
             Messages::AutoDeviceData(..) =&gt; <span class="string">"auto_device_data"</span>,
-            Messages::Reset(..) =&gt; <span class="string">"reset"</span>,
             Messages::Transducer(..) =&gt; <span class="string">"transducer"</span>,
-            Messages::SetDeviceId(..) =&gt; <span class="string">"set_device_id"</span>,
             Messages::MotorOff(..) =&gt; <span class="string">"motor_off"</span>,
+            Messages::Reset(..) =&gt; <span class="string">"reset"</span>,
             Messages::AutoTransmit(..) =&gt; <span class="string">"auto_transmit"</span>,
+            Messages::SetDeviceId(..) =&gt; <span class="string">"set_device_id"</span>,
             Messages::DeviceData(..) =&gt; <span class="string">"device_data"</span>,
         }
     }
     <span class="kw">fn </span>message_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
         <span class="kw">match </span><span class="self">self </span>{
             Messages::AutoDeviceData(..) =&gt; <span class="number">2301u16</span>,
-            Messages::Reset(..) =&gt; <span class="number">2600u16</span>,
             Messages::Transducer(..) =&gt; <span class="number">2601u16</span>,
-            Messages::SetDeviceId(..) =&gt; <span class="number">2000u16</span>,
             Messages::MotorOff(..) =&gt; <span class="number">2903u16</span>,
+            Messages::Reset(..) =&gt; <span class="number">2600u16</span>,
             Messages::AutoTransmit(..) =&gt; <span class="number">2602u16</span>,
+            Messages::SetDeviceId(..) =&gt; <span class="number">2000u16</span>,
             Messages::DeviceData(..) =&gt; <span class="number">2300u16</span>,
         }
     }
     <span class="kw">fn </span>message_id_from_name(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;u16, String&gt; {
         <span class="kw">match </span>name {
             <span class="string">"auto_device_data" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2301u16</span>),
-            <span class="string">"reset" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2600u16</span>),
             <span class="string">"transducer" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2601u16</span>),
-            <span class="string">"set_device_id" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2000u16</span>),
             <span class="string">"motor_off" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2903u16</span>),
+            <span class="string">"reset" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2600u16</span>),
             <span class="string">"auto_transmit" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2602u16</span>),
+            <span class="string">"set_device_id" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2000u16</span>),
             <span class="string">"device_data" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2300u16</span>),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">"Failed to find message ID from name: {name}."</span>)),
         }
@@ -1371,11 +1387,11 @@
     <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
         <span class="kw">match </span><span class="self">self </span>{
             Messages::AutoDeviceData(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
-            Messages::Reset(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
             Messages::Transducer(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
-            Messages::SetDeviceId(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
             Messages::MotorOff(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
+            Messages::Reset(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
             Messages::AutoTransmit(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
+            Messages::SetDeviceId(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
             Messages::DeviceData(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
         }
     }
@@ -1386,18 +1402,18 @@
             <span class="number">2301u16 </span>=&gt; Messages::AutoDeviceData(
                 &lt;AutoDeviceDataStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
             ),
-            <span class="number">2600u16 </span>=&gt; Messages::Reset(&lt;ResetStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload)),
             <span class="number">2601u16 </span>=&gt; Messages::Transducer(&lt;TransducerStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(
                 payload,
             )),
-            <span class="number">2000u16 </span>=&gt; Messages::SetDeviceId(
-                &lt;SetDeviceIdStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
-            ),
             <span class="number">2903u16 </span>=&gt; {
                 Messages::MotorOff(&lt;MotorOffStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload))
             }
+            <span class="number">2600u16 </span>=&gt; Messages::Reset(&lt;ResetStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload)),
             <span class="number">2602u16 </span>=&gt; Messages::AutoTransmit(
                 &lt;AutoTransmitStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
+            ),
+            <span class="number">2000u16 </span>=&gt; Messages::SetDeviceId(
+                &lt;SetDeviceIdStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
             ),
             <span class="number">2300u16 </span>=&gt; Messages::DeviceData(&lt;DeviceDataStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(
                 payload,
