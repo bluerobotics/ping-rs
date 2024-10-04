@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serialport-4.4.0/src/posix/termios.rs`."><title>termios.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serialport" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0 (051478957 2024-07-21)" data-channel="1.80.0" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serialport-4.5.1/src/posix/termios.rs`."><title>termios.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serialport" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -286,6 +286,11 @@
 <a href="#286" id="286">286</a>
 <a href="#287" id="287">287</a>
 <a href="#288" id="288">288</a>
+<a href="#289" id="289">289</a>
+<a href="#290" id="290">290</a>
+<a href="#291" id="291">291</a>
+<a href="#292" id="292">292</a>
+<a href="#293" id="293">293</a>
 </pre></div><pre class="rust"><code><span class="comment">// A set of helper functions for working with the `termios` and `termios2` structs
 </span><span class="kw">use </span>cfg_if::cfg_if;
 
@@ -501,11 +506,12 @@
         </span>))
     )
 ))]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>set_baud_rate(termios: <span class="kw-2">&amp;mut </span>Termios, baud_rate: u32) {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>set_baud_rate(termios: <span class="kw-2">&amp;mut </span>Termios, baud_rate: u32) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
     termios.c_cflag &amp;= !nix::libc::CBAUD;
     termios.c_cflag |= nix::libc::BOTHER;
     termios.c_ispeed = baud_rate;
     termios.c_ospeed = baud_rate;
+    <span class="prelude-val">Ok</span>(())
 }
 
 <span class="comment">// BSDs use the baud rate as the constant value so there's no translation necessary
@@ -515,9 +521,10 @@
     target_os = <span class="string">"netbsd"</span>,
     target_os = <span class="string">"openbsd"
 </span>))]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>set_baud_rate(termios: <span class="kw-2">&amp;mut </span>Termios, baud_rate: u32) {
-    <span class="comment">// Ignore the return value because this should never fail
-    </span><span class="kw">unsafe </span>{ libc::cfsetspeed(termios, baud_rate.into()) };
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>set_baud_rate(termios: <span class="kw-2">&amp;mut </span>Termios, baud_rate: u32) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    <span class="kw">let </span>res = <span class="kw">unsafe </span>{ libc::cfsetspeed(termios, baud_rate.into()) };
+    nix::errno::Errno::result(res)<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(())
 }
 
 <span class="attr">#[cfg(all(
@@ -528,7 +535,9 @@
         target_arch = <span class="string">"powerpc64"
     </span>)
 ))]
-</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>set_baud_rate(termios: <span class="kw-2">&amp;mut </span>Termios, baud_rate: u32) {
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>set_baud_rate(termios: <span class="kw-2">&amp;mut </span>Termios, baud_rate: u32) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    <span class="kw">use crate</span>::{Error, ErrorKind};
+
     <span class="kw">use </span><span class="self">self</span>::libc::{
         B1000000, B1152000, B1500000, B2000000, B2500000, B3000000, B3500000, B4000000, B460800,
         B500000, B576000, B921600,
@@ -569,9 +578,10 @@
         <span class="number">3_000_000 </span>=&gt; B3000000,
         <span class="number">3_500_000 </span>=&gt; B3500000,
         <span class="number">4_000_000 </span>=&gt; B4000000,
-        <span class="kw">_ </span>=&gt; <span class="kw">return</span>,
+        <span class="kw">_ </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(ErrorKind::InvalidInput, <span class="string">"Unsupported baud rate"</span>)),
     };
     <span class="kw">let </span>res = <span class="kw">unsafe </span>{ libc::cfsetspeed(termios, baud_rate) };
-    nix::errno::Errno::result(res).expect(<span class="string">"cfsetspeed failed"</span>);
+    nix::errno::Errno::result(res)<span class="question-mark">?</span>;
+    <span class="prelude-val">Ok</span>(())
 }
 </code></pre></div></section></main></body></html>

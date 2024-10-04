@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/work/ping-rs/ping-rs/target/debug/build/bluerobotics-ping-0abe0fc44480d926/out/omniscan450.rs`."><title>omniscan450.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../../../../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../../../../../../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../../../../../../../../../../../" data-static-root-path="../../../../../../../../../../../../static.files/" data-current-crate="bluerobotics_ping" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0 (051478957 2024-07-21)" data-channel="1.80.0" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../../../../../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../../../../../../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../../../../../../../../../src-files.js"></script><script defer src="../../../../../../../../../../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../../../../../../../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/work/ping-rs/ping-rs/target/debug/build/bluerobotics-ping-d3a294239e9b0899/out/omniscan450.rs`."><title>omniscan450.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../../../../../../../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../../../../../../../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../../../../../../../../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../../../../../../../../../../../" data-static-root-path="../../../../../../../../../../../../static.files/" data-current-crate="bluerobotics_ping" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../../../../../../../../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../../../../../../../../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../../../../../../../../../../src-files.js"></script><script defer src="../../../../../../../../../../../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../../../../../../../../../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../../../../../../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../../../../../../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -484,24 +484,156 @@
 <span class="attr">#[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>Messages {
-    OsMonoProfile(OsMonoProfileStruct),
     SetSpeedOfSound(SetSpeedOfSoundStruct),
     OsPingParams(OsPingParamsStruct),
+    OsMonoProfile(OsMonoProfileStruct),
 }
 <span class="kw">impl </span>Messages {
     <span class="kw">pub fn </span>inner&lt;T: <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>T&gt; {
         <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::OsMonoProfile(inner_struct) =&gt; {
-                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
-            }
             <span class="self">Self</span>::SetSpeedOfSound(inner_struct) =&gt; {
                 (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
             }
             <span class="self">Self</span>::OsPingParams(inner_struct) =&gt; {
                 (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
             }
+            <span class="self">Self</span>::OsMonoProfile(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
         }
     }
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Set the speed of sound."</span>]
+</span><span class="kw">pub struct </span>SetSpeedOfSoundStruct {
+    <span class="attr">#[doc = <span class="string">"The speed of sound in the measurement medium. ~1,500,000 mm/s for water."</span>]
+    </span><span class="kw">pub </span>speed_of_sound: u32,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetSpeedOfSoundStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.speed_of_sound.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetSpeedOfSoundStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            speed_of_sound: u32::from_le_bytes(
+                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetSpeedOfSoundStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">1002u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"No documentation provided."</span>]
+</span><span class="kw">pub struct </span>OsPingParamsStruct {
+    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
+    </span><span class="kw">pub </span>start_mm: u32,
+    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
+    </span><span class="kw">pub </span>length_mm: u32,
+    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
+    </span><span class="kw">pub </span>msec_per_ping: u32,
+    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
+    </span><span class="kw">pub </span>reserved_1: f32,
+    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
+    </span><span class="kw">pub </span>reserved_2: f32,
+    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
+    </span><span class="kw">pub </span>pulse_len_percent: f32,
+    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
+    </span><span class="kw">pub </span>filter_duration_percent: f32,
+    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
+    </span><span class="kw">pub </span>gain_index: i16,
+    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
+    </span><span class="kw">pub </span>num_results: u16,
+    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
+    </span><span class="kw">pub </span>enable: u8,
+    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
+    </span><span class="kw">pub </span>reserved_3: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>OsPingParamsStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.start_mm.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.length_mm.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.msec_per_ping.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved_1.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved_2.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.pulse_len_percent.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.filter_duration_percent.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_index.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.num_results.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.enable.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved_3.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>OsPingParamsStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            start_mm: u32::from_le_bytes(
+                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+            length_mm: u32::from_le_bytes(
+                payload[<span class="number">4usize</span>..<span class="number">4usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+            msec_per_ping: u32::from_le_bytes(
+                payload[<span class="number">8usize</span>..<span class="number">8usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+            reserved_1: f32::from_le_bytes(
+                payload[<span class="number">12usize</span>..<span class="number">12usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+            reserved_2: f32::from_le_bytes(
+                payload[<span class="number">16usize</span>..<span class="number">16usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+            pulse_len_percent: f32::from_le_bytes(
+                payload[<span class="number">20usize</span>..<span class="number">20usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+            filter_duration_percent: f32::from_le_bytes(
+                payload[<span class="number">24usize</span>..<span class="number">24usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+            gain_index: i16::from_le_bytes(
+                payload[<span class="number">28usize</span>..<span class="number">28usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+            num_results: u16::from_le_bytes(
+                payload[<span class="number">30usize</span>..<span class="number">30usize </span>+ <span class="number">2usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+            enable: payload[<span class="number">32usize</span>].into(),
+            reserved_3: payload[<span class="number">33usize</span>].into(),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>OsPingParamsStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">2197u16
+    </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
@@ -650,138 +782,6 @@
         <span class="number">2198u16
     </span>}
 }
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Set the speed of sound."</span>]
-</span><span class="kw">pub struct </span>SetSpeedOfSoundStruct {
-    <span class="attr">#[doc = <span class="string">"The speed of sound in the measurement medium. ~1,500,000 mm/s for water."</span>]
-    </span><span class="kw">pub </span>speed_of_sound: u32,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetSpeedOfSoundStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.speed_of_sound.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetSpeedOfSoundStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            speed_of_sound: u32::from_le_bytes(
-                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">4usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetSpeedOfSoundStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1002u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"No documentation provided."</span>]
-</span><span class="kw">pub struct </span>OsPingParamsStruct {
-    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
-    </span><span class="kw">pub </span>start_mm: u32,
-    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
-    </span><span class="kw">pub </span>length_mm: u32,
-    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
-    </span><span class="kw">pub </span>msec_per_ping: u32,
-    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
-    </span><span class="kw">pub </span>reserved_1: f32,
-    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
-    </span><span class="kw">pub </span>reserved_2: f32,
-    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
-    </span><span class="kw">pub </span>pulse_len_percent: f32,
-    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
-    </span><span class="kw">pub </span>filter_duration_percent: f32,
-    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
-    </span><span class="kw">pub </span>gain_index: i16,
-    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
-    </span><span class="kw">pub </span>num_results: u16,
-    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
-    </span><span class="kw">pub </span>enable: u8,
-    <span class="attr">#[doc = <span class="string">"Not documented"</span>]
-    </span><span class="kw">pub </span>reserved_3: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>OsPingParamsStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.start_mm.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.length_mm.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.msec_per_ping.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved_1.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved_2.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.pulse_len_percent.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.filter_duration_percent.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.gain_index.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.num_results.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.enable.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved_3.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>OsPingParamsStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            start_mm: u32::from_le_bytes(
-                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">4usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-            length_mm: u32::from_le_bytes(
-                payload[<span class="number">4usize</span>..<span class="number">4usize </span>+ <span class="number">4usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-            msec_per_ping: u32::from_le_bytes(
-                payload[<span class="number">8usize</span>..<span class="number">8usize </span>+ <span class="number">4usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-            reserved_1: f32::from_le_bytes(
-                payload[<span class="number">12usize</span>..<span class="number">12usize </span>+ <span class="number">4usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-            reserved_2: f32::from_le_bytes(
-                payload[<span class="number">16usize</span>..<span class="number">16usize </span>+ <span class="number">4usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-            pulse_len_percent: f32::from_le_bytes(
-                payload[<span class="number">20usize</span>..<span class="number">20usize </span>+ <span class="number">4usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-            filter_duration_percent: f32::from_le_bytes(
-                payload[<span class="number">24usize</span>..<span class="number">24usize </span>+ <span class="number">4usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-            gain_index: i16::from_le_bytes(
-                payload[<span class="number">28usize</span>..<span class="number">28usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-            num_results: u16::from_le_bytes(
-                payload[<span class="number">30usize</span>..<span class="number">30usize </span>+ <span class="number">2usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-            enable: payload[<span class="number">32usize</span>].into(),
-            reserved_3: payload[<span class="number">33usize</span>].into(),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>OsPingParamsStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">2197u16
-    </span>}
-}
 <span class="kw">impl </span>Device {
     <span class="kw">pub fn </span>new&lt;T&gt;(io: T) -&gt; <span class="self">Self
     </span><span class="kw">where
@@ -791,10 +791,6 @@
             common: Common::new(io),
         }
     }
-    <span class="attr">#[doc = <span class="string">"A profile produced from a single acoustic measurement. The data returned is an array of response strength, in dB, at even intervals across the scan region. The scan region is defined as the region between &lt;scan_start&gt; and &lt;scan_start + scan_length&gt; millimeters away from the transducer. Note that the amplitude of the results are in dB. This is just to keep high dynamic range in the u16 sized data elements. Normally these are converted back to linear power or signal levels."</span>]
-    </span><span class="kw">pub async fn </span>os_mono_profile(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;OsMonoProfileStruct, PingError&gt; {
-        <span class="self">self</span>.request().<span class="kw">await
-    </span>}
     <span class="attr">#[doc = <span class="string">"Set the speed of sound."</span>]
     #[doc = <span class="string">"# Arguments"</span>]
     #[doc = <span class="string">"* `speed_of_sound` \\[mm/s\\] - The speed of sound in the measurement medium. ~1,500,000 mm/s for water."</span>]
@@ -850,27 +846,31 @@
         <span class="self">self</span>.get_common().send_message(package).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
+    <span class="attr">#[doc = <span class="string">"A profile produced from a single acoustic measurement. The data returned is an array of response strength, in dB, at even intervals across the scan region. The scan region is defined as the region between &lt;scan_start&gt; and &lt;scan_start + scan_length&gt; millimeters away from the transducer. Note that the amplitude of the results are in dB. This is just to keep high dynamic range in the u16 sized data elements. Normally these are converted back to linear power or signal levels."</span>]
+    </span><span class="kw">pub async fn </span>os_mono_profile(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;OsMonoProfileStruct, PingError&gt; {
+        <span class="self">self</span>.request().<span class="kw">await
+    </span>}
 }
 <span class="kw">impl </span>PingMessage <span class="kw">for </span>Messages {
     <span class="kw">fn </span>message_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::OsMonoProfile(..) =&gt; <span class="string">"os_mono_profile"</span>,
             Messages::SetSpeedOfSound(..) =&gt; <span class="string">"set_speed_of_sound"</span>,
             Messages::OsPingParams(..) =&gt; <span class="string">"os_ping_params"</span>,
+            Messages::OsMonoProfile(..) =&gt; <span class="string">"os_mono_profile"</span>,
         }
     }
     <span class="kw">fn </span>message_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::OsMonoProfile(..) =&gt; <span class="number">2198u16</span>,
             Messages::SetSpeedOfSound(..) =&gt; <span class="number">1002u16</span>,
             Messages::OsPingParams(..) =&gt; <span class="number">2197u16</span>,
+            Messages::OsMonoProfile(..) =&gt; <span class="number">2198u16</span>,
         }
     }
     <span class="kw">fn </span>message_id_from_name(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;u16, String&gt; {
         <span class="kw">match </span>name {
-            <span class="string">"os_mono_profile" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2198u16</span>),
             <span class="string">"set_speed_of_sound" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1002u16</span>),
             <span class="string">"os_ping_params" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2197u16</span>),
+            <span class="string">"os_mono_profile" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2198u16</span>),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">"Failed to find message ID from name: {name}."</span>)),
         }
     }
@@ -878,23 +878,23 @@
 <span class="kw">impl </span>SerializePayload <span class="kw">for </span>Messages {
     <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::OsMonoProfile(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
             Messages::SetSpeedOfSound(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
             Messages::OsPingParams(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
+            Messages::OsMonoProfile(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
         }
     }
 }
 <span class="kw">impl </span>DeserializeGenericMessage <span class="kw">for </span>Messages {
     <span class="kw">fn </span>deserialize(message_id: u16, payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt; {
         <span class="prelude-val">Ok</span>(<span class="kw">match </span>message_id {
-            <span class="number">2198u16 </span>=&gt; Messages::OsMonoProfile(
-                &lt;OsMonoProfileStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
-            ),
             <span class="number">1002u16 </span>=&gt; Messages::SetSpeedOfSound(
                 &lt;SetSpeedOfSoundStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
             ),
             <span class="number">2197u16 </span>=&gt; Messages::OsPingParams(
                 &lt;OsPingParamsStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
+            ),
+            <span class="number">2198u16 </span>=&gt; Messages::OsMonoProfile(
+                &lt;OsMonoProfileStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
             ),
             <span class="kw">_ </span>=&gt; {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="kw-2">&amp;</span><span class="string">"Unknown message id"</span>);

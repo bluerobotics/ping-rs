@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serialport-4.4.0/src/posix/enumerate.rs`."><title>enumerate.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serialport" data-themes="" data-resource-suffix="" data-rustdoc-version="1.80.0 (051478957 2024-07-21)" data-channel="1.80.0" data-search-js="search-d52510db62a78183.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serialport-4.5.1/src/posix/enumerate.rs`."><title>enumerate.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-c5d6553a23f1e5a6.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serialport" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0 (eeb90cda1 2024-09-04)" data-channel="1.81.0" data-search-js="search-d234aafac6c221dd.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-d2fab2bf619172d3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -598,10 +598,158 @@
 <a href="#598" id="598">598</a>
 <a href="#599" id="599">599</a>
 <a href="#600" id="600">600</a>
+<a href="#601" id="601">601</a>
+<a href="#602" id="602">602</a>
+<a href="#603" id="603">603</a>
+<a href="#604" id="604">604</a>
+<a href="#605" id="605">605</a>
+<a href="#606" id="606">606</a>
+<a href="#607" id="607">607</a>
+<a href="#608" id="608">608</a>
+<a href="#609" id="609">609</a>
+<a href="#610" id="610">610</a>
+<a href="#611" id="611">611</a>
+<a href="#612" id="612">612</a>
+<a href="#613" id="613">613</a>
+<a href="#614" id="614">614</a>
+<a href="#615" id="615">615</a>
+<a href="#616" id="616">616</a>
+<a href="#617" id="617">617</a>
+<a href="#618" id="618">618</a>
+<a href="#619" id="619">619</a>
+<a href="#620" id="620">620</a>
+<a href="#621" id="621">621</a>
+<a href="#622" id="622">622</a>
+<a href="#623" id="623">623</a>
+<a href="#624" id="624">624</a>
+<a href="#625" id="625">625</a>
+<a href="#626" id="626">626</a>
+<a href="#627" id="627">627</a>
+<a href="#628" id="628">628</a>
+<a href="#629" id="629">629</a>
+<a href="#630" id="630">630</a>
+<a href="#631" id="631">631</a>
+<a href="#632" id="632">632</a>
+<a href="#633" id="633">633</a>
+<a href="#634" id="634">634</a>
+<a href="#635" id="635">635</a>
+<a href="#636" id="636">636</a>
+<a href="#637" id="637">637</a>
+<a href="#638" id="638">638</a>
+<a href="#639" id="639">639</a>
+<a href="#640" id="640">640</a>
+<a href="#641" id="641">641</a>
+<a href="#642" id="642">642</a>
+<a href="#643" id="643">643</a>
+<a href="#644" id="644">644</a>
+<a href="#645" id="645">645</a>
+<a href="#646" id="646">646</a>
+<a href="#647" id="647">647</a>
+<a href="#648" id="648">648</a>
+<a href="#649" id="649">649</a>
+<a href="#650" id="650">650</a>
+<a href="#651" id="651">651</a>
+<a href="#652" id="652">652</a>
+<a href="#653" id="653">653</a>
+<a href="#654" id="654">654</a>
+<a href="#655" id="655">655</a>
+<a href="#656" id="656">656</a>
+<a href="#657" id="657">657</a>
+<a href="#658" id="658">658</a>
+<a href="#659" id="659">659</a>
+<a href="#660" id="660">660</a>
+<a href="#661" id="661">661</a>
+<a href="#662" id="662">662</a>
+<a href="#663" id="663">663</a>
+<a href="#664" id="664">664</a>
+<a href="#665" id="665">665</a>
+<a href="#666" id="666">666</a>
+<a href="#667" id="667">667</a>
+<a href="#668" id="668">668</a>
+<a href="#669" id="669">669</a>
+<a href="#670" id="670">670</a>
+<a href="#671" id="671">671</a>
+<a href="#672" id="672">672</a>
+<a href="#673" id="673">673</a>
+<a href="#674" id="674">674</a>
+<a href="#675" id="675">675</a>
+<a href="#676" id="676">676</a>
+<a href="#677" id="677">677</a>
+<a href="#678" id="678">678</a>
+<a href="#679" id="679">679</a>
+<a href="#680" id="680">680</a>
+<a href="#681" id="681">681</a>
+<a href="#682" id="682">682</a>
+<a href="#683" id="683">683</a>
+<a href="#684" id="684">684</a>
+<a href="#685" id="685">685</a>
+<a href="#686" id="686">686</a>
+<a href="#687" id="687">687</a>
+<a href="#688" id="688">688</a>
+<a href="#689" id="689">689</a>
+<a href="#690" id="690">690</a>
+<a href="#691" id="691">691</a>
+<a href="#692" id="692">692</a>
+<a href="#693" id="693">693</a>
+<a href="#694" id="694">694</a>
+<a href="#695" id="695">695</a>
+<a href="#696" id="696">696</a>
+<a href="#697" id="697">697</a>
+<a href="#698" id="698">698</a>
+<a href="#699" id="699">699</a>
+<a href="#700" id="700">700</a>
+<a href="#701" id="701">701</a>
+<a href="#702" id="702">702</a>
+<a href="#703" id="703">703</a>
+<a href="#704" id="704">704</a>
+<a href="#705" id="705">705</a>
+<a href="#706" id="706">706</a>
+<a href="#707" id="707">707</a>
+<a href="#708" id="708">708</a>
+<a href="#709" id="709">709</a>
+<a href="#710" id="710">710</a>
+<a href="#711" id="711">711</a>
+<a href="#712" id="712">712</a>
+<a href="#713" id="713">713</a>
+<a href="#714" id="714">714</a>
+<a href="#715" id="715">715</a>
+<a href="#716" id="716">716</a>
+<a href="#717" id="717">717</a>
+<a href="#718" id="718">718</a>
+<a href="#719" id="719">719</a>
+<a href="#720" id="720">720</a>
+<a href="#721" id="721">721</a>
+<a href="#722" id="722">722</a>
+<a href="#723" id="723">723</a>
+<a href="#724" id="724">724</a>
+<a href="#725" id="725">725</a>
+<a href="#726" id="726">726</a>
+<a href="#727" id="727">727</a>
+<a href="#728" id="728">728</a>
+<a href="#729" id="729">729</a>
+<a href="#730" id="730">730</a>
+<a href="#731" id="731">731</a>
+<a href="#732" id="732">732</a>
+<a href="#733" id="733">733</a>
+<a href="#734" id="734">734</a>
+<a href="#735" id="735">735</a>
+<a href="#736" id="736">736</a>
+<a href="#737" id="737">737</a>
+<a href="#738" id="738">738</a>
+<a href="#739" id="739">739</a>
+<a href="#740" id="740">740</a>
+<a href="#741" id="741">741</a>
+<a href="#742" id="742">742</a>
+<a href="#743" id="743">743</a>
+<a href="#744" id="744">744</a>
+<a href="#745" id="745">745</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>cfg_if::cfg_if;
 
-<span class="attr">#[cfg(all(target_os = <span class="string">"linux"</span>, not(target_env = <span class="string">"musl"</span>), feature = <span class="string">"libudev"</span>))]
-</span><span class="kw">use </span>std::ffi::OsStr;
+<span class="macro">cfg_if!</span> {
+    <span class="kw">if </span><span class="attr">#[cfg(all(target_os = <span class="string">"linux"</span>, not(target_env = <span class="string">"musl"</span>), feature = <span class="string">"libudev"</span>))]</span>{
+        <span class="kw">use </span>std::ffi::OsStr;
+    }
+}
 
 <span class="macro">cfg_if!</span> {
     <span class="kw">if </span><span class="attr">#[cfg(any(target_os = <span class="string">"ios"</span>, target_os = <span class="string">"macos"</span>))] </span>{
@@ -774,8 +922,96 @@
                 <span class="prelude-val">Ok</span>(SerialPortType::PciPort)
             }
         }
+        <span class="prelude-val">None </span>=&gt; find_usb_interface_from_parents(d.parent())
+            .and_then(get_modalias_from_device)
+            .as_deref()
+            .and_then(parse_modalias)
+            .map_or(<span class="prelude-val">Ok</span>(SerialPortType::Unknown), |port_info| {
+                <span class="prelude-val">Ok</span>(SerialPortType::UsbPort(port_info))
+            }),
         <span class="kw">_ </span>=&gt; <span class="prelude-val">Ok</span>(SerialPortType::Unknown),
     }
+}
+
+<span class="attr">#[cfg(all(target_os = <span class="string">"linux"</span>, not(target_env = <span class="string">"musl"</span>), feature = <span class="string">"libudev"</span>))]
+</span><span class="kw">fn </span>find_usb_interface_from_parents(parent: <span class="prelude-ty">Option</span>&lt;libudev::Device&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;libudev::Device&gt; {
+    <span class="kw">let </span><span class="kw-2">mut </span>p = parent<span class="question-mark">?</span>;
+
+    <span class="comment">// limit the query depth
+    </span><span class="kw">for _ in </span><span class="number">1</span>..<span class="number">4 </span>{
+        <span class="kw">match </span>p.devtype() {
+            <span class="prelude-val">None </span>=&gt; <span class="kw">match </span>p.parent() {
+                <span class="prelude-val">None </span>=&gt; <span class="kw">break</span>,
+                <span class="prelude-val">Some</span>(x) =&gt; p = x,
+            },
+            <span class="prelude-val">Some</span>(s) =&gt; {
+                <span class="kw">if </span>s.to_str()<span class="question-mark">? </span>== <span class="string">"usb_interface" </span>{
+                    <span class="kw">break</span>;
+                } <span class="kw">else </span>{
+                    <span class="kw">match </span>p.parent() {
+                        <span class="prelude-val">None </span>=&gt; <span class="kw">break</span>,
+                        <span class="prelude-val">Some</span>(x) =&gt; p = x,
+                    }
+                }
+            }
+        }
+    }
+
+    <span class="prelude-val">Some</span>(p)
+}
+
+<span class="attr">#[cfg(all(target_os = <span class="string">"linux"</span>, not(target_env = <span class="string">"musl"</span>), feature = <span class="string">"libudev"</span>))]
+</span><span class="kw">fn </span>get_modalias_from_device(d: libudev::Device) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
+    <span class="prelude-val">Some</span>(
+        d.property_value(<span class="string">"MODALIAS"</span>)
+            .and_then(OsStr::to_str)<span class="question-mark">?
+            </span>.to_owned(),
+    )
+}
+
+<span class="comment">//  MODALIAS = usb:v303Ap1001d0101dcEFdsc02dp01ic02isc02ip00in00
+//  v    303A  (device vendor)
+//  p    1001  (device product)
+//  d    0101  (bcddevice)
+//  dc     EF  (device class)
+//  dsc    02  (device subclass)
+//  dp     01  (device protocol)
+//  ic     02  (interface class)
+//  isc    02  (interface subclass)
+//  ip     00  (interface protocol)
+//  in     00  (interface number)
+</span><span class="attr">#[cfg(all(target_os = <span class="string">"linux"</span>, not(target_env = <span class="string">"musl"</span>), feature = <span class="string">"libudev"</span>))]
+</span><span class="kw">fn </span>parse_modalias(moda: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;UsbPortInfo&gt; {
+    <span class="comment">// Find the start of the string, will start with "usb:"
+    </span><span class="kw">let </span>mod_start = moda.find(<span class="string">"usb:v"</span>)<span class="question-mark">?</span>;
+
+    <span class="comment">// Tail to update while searching.
+    </span><span class="kw">let </span><span class="kw-2">mut </span>mod_tail = moda.get(mod_start + <span class="number">5</span>..)<span class="question-mark">?</span>;
+
+    <span class="comment">// The next four characters should be hex values of the vendor.
+    </span><span class="kw">let </span>vid = mod_tail.get(..<span class="number">4</span>)<span class="question-mark">?</span>;
+    mod_tail = mod_tail.get(<span class="number">4</span>..)<span class="question-mark">?</span>;
+
+    <span class="comment">// The next portion we care about is the device product ID.
+    </span><span class="kw">let </span>pid_start = mod_tail.find(<span class="string">'p'</span>)<span class="question-mark">?</span>;
+    <span class="kw">let </span>pid = mod_tail.get(pid_start + <span class="number">1</span>..pid_start + <span class="number">5</span>)<span class="question-mark">?</span>;
+
+    <span class="prelude-val">Some</span>(UsbPortInfo {
+        vid: u16::from_str_radix(vid, <span class="number">16</span>).ok()<span class="question-mark">?</span>,
+        pid: u16::from_str_radix(pid, <span class="number">16</span>).ok()<span class="question-mark">?</span>,
+        serial_number: <span class="prelude-val">None</span>,
+        manufacturer: <span class="prelude-val">None</span>,
+        product: <span class="prelude-val">None</span>,
+        <span class="comment">// Only attempt to find the interface if the feature is enabled.
+        </span><span class="attr">#[cfg(feature = <span class="string">"usbportinfo-interface"</span>)]
+        </span>interface: mod_tail.get(pid_start + <span class="number">4</span>..).and_then(|mod_tail| {
+            mod_tail.find(<span class="string">"in"</span>).and_then(|i_start| {
+                mod_tail
+                    .get(i_start + <span class="number">2</span>..i_start + <span class="number">4</span>)
+                    .and_then(|interface| u8::from_str_radix(interface, <span class="number">16</span>).ok())
+            })
+        }),
+    })
 }
 
 <span class="attr">#[cfg(any(target_os = <span class="string">"ios"</span>, target_os = <span class="string">"macos"</span>))]
@@ -900,7 +1136,7 @@
 /// `IOIteratorNext`). Specific properties are extracted for USB devices.
 </span><span class="kw">fn </span>port_type(service: io_object_t) -&gt; SerialPortType {
     <span class="kw">let </span>bluetooth_device_class_name = <span class="string">b"IOBluetoothSerialClient\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char;
-    <span class="kw">let </span>usb_device_class_name = <span class="string">b"IOUSBHostDevice\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char;
+    <span class="kw">let </span>usb_device_class_name = <span class="string">b"IOUSBHostInterface\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span>c_char;
     <span class="kw">let </span>legacy_usb_device_class_name = kIOUSBDeviceClassName;
 
     <span class="kw">let </span>maybe_usb_device = get_parent_device_by_type(service, usb_device_class_name)
@@ -1196,6 +1432,60 @@
                 <span class="string">"Not implemented for this OS"</span>,
             ))
         }
+    }
+}
+
+<span class="attr">#[cfg(all(
+    test,
+    target_os = <span class="string">"linux"</span>,
+    not(target_env = <span class="string">"musl"</span>),
+    feature = <span class="string">"libudev"
+</span>))]
+</span><span class="kw">mod </span>tests {
+    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+
+    <span class="kw">use </span>quickcheck_macros::quickcheck;
+
+    <span class="attr">#[quickcheck]
+    </span><span class="kw">fn </span>quickcheck_parse_modalias_does_not_panic_from_random_data(modalias: String) -&gt; bool {
+        <span class="kw">let _ </span>= parse_modalias(<span class="kw-2">&amp;</span>modalias);
+        <span class="bool-val">true
+    </span>}
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>parse_modalias_canonical() {
+        <span class="kw">const </span>MODALIAS: <span class="kw-2">&amp;</span>str = <span class="string">"usb:v303Ap1001d0101dcEFdsc02dp01ic02isc02ip00in0C"</span>;
+
+        <span class="kw">let </span>port_info = parse_modalias(MODALIAS).expect(<span class="string">"parse failed"</span>);
+
+        <span class="macro">assert_eq!</span>(port_info.vid, <span class="number">0x303A</span>, <span class="string">"vendor parse invalid"</span>);
+        <span class="macro">assert_eq!</span>(port_info.pid, <span class="number">0x1001</span>, <span class="string">"product parse invalid"</span>);
+
+        <span class="attr">#[cfg(feature = <span class="string">"usbportinfo-interface"</span>)]
+        </span><span class="macro">assert_eq!</span>(port_info.interface, <span class="prelude-val">Some</span>(<span class="number">0x0C</span>), <span class="string">"interface parse invalid"</span>);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>parse_modalias_corner_cases() {
+        <span class="macro">assert!</span>(parse_modalias(<span class="string">""</span>).is_none());
+        <span class="macro">assert!</span>(parse_modalias(<span class="string">"usb"</span>).is_none());
+        <span class="macro">assert!</span>(parse_modalias(<span class="string">"usb:"</span>).is_none());
+        <span class="macro">assert!</span>(parse_modalias(<span class="string">"usb:vdcdc"</span>).is_none());
+        <span class="macro">assert!</span>(parse_modalias(<span class="string">"usb:pdcdc"</span>).is_none());
+
+        <span class="comment">// Just vendor and product IDs.
+        </span><span class="kw">let </span>info = parse_modalias(<span class="string">"usb:vdcdcpabcd"</span>).unwrap();
+        <span class="macro">assert_eq!</span>(info.vid, <span class="number">0xdcdc</span>);
+        <span class="macro">assert_eq!</span>(info.pid, <span class="number">0xabcd</span>);
+        <span class="attr">#[cfg(feature = <span class="string">"usbportinfo-interface"</span>)]
+        </span><span class="macro">assert!</span>(info.interface.is_none());
+
+        <span class="comment">// Vendor and product ID plus an interface number.
+        </span><span class="kw">let </span>info = parse_modalias(<span class="string">"usb:v1234p5678indc"</span>).unwrap();
+        <span class="macro">assert_eq!</span>(info.vid, <span class="number">0x1234</span>);
+        <span class="macro">assert_eq!</span>(info.pid, <span class="number">0x5678</span>);
+        <span class="attr">#[cfg(feature = <span class="string">"usbportinfo-interface"</span>)]
+        </span><span class="macro">assert_eq!</span>(info.interface, <span class="prelude-val">Some</span>(<span class="number">0xdc</span>));
     }
 }
 </code></pre></div></section></main></body></html>
