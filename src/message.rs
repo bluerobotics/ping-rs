@@ -79,20 +79,20 @@ impl ProtocolMessage {
 
     pub fn calculate_crc(&self) -> u16 {
         let mut checksum: u16 = 0;
-        checksum += HEADER[0] as u16;
-        checksum += HEADER[1] as u16;
+        checksum = checksum.wrapping_add(HEADER[0] as u16);
+        checksum = checksum.wrapping_add(HEADER[1] as u16);
         self.payload_length
             .to_le_bytes()
             .iter()
-            .for_each(|byte| checksum += *byte as u16);
+            .for_each(|byte| checksum = checksum.wrapping_add(*byte as u16));
         self.message_id
             .to_le_bytes()
             .iter()
-            .for_each(|byte| checksum += *byte as u16);
-        checksum += self.src_device_id as u16;
-        checksum += self.dst_device_id as u16;
+            .for_each(|byte| checksum = checksum.wrapping_add(*byte as u16));
+        checksum = checksum.wrapping_add(self.src_device_id as u16);
+        checksum = checksum.wrapping_add(self.dst_device_id as u16);
         for &byte in &self.payload {
-            checksum += byte as u16;
+            checksum = checksum.wrapping_add(byte as u16);
         }
         checksum
     }
