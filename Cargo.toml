@@ -27,6 +27,7 @@ serde_bytes = "0.11"
 [dev-dependencies]
 tracing-test = "0.2.4"
 udp-stream = "0.0.12"
+criterion = { version = "0.5.1", features = ["html_reports", "async_tokio"] }
 
 [build-dependencies]
 convert_case = "0.6.0"
@@ -38,3 +39,7 @@ serde_json = "1.0.64"
 [features]
 local_runner = []
 default = ["serde"]
+
+[[bench]]
+name = "bench"
+harness = false
