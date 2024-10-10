@@ -76,7 +76,8 @@ jobs:
           /etc/github_runner/run-tests.sh \
             "Basic Ping1D Test w Ping1:ping_1d:--serial-port /dev/ttyUSB_Ping1:30" \
             "Basic Ping1D Test w Ping2:ping_1d:--serial-port /dev/ttyUSB_Ping2:30" \
-            "Basic Ping360 Test:ping_360:--serial-port /dev/ttyUSB_Ping360:30"
+            "Basic Ping360 Test w Serial:ping_360:--serial-port /dev/ttyUSB_Ping360:30" \
+            "Basic Ping360 Test w UDP:ping_360:--udp-address 192.168.1.197 --udp-port 12345:30"
           # Test Name:Example Name:Additional Args:Timeout
       - name: Post CI management script
         if: always()
