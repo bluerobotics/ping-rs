@@ -36,6 +36,52 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./target/doc
 
+  compile-examples:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Compile examples for ARM v7
+      uses: houseabsolute/actions-rust-cross@v0.0.14
+      with:
+        target: armv7-unknown-linux-gnueabihf
+        args: "--examples --release"
+    - name: Upload compiled examples
+      uses: actions/upload-artifact@v4.4.3
+      with:
+        name: examples-armv7
+        path: target/armv7-unknown-linux-gnueabihf/release/examples/*
+
+  local-tests:
+    needs: compile-examples
+    runs-on: raspbian-armv7-kernel-5.10.33
+    if: ${{ github.repository_owner == 'bluerobotics' }}
+    steps:
+      - name: Run USB management script
+        run: /etc/github_runner/ci_management.sh
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Download compiled examples
+        uses: actions/download-artifact@v4
+        with:
+          name: examples-armv7
+          path: ./examples
+      - name: Make examples executable
+        run: |
+          chmod +x ./examples/*
+      - name: Run Tests
+        env:
+          STOP_ON_FAILURE: "false"  # Set to "true" to stop on first failure
+        run: |
+          /etc/github_runner/run-tests.sh \
+            "Basic Ping1D Test w Ping1:ping_1d:--serial-port /dev/ttyUSB_Ping1:30" \
+            "Basic Ping1D Test w Ping2:ping_1d:--serial-port /dev/ttyUSB_Ping2:30"
+          # Test Name:Example Name:Additional Args:Timeout
+      - name: Post CI management script
+        if: always()
+        run: |
+          source /etc/github_runner/ci_management.sh
+          clear_busy_state
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
