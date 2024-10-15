@@ -484,17 +484,17 @@
 <span class="attr">#[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>Messages {
-    SetSpeedOfSound(SetSpeedOfSoundStruct),
     OsMonoProfile(OsMonoProfileStruct),
+    SetSpeedOfSound(SetSpeedOfSoundStruct),
     OsPingParams(OsPingParamsStruct),
 }
 <span class="kw">impl </span>Messages {
     <span class="kw">pub fn </span>inner&lt;T: <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>T&gt; {
         <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::SetSpeedOfSound(inner_struct) =&gt; {
+            <span class="self">Self</span>::OsMonoProfile(inner_struct) =&gt; {
                 (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
             }
-            <span class="self">Self</span>::OsMonoProfile(inner_struct) =&gt; {
+            <span class="self">Self</span>::SetSpeedOfSound(inner_struct) =&gt; {
                 (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
             }
             <span class="self">Self</span>::OsPingParams(inner_struct) =&gt; {
@@ -502,36 +502,6 @@
             }
         }
     }
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Set the speed of sound."</span>]
-</span><span class="kw">pub struct </span>SetSpeedOfSoundStruct {
-    <span class="attr">#[doc = <span class="string">"The speed of sound in the measurement medium. ~1,500,000 mm/s for water."</span>]
-    </span><span class="kw">pub </span>speed_of_sound: u32,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetSpeedOfSoundStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.speed_of_sound.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetSpeedOfSoundStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            speed_of_sound: u32::from_le_bytes(
-                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">4usize</span>]
-                    .try_into()
-                    .expect(<span class="string">"Wrong slice length"</span>),
-            ),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetSpeedOfSoundStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">1002u16
-    </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
@@ -682,6 +652,36 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Set the speed of sound."</span>]
+</span><span class="kw">pub struct </span>SetSpeedOfSoundStruct {
+    <span class="attr">#[doc = <span class="string">"The speed of sound in the measurement medium. ~1,500,000 mm/s for water."</span>]
+    </span><span class="kw">pub </span>speed_of_sound: u32,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetSpeedOfSoundStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.speed_of_sound.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetSpeedOfSoundStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            speed_of_sound: u32::from_le_bytes(
+                payload[<span class="number">0usize</span>..<span class="number">0usize </span>+ <span class="number">4usize</span>]
+                    .try_into()
+                    .expect(<span class="string">"Wrong slice length"</span>),
+            ),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetSpeedOfSoundStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">1002u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 #[doc = <span class="string">"No documentation provided."</span>]
 </span><span class="kw">pub struct </span>OsPingParamsStruct {
     <span class="attr">#[doc = <span class="string">"Not documented"</span>]
@@ -791,6 +791,10 @@
             common: Common::new(io),
         }
     }
+    <span class="attr">#[doc = <span class="string">"A profile produced from a single acoustic measurement. The data returned is an array of response strength, in dB, at even intervals across the scan region. The scan region is defined as the region between &lt;scan_start&gt; and &lt;scan_start + scan_length&gt; millimeters away from the transducer. Note that the amplitude of the results are in dB. This is just to keep high dynamic range in the u16 sized data elements. Normally these are converted back to linear power or signal levels."</span>]
+    </span><span class="kw">pub async fn </span>os_mono_profile(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;OsMonoProfileStruct, PingError&gt; {
+        <span class="self">self</span>.request().<span class="kw">await
+    </span>}
     <span class="attr">#[doc = <span class="string">"Set the speed of sound."</span>]
     #[doc = <span class="string">"# Arguments"</span>]
     #[doc = <span class="string">"* `speed_of_sound` \\[mm/s\\] - The speed of sound in the measurement medium. ~1,500,000 mm/s for water."</span>]
@@ -801,10 +805,6 @@
         <span class="self">self</span>.get_common().send_message(package).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
-    <span class="attr">#[doc = <span class="string">"A profile produced from a single acoustic measurement. The data returned is an array of response strength, in dB, at even intervals across the scan region. The scan region is defined as the region between &lt;scan_start&gt; and &lt;scan_start + scan_length&gt; millimeters away from the transducer. Note that the amplitude of the results are in dB. This is just to keep high dynamic range in the u16 sized data elements. Normally these are converted back to linear power or signal levels."</span>]
-    </span><span class="kw">pub async fn </span>os_mono_profile(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;OsMonoProfileStruct, PingError&gt; {
-        <span class="self">self</span>.request().<span class="kw">await
-    </span>}
     <span class="attr">#[doc = <span class="string">"No documentation provided."</span>]
     #[doc = <span class="string">"# Arguments"</span>]
     #[doc = <span class="string">"* `start_mm` - Not documented"</span>]
@@ -854,22 +854,22 @@
 <span class="kw">impl </span>PingMessage <span class="kw">for </span>Messages {
     <span class="kw">fn </span>message_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::SetSpeedOfSound(..) =&gt; <span class="string">"set_speed_of_sound"</span>,
             Messages::OsMonoProfile(..) =&gt; <span class="string">"os_mono_profile"</span>,
+            Messages::SetSpeedOfSound(..) =&gt; <span class="string">"set_speed_of_sound"</span>,
             Messages::OsPingParams(..) =&gt; <span class="string">"os_ping_params"</span>,
         }
     }
     <span class="kw">fn </span>message_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::SetSpeedOfSound(..) =&gt; <span class="number">1002u16</span>,
             Messages::OsMonoProfile(..) =&gt; <span class="number">2198u16</span>,
+            Messages::SetSpeedOfSound(..) =&gt; <span class="number">1002u16</span>,
             Messages::OsPingParams(..) =&gt; <span class="number">2197u16</span>,
         }
     }
     <span class="kw">fn </span>message_id_from_name(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;u16, String&gt; {
         <span class="kw">match </span>name {
-            <span class="string">"set_speed_of_sound" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1002u16</span>),
             <span class="string">"os_mono_profile" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2198u16</span>),
+            <span class="string">"set_speed_of_sound" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1002u16</span>),
             <span class="string">"os_ping_params" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2197u16</span>),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">"Failed to find message ID from name: {name}."</span>)),
         }
@@ -878,8 +878,8 @@
 <span class="kw">impl </span>SerializePayload <span class="kw">for </span>Messages {
     <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::SetSpeedOfSound(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
             Messages::OsMonoProfile(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
+            Messages::SetSpeedOfSound(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
             Messages::OsPingParams(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
         }
     }
@@ -887,11 +887,11 @@
 <span class="kw">impl </span>DeserializeGenericMessage <span class="kw">for </span>Messages {
     <span class="kw">fn </span>deserialize(message_id: u16, payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt; {
         <span class="prelude-val">Ok</span>(<span class="kw">match </span>message_id {
-            <span class="number">1002u16 </span>=&gt; Messages::SetSpeedOfSound(
-                &lt;SetSpeedOfSoundStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
-            ),
             <span class="number">2198u16 </span>=&gt; Messages::OsMonoProfile(
                 &lt;OsMonoProfileStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
+            ),
+            <span class="number">1002u16 </span>=&gt; Messages::SetSpeedOfSound(
+                &lt;SetSpeedOfSoundStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
             ),
             <span class="number">2197u16 </span>=&gt; Messages::OsPingParams(
                 &lt;OsPingParamsStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
