@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serialport-4.5.1/src/posix/enumerate.rs`."><title>enumerate.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-492a78a4a87dcc01.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serialport" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0 (f6e511eec 2024-10-15)" data-channel="1.82.0" data-search-js="search-a99f1315e7cc5121.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-921df33f47b8780c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-3b12f09e550e0385.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serialport-4.6.0/src/posix/enumerate.rs`."><title>enumerate.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-492a78a4a87dcc01.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="serialport" data-themes="" data-resource-suffix="" data-rustdoc-version="1.82.0 (f6e511eec 2024-10-15)" data-channel="1.82.0" data-search-js="search-a99f1315e7cc5121.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-921df33f47b8780c.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-3b12f09e550e0385.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -717,32 +717,6 @@
 <a href="#717" id="717">717</a>
 <a href="#718" id="718">718</a>
 <a href="#719" id="719">719</a>
-<a href="#720" id="720">720</a>
-<a href="#721" id="721">721</a>
-<a href="#722" id="722">722</a>
-<a href="#723" id="723">723</a>
-<a href="#724" id="724">724</a>
-<a href="#725" id="725">725</a>
-<a href="#726" id="726">726</a>
-<a href="#727" id="727">727</a>
-<a href="#728" id="728">728</a>
-<a href="#729" id="729">729</a>
-<a href="#730" id="730">730</a>
-<a href="#731" id="731">731</a>
-<a href="#732" id="732">732</a>
-<a href="#733" id="733">733</a>
-<a href="#734" id="734">734</a>
-<a href="#735" id="735">735</a>
-<a href="#736" id="736">736</a>
-<a href="#737" id="737">737</a>
-<a href="#738" id="738">738</a>
-<a href="#739" id="739">739</a>
-<a href="#740" id="740">740</a>
-<a href="#741" id="741">741</a>
-<a href="#742" id="742">742</a>
-<a href="#743" id="743">743</a>
-<a href="#744" id="744">744</a>
-<a href="#745" id="745">745</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>cfg_if::cfg_if;
 
 <span class="macro">cfg_if!</span> {
@@ -753,18 +727,20 @@
 
 <span class="macro">cfg_if!</span> {
     <span class="kw">if </span><span class="attr">#[cfg(any(target_os = <span class="string">"ios"</span>, target_os = <span class="string">"macos"</span>))] </span>{
-        <span class="kw">use </span>core_foundation_sys::base::<span class="kw-2">*</span>;
-        <span class="kw">use </span>core_foundation_sys::dictionary::<span class="kw-2">*</span>;
-        <span class="kw">use </span>core_foundation_sys::number::<span class="kw-2">*</span>;
-        <span class="kw">use </span>core_foundation_sys::string::<span class="kw-2">*</span>;
+        <span class="kw">use </span>core_foundation::base::CFType;
+        <span class="kw">use </span>core_foundation::base::TCFType;
+        <span class="kw">use </span>core_foundation::dictionary::CFDictionary;
+        <span class="kw">use </span>core_foundation::dictionary::CFMutableDictionary;
+        <span class="kw">use </span>core_foundation::number::CFNumber;
+        <span class="kw">use </span>core_foundation::string::CFString;
+        <span class="kw">use </span>core_foundation_sys::base::{kCFAllocatorDefault, CFRetain};
         <span class="kw">use </span>io_kit_sys::<span class="kw-2">*</span>;
         <span class="kw">use </span>io_kit_sys::keys::<span class="kw-2">*</span>;
         <span class="kw">use </span>io_kit_sys::serial::keys::<span class="kw-2">*</span>;
         <span class="kw">use </span>io_kit_sys::types::<span class="kw-2">*</span>;
         <span class="kw">use </span>io_kit_sys::usb::lib::<span class="kw-2">*</span>;
         <span class="kw">use </span>nix::libc::{c_char, c_void};
-        <span class="kw">use </span>std::convert::TryInto;
-        <span class="kw">use </span>std::ffi::{CStr, CString};
+        <span class="kw">use </span>std::ffi::CStr;
         <span class="kw">use </span>std::mem::MaybeUninit;
     }
 }
@@ -776,11 +752,7 @@
     target_os = <span class="string">"macos"
 </span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::SerialPortType;
-<span class="attr">#[cfg(any(
-    target_os = <span class="string">"ios"</span>,
-    all(target_os = <span class="string">"linux"</span>, not(target_env = <span class="string">"musl"</span>), feature = <span class="string">"libudev"</span>),
-    target_os = <span class="string">"macos"
-</span>))]
+<span class="attr">#[cfg(any(target_os = <span class="string">"ios"</span>, target_os = <span class="string">"linux"</span>, target_os = <span class="string">"macos"</span>))]
 </span><span class="kw">use </span><span class="kw">crate</span>::UsbPortInfo;
 <span class="attr">#[cfg(any(
     target_os = <span class="string">"android"</span>,
@@ -885,9 +857,6 @@
             <span class="kw">let </span>usb_properties = <span class="macro">vec!</span>[
                 d.property_value(<span class="string">"ID_USB_VENDOR_ID"</span>),
                 d.property_value(<span class="string">"ID_USB_MODEL_ID"</span>),
-                d.property_value(<span class="string">"ID_USB_VENDOR"</span>),
-                d.property_value(<span class="string">"ID_USB_MODEL"</span>),
-                d.property_value(<span class="string">"ID_USB_SERIAL_SHORT"</span>),
             ]
             .into_iter()
             .collect::&lt;<span class="prelude-ty">Option</span>&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;&gt;();
@@ -1044,91 +1013,54 @@
 <span class="attr">#[cfg(any(target_os = <span class="string">"ios"</span>, target_os = <span class="string">"macos"</span>))]
 #[allow(non_upper_case_globals)]
 </span><span class="doccomment">/// Returns a specific property of the given device as an integer.
-</span><span class="kw">fn </span>get_int_property(
-    device_type: io_registry_entry_t,
-    property: <span class="kw-2">&amp;</span>str,
-    cf_number_type: CFNumberType,
-) -&gt; <span class="prelude-ty">Option</span>&lt;u32&gt; {
-    <span class="kw">unsafe </span>{
-        <span class="kw">let </span>prop_str = CString::new(property).unwrap();
-        <span class="kw">let </span>key = CFStringCreateWithCString(
+</span><span class="kw">fn </span>get_int_property(device_type: io_registry_entry_t, property: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;u32&gt; {
+    <span class="kw">let </span>cf_property = CFString::new(property);
+
+    <span class="kw">let </span>cf_type_ref = <span class="kw">unsafe </span>{
+        IORegistryEntryCreateCFProperty(
+            device_type,
+            cf_property.as_concrete_TypeRef(),
             kCFAllocatorDefault,
-            prop_str.as_ptr(),
-            kCFStringEncodingUTF8,
-        );
-        <span class="kw">let </span>_key_guard = scopeguard::guard((), |<span class="kw">_</span>| {
-            CFRelease(key <span class="kw">as </span><span class="kw-2">*const </span>c_void);
-        });
-
-        <span class="kw">let </span>container = IORegistryEntryCreateCFProperty(device_type, key, kCFAllocatorDefault, <span class="number">0</span>);
-        <span class="kw">if </span>container.is_null() {
-            <span class="kw">return </span><span class="prelude-val">None</span>;
-        }
-        <span class="kw">let </span>_container_guard = scopeguard::guard((), |<span class="kw">_</span>| {
-            CFRelease(container);
-        });
-
-        <span class="kw">match </span>cf_number_type {
-            kCFNumberSInt8Type =&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>num: u8 = <span class="number">0</span>;
-                <span class="kw">let </span>num_ptr: <span class="kw-2">*mut </span>c_void = <span class="kw-2">&amp;mut </span>num <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_ as </span><span class="kw-2">*mut </span>c_void;
-                CFNumberGetValue(container <span class="kw">as </span>CFNumberRef, cf_number_type, num_ptr);
-                <span class="prelude-val">Some</span>(num <span class="kw">as </span>u32)
-            }
-            kCFNumberSInt16Type =&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>num: u16 = <span class="number">0</span>;
-                <span class="kw">let </span>num_ptr: <span class="kw-2">*mut </span>c_void = <span class="kw-2">&amp;mut </span>num <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_ as </span><span class="kw-2">*mut </span>c_void;
-                CFNumberGetValue(container <span class="kw">as </span>CFNumberRef, cf_number_type, num_ptr);
-                <span class="prelude-val">Some</span>(num <span class="kw">as </span>u32)
-            }
-            kCFNumberSInt32Type =&gt; {
-                <span class="kw">let </span><span class="kw-2">mut </span>num: u32 = <span class="number">0</span>;
-                <span class="kw">let </span>num_ptr: <span class="kw-2">*mut </span>c_void = <span class="kw-2">&amp;mut </span>num <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_ as </span><span class="kw-2">*mut </span>c_void;
-                CFNumberGetValue(container <span class="kw">as </span>CFNumberRef, cf_number_type, num_ptr);
-                <span class="prelude-val">Some</span>(num)
-            }
-            <span class="kw">_ </span>=&gt; <span class="prelude-val">None</span>,
-        }
+            <span class="number">0</span>,
+        )
+    };
+    <span class="kw">if </span>cf_type_ref.is_null() {
+        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(ErrorKind::Unknown, <span class="string">"Failed to get property"</span>));
     }
+
+    <span class="kw">let </span>cf_type = <span class="kw">unsafe </span>{ CFType::wrap_under_create_rule(cf_type_ref) };
+    cf_type
+        .downcast::&lt;CFNumber&gt;()
+        .and_then(|n| n.to_i64())
+        .map(|n| n <span class="kw">as </span>u32)
+        .ok_or(Error::new(
+            ErrorKind::Unknown,
+            <span class="string">"Failed to get numerical value"</span>,
+        ))
 }
 
 <span class="attr">#[cfg(any(target_os = <span class="string">"ios"</span>, target_os = <span class="string">"macos"</span>))]
 </span><span class="doccomment">/// Returns a specific property of the given device as a string.
-</span><span class="kw">fn </span>get_string_property(device_type: io_registry_entry_t, property: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
-    <span class="kw">unsafe </span>{
-        <span class="kw">let </span>prop_str = CString::new(property).unwrap();
-        <span class="kw">let </span>key = CFStringCreateWithCString(
+</span><span class="kw">fn </span>get_string_property(device_type: io_registry_entry_t, property: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;String&gt; {
+    <span class="kw">let </span>cf_property = CFString::new(property);
+
+    <span class="kw">let </span>cf_type_ref = <span class="kw">unsafe </span>{
+        IORegistryEntryCreateCFProperty(
+            device_type,
+            cf_property.as_concrete_TypeRef(),
             kCFAllocatorDefault,
-            prop_str.as_ptr(),
-            kCFStringEncodingUTF8,
-        );
-        <span class="kw">let </span>_key_guard = scopeguard::guard((), |<span class="kw">_</span>| {
-            CFRelease(key <span class="kw">as </span><span class="kw-2">*const </span>c_void);
-        });
-
-        <span class="kw">let </span>container = IORegistryEntryCreateCFProperty(device_type, key, kCFAllocatorDefault, <span class="number">0</span>);
-        <span class="kw">if </span>container.is_null() {
-            <span class="kw">return </span><span class="prelude-val">None</span>;
-        }
-        <span class="kw">let </span>_container_guard = scopeguard::guard((), |<span class="kw">_</span>| {
-            CFRelease(container);
-        });
-
-        <span class="kw">let </span><span class="kw-2">mut </span>buf = Vec::with_capacity(<span class="number">256</span>);
-        <span class="kw">let </span>result = CFStringGetCString(
-            container <span class="kw">as </span>CFStringRef,
-            buf.as_mut_ptr(),
-            buf.capacity().try_into().unwrap(),
-            kCFStringEncodingUTF8,
-        );
-        <span class="kw">let </span>opt_str = <span class="kw">if </span>result != <span class="number">0 </span>{
-            CStr::from_ptr(buf.as_ptr()).to_str().ok().map(String::from)
-        } <span class="kw">else </span>{
-            <span class="prelude-val">None
-        </span>};
-
-        opt_str
+            <span class="number">0</span>,
+        )
+    };
+    <span class="kw">if </span>cf_type_ref.is_null() {
+        <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(ErrorKind::Unknown, <span class="string">"Failed to get property"</span>));
     }
+
+    <span class="kw">let </span>cf_type = <span class="kw">unsafe </span>{ CFType::wrap_under_create_rule(cf_type_ref) };
+    cf_type
+        .downcast::&lt;CFString&gt;()
+        .map(|s| s.to_string())
+        .ok_or(Error::new(ErrorKind::Unknown, <span class="string">"Failed to get string value"</span>))
 }
 
 <span class="attr">#[cfg(any(target_os = <span class="string">"ios"</span>, target_os = <span class="string">"macos"</span>))]
@@ -1143,13 +1075,11 @@
         .or_else(|| get_parent_device_by_type(service, legacy_usb_device_class_name));
     <span class="kw">if let </span><span class="prelude-val">Some</span>(usb_device) = maybe_usb_device {
         SerialPortType::UsbPort(UsbPortInfo {
-            vid: get_int_property(usb_device, <span class="string">"idVendor"</span>, kCFNumberSInt16Type).unwrap_or_default()
-                <span class="kw">as </span>u16,
-            pid: get_int_property(usb_device, <span class="string">"idProduct"</span>, kCFNumberSInt16Type).unwrap_or_default()
-                <span class="kw">as </span>u16,
-            serial_number: get_string_property(usb_device, <span class="string">"USB Serial Number"</span>),
-            manufacturer: get_string_property(usb_device, <span class="string">"USB Vendor Name"</span>),
-            product: get_string_property(usb_device, <span class="string">"USB Product Name"</span>),
+            vid: get_int_property(usb_device, <span class="string">"idVendor"</span>).unwrap_or_default() <span class="kw">as </span>u16,
+            pid: get_int_property(usb_device, <span class="string">"idProduct"</span>).unwrap_or_default() <span class="kw">as </span>u16,
+            serial_number: get_string_property(usb_device, <span class="string">"USB Serial Number"</span>).ok(),
+            manufacturer: get_string_property(usb_device, <span class="string">"USB Vendor Name"</span>).ok(),
+            product: get_string_property(usb_device, <span class="string">"USB Product Name"</span>).ok(),
             <span class="comment">// Apple developer documentation indicates `bInterfaceNumber` is the supported key for
             // looking up the composite usb interface id. `idVendor` and `idProduct` are included in the same tables, so
             // we will lookup the interface number using the same method. See:
@@ -1157,8 +1087,9 @@
             // https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_driverkit_transport_usb
             // https://developer.apple.com/library/archive/documentation/DeviceDrivers/Conceptual/USBBook/USBOverview/USBOverview.html#//apple_ref/doc/uid/TP40002644-BBCEACAJ
             </span><span class="attr">#[cfg(feature = <span class="string">"usbportinfo-interface"</span>)]
-            </span>interface: get_int_property(usb_device, <span class="string">"bInterfaceNumber"</span>, kCFNumberSInt8Type)
-                .map(|x| x <span class="kw">as </span>u8),
+            </span>interface: get_int_property(usb_device, <span class="string">"bInterfaceNumber"</span>)
+                .map(|x| x <span class="kw">as </span>u8)
+                .ok(),
         })
     } <span class="kw">else if </span>get_parent_device_by_type(service, bluetooth_device_class_name).is_some() {
         SerialPortType::BluetoothPort
@@ -1185,43 +1116,15 @@
                         <span class="string">"IOServiceMatching returned a NULL dictionary."</span>,
                     ));
                 }
-                <span class="kw">let </span>_classes_to_match_guard = scopeguard::guard((), |<span class="kw">_</span>| {
-                    CFRelease(classes_to_match <span class="kw">as </span><span class="kw-2">*const </span>c_void);
-                });
+                <span class="kw">let </span><span class="kw-2">mut </span>classes_to_match = CFMutableDictionary::wrap_under_create_rule(classes_to_match);
 
                 <span class="comment">// Populate the search dictionary with a single key/value pair indicating that we're
                 // searching for serial devices matching the RS232 device type.
-                </span><span class="kw">let </span>key = CFStringCreateWithCString(
-                    kCFAllocatorDefault,
-                    kIOSerialBSDTypeKey,
-                    kCFStringEncodingUTF8,
-                );
-                <span class="kw">if </span>key.is_null() {
-                    <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
-                        ErrorKind::Unknown,
-                        <span class="string">"Failed to allocate key string."</span>,
-                    ));
-                }
-                <span class="kw">let </span>_key_guard = scopeguard::guard((), |<span class="kw">_</span>| {
-                    CFRelease(key <span class="kw">as </span><span class="kw-2">*const </span>c_void);
-                });
-
-                <span class="kw">let </span>value = CFStringCreateWithCString(
-                    kCFAllocatorDefault,
-                    kIOSerialBSDAllTypes,
-                    kCFStringEncodingUTF8,
-                );
-                <span class="kw">if </span>value.is_null() {
-                    <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(
-                        ErrorKind::Unknown,
-                        <span class="string">"Failed to allocate value string."</span>,
-                    ));
-                }
-                <span class="kw">let </span>_value_guard = scopeguard::guard((), |<span class="kw">_</span>| {
-                    CFRelease(value <span class="kw">as </span><span class="kw-2">*const </span>c_void);
-                });
-
-                CFDictionarySetValue(classes_to_match, key <span class="kw">as </span>CFTypeRef, value <span class="kw">as </span>CFTypeRef);
+                </span><span class="kw">let </span>search_key = CStr::from_ptr(kIOSerialBSDTypeKey);
+                <span class="kw">let </span>search_key = CFString::from_static_string(search_key.to_str().map_err(|<span class="kw">_</span>| Error::new(ErrorKind::Unknown, <span class="string">"Failed to convert search key string"</span>))<span class="question-mark">?</span>);
+                <span class="kw">let </span>search_value = CStr::from_ptr(kIOSerialBSDAllTypes);
+                <span class="kw">let </span>search_value = CFString::from_static_string(search_value.to_str().map_err(|<span class="kw">_</span>| Error::new(ErrorKind::Unknown, <span class="string">"Failed to convert search key string"</span>))<span class="question-mark">?</span>);
+                classes_to_match.set(search_key, search_value);
 
                 <span class="comment">// Get an interface to IOKit
                 </span><span class="kw">let </span><span class="kw-2">mut </span>master_port: mach_port_t = MACH_PORT_NULL;
@@ -1233,11 +1136,17 @@
                     ));
                 }
 
-                <span class="comment">// Run the search.
-                </span><span class="kw">let </span><span class="kw-2">mut </span>matching_services = MaybeUninit::uninit();
+                <span class="comment">// Run the search. IOServiceGetMatchingServices consumes one reference count of
+                // classes_to_match, so explicitly retain.
+                //
+                // TODO: We could also just mem::forget classes_to_match like in
+                // TCFType::into_CFType. Is there a special reason that there is no
+                // TCFType::into_concrete_TypeRef()?
+                </span>CFRetain(classes_to_match.as_CFTypeRef());
+                <span class="kw">let </span><span class="kw-2">mut </span>matching_services = MaybeUninit::uninit();
                 kern_result = IOServiceGetMatchingServices(
                     kIOMasterPortDefault,
-                    CFRetain(classes_to_match <span class="kw">as </span><span class="kw-2">*const </span>c_void) <span class="kw">as </span><span class="kw-2">*const </span>__CFDictionary,
+                    classes_to_match.as_concrete_TypeRef(),
                     matching_services.as_mut_ptr(),
                 );
                 <span class="kw">if </span>kern_result != KERN_SUCCESS {
@@ -1270,42 +1179,29 @@
                         kCFAllocatorDefault,
                         <span class="number">0</span>,
                     );
-                    <span class="kw">let </span>_props_guard = scopeguard::guard((), |<span class="kw">_</span>| {
-                        CFRelease(props.assume_init() <span class="kw">as </span><span class="kw-2">*const </span>c_void);
-                    });
-
                     <span class="kw">if </span>result == KERN_SUCCESS {
+                        <span class="comment">// A successful call to IORegistryEntryCreateCFProperties indicates that a
+                        // properties dict has been allocated and we as the caller are in charge of
+                        // releasing it.
+                        </span><span class="kw">let </span>props = props.assume_init();
+                        <span class="kw">let </span>props: CFDictionary&lt;CFString, <span class="kw-2">*const </span>c_void&gt; = CFDictionary::wrap_under_create_rule(props);
+
                         <span class="kw">for </span>key <span class="kw">in </span>[<span class="string">"IOCalloutDevice"</span>, <span class="string">"IODialinDevice"</span>].iter() {
-                            <span class="kw">let </span>key_cstring = CString::new(<span class="kw-2">*</span>key).unwrap();
-                            <span class="kw">let </span>key_cfstring = CFStringCreateWithCString(
-                                kCFAllocatorDefault,
-                                key_cstring.as_ptr(),
-                                kCFStringEncodingUTF8,
-                            );
-                            <span class="kw">let </span>_key_cfstring_guard = scopeguard::guard((), |<span class="kw">_</span>| {
-                                CFRelease(key_cfstring <span class="kw">as </span><span class="kw-2">*const </span>c_void);
-                            });
+                            <span class="kw">let </span>cf_key = CFString::new(key);
 
-                            <span class="kw">let </span><span class="kw-2">mut </span>value = std::ptr::null();
-                            <span class="kw">let </span>found = CFDictionaryGetValueIfPresent(props.assume_init(), key_cfstring <span class="kw">as </span><span class="kw-2">*const </span>c_void, <span class="kw-2">&amp;mut </span>value);
-                            <span class="kw">if </span>found == <span class="bool-val">true </span><span class="kw">as </span>Boolean {
-                                <span class="kw">let </span>type_id = CFGetTypeID(value);
-                                <span class="kw">if </span>type_id == CFStringGetTypeID() {
-                                    <span class="kw">let </span><span class="kw-2">mut </span>buf = Vec::with_capacity(<span class="number">256</span>);
-
-                                    CFStringGetCString(
-                                        value <span class="kw">as </span>CFStringRef,
-                                        buf.as_mut_ptr(),
-                                        buf.capacity() <span class="kw">as </span>isize,
-                                        kCFStringEncodingUTF8,
-                                    );
-                                    <span class="kw">let </span>path = CStr::from_ptr(buf.as_ptr()).to_string_lossy();
-                                    vec.push(SerialPortInfo {
-                                        port_name: path.to_string(),
-                                        port_type: port_type(modem_service),
-                                    });
-                                } <span class="kw">else </span>{
-                                    <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(ErrorKind::Unknown, <span class="string">"Found invalid type for TypeID"</span>));
+                            <span class="kw">if let </span><span class="prelude-val">Some</span>(cf_ref) = props.find(cf_key) {
+                                <span class="kw">let </span>cf_type = CFType::wrap_under_get_rule(<span class="kw-2">*</span>cf_ref);
+                                <span class="kw">match </span>cf_type
+                                     .downcast::&lt;CFString&gt;()
+                                     .map(|s| s.to_string())
+                                {
+                                    <span class="prelude-val">Some</span>(path) =&gt; {
+                                        vec.push(SerialPortInfo {
+                                            port_name: path,
+                                            port_type: port_type(modem_service),
+                                        });
+                                    }
+                                    <span class="prelude-val">None </span>=&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(ErrorKind::Unknown, <span class="macro">format!</span>(<span class="string">"Failed to get string value for {}"</span>, key))),
                                 }
                             } <span class="kw">else </span>{
                                 <span class="kw">return </span><span class="prelude-val">Err</span>(Error::new(ErrorKind::Unknown, <span class="macro">format!</span>(<span class="string">"Key {} missing in dict"</span>, key)));
@@ -1357,11 +1253,61 @@
         <span class="kw">use </span>std::io::Read;
         <span class="kw">use </span>std::path::Path;
 
+        <span class="kw">fn </span>read_file_to_trimmed_string(dir: <span class="kw-2">&amp;</span>Path, file: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;String&gt; {
+            <span class="kw">let </span>path = dir.join(file);
+            <span class="kw">let </span><span class="kw-2">mut </span>s = String::new();
+            File::open(path).ok()<span class="question-mark">?</span>.read_to_string(<span class="kw-2">&amp;mut </span>s).ok()<span class="question-mark">?</span>;
+            <span class="prelude-val">Some</span>(s.trim().to_owned())
+        }
+
+        <span class="kw">fn </span>read_file_to_u16(dir: <span class="kw-2">&amp;</span>Path, file: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;u16&gt; {
+            u16::from_str_radix(<span class="kw-2">&amp;</span>read_file_to_trimmed_string(dir, file)<span class="question-mark">?</span>, <span class="number">16</span>).ok()
+        }
+
+        <span class="attr">#[cfg(feature = <span class="string">"usbportinfo-interface"</span>)]
+        </span><span class="kw">fn </span>read_file_to_u8(dir: <span class="kw-2">&amp;</span>Path, file: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;u8&gt; {
+            u8::from_str_radix(<span class="kw-2">&amp;</span>read_file_to_trimmed_string(dir, file)<span class="question-mark">?</span>, <span class="number">16</span>).ok()
+        }
+
+        <span class="kw">fn </span>read_usb_port_info(device_path: <span class="kw-2">&amp;</span>Path) -&gt; <span class="prelude-ty">Option</span>&lt;SerialPortType&gt; {
+            <span class="kw">let </span>device_path = device_path
+                .canonicalize()
+                .ok()<span class="question-mark">?</span>;
+            <span class="kw">let </span>subsystem = device_path.join(<span class="string">"subsystem"</span>).canonicalize().ok()<span class="question-mark">?</span>;
+            <span class="kw">let </span>subsystem = subsystem.file_name()<span class="question-mark">?</span>.to_string_lossy();
+
+            <span class="kw">let </span>usb_interface_path = <span class="kw">if </span>subsystem == <span class="string">"usb-serial" </span>{
+                device_path.parent()<span class="question-mark">?
+            </span>} <span class="kw">else if </span>subsystem == <span class="string">"usb" </span>{
+                <span class="kw-2">&amp;</span>device_path
+            } <span class="kw">else </span>{
+                <span class="kw">return </span><span class="prelude-val">None</span>;
+            };
+            <span class="kw">let </span>usb_device_path = usb_interface_path.parent()<span class="question-mark">?</span>;
+
+            <span class="kw">let </span>vid = read_file_to_u16(<span class="kw-2">&amp;</span>usb_device_path, <span class="kw-2">&amp;</span><span class="string">"idVendor"</span>)<span class="question-mark">?</span>;
+            <span class="kw">let </span>pid = read_file_to_u16(<span class="kw-2">&amp;</span>usb_device_path, <span class="kw-2">&amp;</span><span class="string">"idProduct"</span>)<span class="question-mark">?</span>;
+            <span class="attr">#[cfg(feature = <span class="string">"usbportinfo-interface"</span>)]
+            </span><span class="kw">let </span>interface = read_file_to_u8(<span class="kw-2">&amp;</span>usb_interface_path, <span class="kw-2">&amp;</span><span class="string">"bInterfaceNumber"</span>);
+            <span class="kw">let </span>serial_number = read_file_to_trimmed_string(<span class="kw-2">&amp;</span>usb_device_path, <span class="kw-2">&amp;</span><span class="string">"serial"</span>);
+            <span class="kw">let </span>product = read_file_to_trimmed_string(<span class="kw-2">&amp;</span>usb_device_path, <span class="kw-2">&amp;</span><span class="string">"product"</span>);
+            <span class="kw">let </span>manufacturer = read_file_to_trimmed_string(<span class="kw-2">&amp;</span>usb_device_path, <span class="kw-2">&amp;</span><span class="string">"manufacturer"</span>);
+            <span class="prelude-val">Some</span>(SerialPortType::UsbPort(UsbPortInfo {
+                vid,
+                pid,
+                serial_number,
+                manufacturer,
+                product,
+                <span class="attr">#[cfg(feature = <span class="string">"usbportinfo-interface"</span>)]
+                </span>interface,
+            }))
+        }
+
         <span class="doccomment">/// Scans `/sys/class/tty` for serial devices (on Linux systems without libudev).
         </span><span class="kw">pub fn </span>available_ports() -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;SerialPortInfo&gt;&gt; {
             <span class="kw">let </span><span class="kw-2">mut </span>vec = Vec::new();
             <span class="kw">let </span>sys_path = Path::new(<span class="string">"/sys/class/tty/"</span>);
-            <span class="kw">let </span>device_path = Path::new(<span class="string">"/dev"</span>);
+            <span class="kw">let </span>dev_path = Path::new(<span class="string">"/dev"</span>);
             <span class="kw">let </span><span class="kw-2">mut </span>s;
             <span class="kw">for </span>path <span class="kw">in </span>sys_path.read_dir().expect(<span class="string">"/sys/class/tty/ doesn't exist on this system"</span>) {
                 <span class="kw">let </span>raw_path = path<span class="question-mark">?</span>.path().clone();
@@ -1371,6 +1317,8 @@
                 <span class="kw">if </span>!path.is_dir() {
                     <span class="kw">continue</span>;
                 }
+
+                <span class="kw">let </span>port_type = read_usb_port_info(<span class="kw-2">&amp;</span>path).unwrap_or(SerialPortType::Unknown);
 
                 path.push(<span class="string">"driver_override"</span>);
                 <span class="kw">if </span>path.is_file() {
@@ -1387,14 +1335,14 @@
                 //
                 // See https://github.com/serialport/serialport-rs/issues/66 for details.
                 </span><span class="kw">if let </span><span class="prelude-val">Some</span>(file_name) = raw_path.file_name() {
-                    <span class="kw">let </span>device_file = device_path.join(file_name);
+                    <span class="kw">let </span>device_file = dev_path.join(file_name);
                     <span class="kw">if </span>!device_file.exists() {
                         <span class="kw">continue</span>;
                     }
 
                     vec.push(SerialPortInfo {
                         port_name: device_file.to_string_lossy().to_string(),
-                        port_type: SerialPortType::Unknown,
+                        port_type,
                     });
                 }
             }
