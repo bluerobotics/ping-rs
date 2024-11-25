@@ -433,63 +433,36 @@
 <span class="attr">#[derive(Debug, Clone, PartialEq)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 </span><span class="kw">pub enum </span>Messages {
-    AsciiText(AsciiTextStruct),
     GeneralRequest(GeneralRequestStruct),
-    SetDeviceId(SetDeviceIdStruct),
-    ProtocolVersion(ProtocolVersionStruct),
     DeviceInformation(DeviceInformationStruct),
+    ProtocolVersion(ProtocolVersionStruct),
     Nack(NackStruct),
+    AsciiText(AsciiTextStruct),
+    SetDeviceId(SetDeviceIdStruct),
     Ack(AckStruct),
 }
 <span class="kw">impl </span>Messages {
     <span class="kw">pub fn </span>inner&lt;T: <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>T&gt; {
         <span class="kw">match </span><span class="self">self </span>{
-            <span class="self">Self</span>::AsciiText(inner_struct) =&gt; {
-                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
-            }
             <span class="self">Self</span>::GeneralRequest(inner_struct) =&gt; {
-                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
-            }
-            <span class="self">Self</span>::SetDeviceId(inner_struct) =&gt; {
-                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
-            }
-            <span class="self">Self</span>::ProtocolVersion(inner_struct) =&gt; {
                 (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
             }
             <span class="self">Self</span>::DeviceInformation(inner_struct) =&gt; {
                 (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
             }
+            <span class="self">Self</span>::ProtocolVersion(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
             <span class="self">Self</span>::Nack(inner_struct) =&gt; (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;(),
+            <span class="self">Self</span>::AsciiText(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
+            <span class="self">Self</span>::SetDeviceId(inner_struct) =&gt; {
+                (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;()
+            }
             <span class="self">Self</span>::Ack(inner_struct) =&gt; (inner_struct <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>std::any::Any).downcast_ref::&lt;T&gt;(),
         }
     }
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"A message for transmitting text data."</span>]
-</span><span class="kw">pub struct </span>AsciiTextStruct {
-    <span class="attr">#[doc = <span class="string">"ASCII text message. (not necessarily NULL terminated)"</span>]
-    </span><span class="kw">pub </span>ascii_message: String,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>AsciiTextStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="self">self</span>.ascii_message.as_bytes());
-        buffer.push(<span class="number">0</span>);
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>AsciiTextStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            ascii_message: String::from_utf8(payload[<span class="number">0usize</span>..payload.len()].to_vec()).unwrap(),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>AsciiTextStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">3u16
-    </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
@@ -519,70 +492,6 @@
 <span class="kw">impl </span>MessageInfo <span class="kw">for </span>GeneralRequestStruct {
     <span class="kw">fn </span>id() -&gt; u16 {
         <span class="number">6u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"Set the device ID."</span>]
-</span><span class="kw">pub struct </span>SetDeviceIdStruct {
-    <span class="attr">#[doc = <span class="string">"Device ID (1-254). 0 is unknown and 255 is reserved for broadcast messages."</span>]
-    </span><span class="kw">pub </span>device_id: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetDeviceIdStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_id.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetDeviceIdStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            device_id: payload[<span class="number">0usize</span>].into(),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetDeviceIdStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">100u16
-    </span>}
-}
-<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
-#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
-#[doc = <span class="string">"The protocol version"</span>]
-</span><span class="kw">pub struct </span>ProtocolVersionStruct {
-    <span class="attr">#[doc = <span class="string">"Protocol version major number."</span>]
-    </span><span class="kw">pub </span>version_major: u8,
-    <span class="attr">#[doc = <span class="string">"Protocol version minor number."</span>]
-    </span><span class="kw">pub </span>version_minor: u8,
-    <span class="attr">#[doc = <span class="string">"Protocol version patch number."</span>]
-    </span><span class="kw">pub </span>version_patch: u8,
-    <span class="attr">#[doc = <span class="string">"reserved"</span>]
-    </span><span class="kw">pub </span>reserved: u8,
-}
-<span class="kw">impl </span>SerializePayload <span class="kw">for </span>ProtocolVersionStruct {
-    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.version_major.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.version_minor.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.version_patch.to_le_bytes());
-        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
-        buffer
-    }
-}
-<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>ProtocolVersionStruct {
-    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            version_major: payload[<span class="number">0usize</span>].into(),
-            version_minor: payload[<span class="number">1usize</span>].into(),
-            version_patch: payload[<span class="number">2usize</span>].into(),
-            reserved: payload[<span class="number">3usize</span>].into(),
-        }
-    }
-}
-<span class="kw">impl </span>MessageInfo <span class="kw">for </span>ProtocolVersionStruct {
-    <span class="kw">fn </span>id() -&gt; u16 {
-        <span class="number">5u16
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
@@ -633,6 +542,44 @@
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
 #[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"The protocol version"</span>]
+</span><span class="kw">pub struct </span>ProtocolVersionStruct {
+    <span class="attr">#[doc = <span class="string">"Protocol version major number."</span>]
+    </span><span class="kw">pub </span>version_major: u8,
+    <span class="attr">#[doc = <span class="string">"Protocol version minor number."</span>]
+    </span><span class="kw">pub </span>version_minor: u8,
+    <span class="attr">#[doc = <span class="string">"Protocol version patch number."</span>]
+    </span><span class="kw">pub </span>version_patch: u8,
+    <span class="attr">#[doc = <span class="string">"reserved"</span>]
+    </span><span class="kw">pub </span>reserved: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>ProtocolVersionStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.version_major.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.version_minor.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.version_patch.to_le_bytes());
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.reserved.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>ProtocolVersionStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            version_major: payload[<span class="number">0usize</span>].into(),
+            version_minor: payload[<span class="number">1usize</span>].into(),
+            version_patch: payload[<span class="number">2usize</span>].into(),
+            reserved: payload[<span class="number">3usize</span>].into(),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>ProtocolVersionStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">5u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
 #[doc = <span class="string">"Not acknowledged."</span>]
 </span><span class="kw">pub struct </span>NackStruct {
     <span class="attr">#[doc = <span class="string">"The message ID that is Not ACKnowledged."</span>]
@@ -664,6 +611,59 @@
 <span class="kw">impl </span>MessageInfo <span class="kw">for </span>NackStruct {
     <span class="kw">fn </span>id() -&gt; u16 {
         <span class="number">2u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"A message for transmitting text data."</span>]
+</span><span class="kw">pub struct </span>AsciiTextStruct {
+    <span class="attr">#[doc = <span class="string">"ASCII text message. (not necessarily NULL terminated)"</span>]
+    </span><span class="kw">pub </span>ascii_message: String,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>AsciiTextStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="self">self</span>.ascii_message.as_bytes());
+        buffer.push(<span class="number">0</span>);
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>AsciiTextStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            ascii_message: String::from_utf8(payload[<span class="number">0usize</span>..payload.len()].to_vec()).unwrap(),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>AsciiTextStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">3u16
+    </span>}
+}
+<span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
+#[cfg_attr(feature = <span class="string">"serde"</span>, derive(Serialize, Deserialize))]
+#[doc = <span class="string">"Set the device ID."</span>]
+</span><span class="kw">pub struct </span>SetDeviceIdStruct {
+    <span class="attr">#[doc = <span class="string">"Device ID (1-254). 0 is unknown and 255 is reserved for broadcast messages."</span>]
+    </span><span class="kw">pub </span>device_id: u8,
+}
+<span class="kw">impl </span>SerializePayload <span class="kw">for </span>SetDeviceIdStruct {
+    <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>buffer: Vec&lt;u8&gt; = Default::default();
+        buffer.extend_from_slice(<span class="kw-2">&amp;</span><span class="self">self</span>.device_id.to_le_bytes());
+        buffer
+    }
+}
+<span class="kw">impl </span>DeserializePayload <span class="kw">for </span>SetDeviceIdStruct {
+    <span class="kw">fn </span>deserialize(payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            device_id: payload[<span class="number">0usize</span>].into(),
+        }
+    }
+}
+<span class="kw">impl </span>MessageInfo <span class="kw">for </span>SetDeviceIdStruct {
+    <span class="kw">fn </span>id() -&gt; u16 {
+        <span class="number">100u16
     </span>}
 }
 <span class="attr">#[derive(Debug, Clone, PartialEq, Default)]
@@ -705,6 +705,14 @@
             common: Common::new(io),
         }
     }
+    <span class="attr">#[doc = <span class="string">"Device information"</span>]
+    </span><span class="kw">pub async fn </span>device_information(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;DeviceInformationStruct, PingError&gt; {
+        <span class="self">self</span>.request().<span class="kw">await
+    </span>}
+    <span class="attr">#[doc = <span class="string">"The protocol version"</span>]
+    </span><span class="kw">pub async fn </span>protocol_version(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ProtocolVersionStruct, PingError&gt; {
+        <span class="self">self</span>.request().<span class="kw">await
+    </span>}
     <span class="attr">#[doc = <span class="string">"Set the device ID."</span>]
     #[doc = <span class="string">"# Arguments"</span>]
     #[doc = <span class="string">"* `device_id` - Device ID (1-254). 0 is unknown and 255 is reserved for broadcast messages."</span>]
@@ -716,46 +724,38 @@
         <span class="self">self</span>.get_common().send_message(package).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="self">self</span>.wait_for_ack(receiver, SetDeviceIdStruct::id()).<span class="kw">await
     </span>}
-    <span class="attr">#[doc = <span class="string">"The protocol version"</span>]
-    </span><span class="kw">pub async fn </span>protocol_version(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;ProtocolVersionStruct, PingError&gt; {
-        <span class="self">self</span>.request().<span class="kw">await
-    </span>}
-    <span class="attr">#[doc = <span class="string">"Device information"</span>]
-    </span><span class="kw">pub async fn </span>device_information(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;DeviceInformationStruct, PingError&gt; {
-        <span class="self">self</span>.request().<span class="kw">await
-    </span>}
 }
 <span class="kw">impl </span>PingMessage <span class="kw">for </span>Messages {
     <span class="kw">fn </span>message_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::AsciiText(..) =&gt; <span class="string">"ascii_text"</span>,
             Messages::GeneralRequest(..) =&gt; <span class="string">"general_request"</span>,
-            Messages::SetDeviceId(..) =&gt; <span class="string">"set_device_id"</span>,
-            Messages::ProtocolVersion(..) =&gt; <span class="string">"protocol_version"</span>,
             Messages::DeviceInformation(..) =&gt; <span class="string">"device_information"</span>,
+            Messages::ProtocolVersion(..) =&gt; <span class="string">"protocol_version"</span>,
             Messages::Nack(..) =&gt; <span class="string">"nack"</span>,
+            Messages::AsciiText(..) =&gt; <span class="string">"ascii_text"</span>,
+            Messages::SetDeviceId(..) =&gt; <span class="string">"set_device_id"</span>,
             Messages::Ack(..) =&gt; <span class="string">"ack"</span>,
         }
     }
     <span class="kw">fn </span>message_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::AsciiText(..) =&gt; <span class="number">3u16</span>,
             Messages::GeneralRequest(..) =&gt; <span class="number">6u16</span>,
-            Messages::SetDeviceId(..) =&gt; <span class="number">100u16</span>,
-            Messages::ProtocolVersion(..) =&gt; <span class="number">5u16</span>,
             Messages::DeviceInformation(..) =&gt; <span class="number">4u16</span>,
+            Messages::ProtocolVersion(..) =&gt; <span class="number">5u16</span>,
             Messages::Nack(..) =&gt; <span class="number">2u16</span>,
+            Messages::AsciiText(..) =&gt; <span class="number">3u16</span>,
+            Messages::SetDeviceId(..) =&gt; <span class="number">100u16</span>,
             Messages::Ack(..) =&gt; <span class="number">1u16</span>,
         }
     }
     <span class="kw">fn </span>message_id_from_name(name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;u16, String&gt; {
         <span class="kw">match </span>name {
-            <span class="string">"ascii_text" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">3u16</span>),
             <span class="string">"general_request" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">6u16</span>),
-            <span class="string">"set_device_id" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">100u16</span>),
-            <span class="string">"protocol_version" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">5u16</span>),
             <span class="string">"device_information" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">4u16</span>),
+            <span class="string">"protocol_version" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">5u16</span>),
             <span class="string">"nack" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">2u16</span>),
+            <span class="string">"ascii_text" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">3u16</span>),
+            <span class="string">"set_device_id" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">100u16</span>),
             <span class="string">"ack" </span>=&gt; <span class="prelude-val">Ok</span>(<span class="number">1u16</span>),
             <span class="kw">_ </span>=&gt; <span class="prelude-val">Err</span>(<span class="macro">format!</span>(<span class="string">"Failed to find message ID from name: {name}."</span>)),
         }
@@ -764,12 +764,12 @@
 <span class="kw">impl </span>SerializePayload <span class="kw">for </span>Messages {
     <span class="kw">fn </span>serialize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;u8&gt; {
         <span class="kw">match </span><span class="self">self </span>{
-            Messages::AsciiText(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
             Messages::GeneralRequest(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
-            Messages::SetDeviceId(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
-            Messages::ProtocolVersion(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
             Messages::DeviceInformation(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
+            Messages::ProtocolVersion(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
             Messages::Nack(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
+            Messages::AsciiText(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
+            Messages::SetDeviceId(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
             Messages::Ack(content) =&gt; (content <span class="kw">as </span><span class="kw-2">&amp;</span><span class="kw">dyn </span>SerializePayload).serialize(),
         }
     }
@@ -777,22 +777,22 @@
 <span class="kw">impl </span>DeserializeGenericMessage <span class="kw">for </span>Messages {
     <span class="kw">fn </span>deserialize(message_id: u16, payload: <span class="kw-2">&amp;</span>[u8]) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str&gt; {
         <span class="prelude-val">Ok</span>(<span class="kw">match </span>message_id {
-            <span class="number">3u16 </span>=&gt; Messages::AsciiText(&lt;AsciiTextStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(
-                payload,
-            )),
             <span class="number">6u16 </span>=&gt; Messages::GeneralRequest(
                 &lt;GeneralRequestStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
-            ),
-            <span class="number">100u16 </span>=&gt; Messages::SetDeviceId(
-                &lt;SetDeviceIdStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
-            ),
-            <span class="number">5u16 </span>=&gt; Messages::ProtocolVersion(
-                &lt;ProtocolVersionStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
             ),
             <span class="number">4u16 </span>=&gt; Messages::DeviceInformation(
                 &lt;DeviceInformationStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
             ),
+            <span class="number">5u16 </span>=&gt; Messages::ProtocolVersion(
+                &lt;ProtocolVersionStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
+            ),
             <span class="number">2u16 </span>=&gt; Messages::Nack(&lt;NackStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload)),
+            <span class="number">3u16 </span>=&gt; Messages::AsciiText(&lt;AsciiTextStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(
+                payload,
+            )),
+            <span class="number">100u16 </span>=&gt; Messages::SetDeviceId(
+                &lt;SetDeviceIdStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload),
+            ),
             <span class="number">1u16 </span>=&gt; Messages::Ack(&lt;AckStruct <span class="kw">as </span>DeserializePayload&gt;::deserialize(payload)),
             <span class="kw">_ </span>=&gt; {
                 <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="kw-2">&amp;</span><span class="string">"Unknown message id"</span>);
