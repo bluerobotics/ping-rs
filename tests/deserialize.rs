@@ -30,12 +30,12 @@ fn test_simple_deserialization() {
         info!("byte : {byte}, {:?}", &decoder.state);
         assert!(matches!(
             decoder.parse_byte(byte.clone()),
-            DecoderResult::InProgress
+            DecoderResult::InProgress(_)
         ));
     }
     assert!(matches!(
         decoder.parse_byte(buffer[buffer.len() - 2]),
-        DecoderResult::InProgress
+        DecoderResult::InProgress(_)
     ));
     let DecoderResult::Success(_message) = decoder.parse_byte(buffer[buffer.len() - 1]) else {
         info!("Decoder state: {:?}", decoder.state);
@@ -46,12 +46,12 @@ fn test_simple_deserialization() {
     for byte in &buffer[0..buffer.len() - 2] {
         assert!(matches!(
             decoder.parse_byte(byte.clone()),
-            DecoderResult::InProgress
+            DecoderResult::InProgress(_)
         ));
     }
     assert!(matches!(
         decoder.parse_byte(buffer[buffer.len() - 2]),
-        DecoderResult::InProgress
+        DecoderResult::InProgress(_)
     ));
     assert!(matches!(
         decoder.parse_byte(0x01), // force a crc error
