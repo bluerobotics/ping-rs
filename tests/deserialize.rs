@@ -44,7 +44,6 @@ fn test_simple_deserialization() {
 
     // Retry with a wrong receipt CRC
     for byte in &buffer[0..buffer.len() - 2] {
-        dbg!(byte, &decoder.state);
         assert!(matches!(
             decoder.parse_byte(byte.clone()),
             DecoderResult::InProgress
