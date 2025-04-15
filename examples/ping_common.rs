@@ -56,7 +56,7 @@ async fn main() -> Result<(), PingError> {
     );
 
     println!("Protocol version is: {version}");
-    println!("Device information: \n {device_information_struct:?}");
+    println!("Device information: \n {device_information_struct:#?}");
 
     // Read the same 2 packages from previous requests, but from subscriber task, all above tasks have success, we did it!
     println!("Checking if subscriber returns with 2 same packages...");
