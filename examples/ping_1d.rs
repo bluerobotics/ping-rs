@@ -1,5 +1,5 @@
 mod common;
-use common::{create_port, Port};
+use common::{configure_tracing, create_port, Port};
 use std::convert::TryFrom;
 
 use bluerobotics_ping::{
@@ -12,6 +12,8 @@ use bluerobotics_ping::{
 
 #[tokio::main]
 async fn main() -> Result<(), PingError> {
+    configure_tracing();
+
     println!("Parsing user provided values and creating port...");
     let port = create_port().await;
 
