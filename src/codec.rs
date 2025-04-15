@@ -1,6 +1,7 @@
 use crate::{decoder::Decoder as PingDecoder, error::PingError, message::ProtocolMessage};
 use bytes::{Buf, BytesMut};
 use tokio_util::codec::{Decoder, Encoder};
+use tracing::debug;
 
 pub struct PingCodec {
     decoder: PingDecoder,
@@ -27,8 +28,10 @@ impl Decoder for PingCodec {
                 return Ok(None);
             };
 
-            match decoder.parse_byte(*byte) {
-                crate::decoder::DecoderResult::InProgress => {
+            let state = decoder.parse_byte(*byte);
+            debug!("Decoder state: {:?}", state);
+            match state {
+                crate::decoder::DecoderResult::InProgress(_) => {
                     consumed += 1;
                     if consumed == src.len() {
                         src.advance(consumed)
