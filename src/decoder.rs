@@ -84,8 +84,8 @@ impl Decoder {
             }
             DecoderState::ReadingPayload => {
                 self.buffer.push(byte);
-                info!(
-                    "DecoderState : ReadingPayload {:?} {:?}",
+                debug!(
+                    "DecoderState : ReadingPayload {:?} of {:?}",
                     self.buffer.len(),
                     self.message.payload_length
                 );
