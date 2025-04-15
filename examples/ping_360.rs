@@ -46,7 +46,7 @@ async fn main() -> Result<(), PingError> {
     );
 
     println!("Protocol version is: {version}");
-    println!("Device information: {device_information:?}");
+    println!("Device information: {device_information:#?}");
 
     Ok(())
 }
