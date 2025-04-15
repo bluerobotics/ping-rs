@@ -1,4 +1,4 @@
-use tracing::info;
+use tracing::debug;
 
 use crate::message::{ProtocolMessage, HEADER};
 #[cfg(feature = "serde")]
@@ -12,20 +12,20 @@ pub enum ParseError {
     ChecksumError(ProtocolMessage),
 }
 
-#[derive(Debug)]
-pub enum DecoderResult {
-    Success(ProtocolMessage),
-    InProgress,
-    Error(ParseError),
-}
-
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum DecoderState {
     AwaitingStart1,
     AwaitingStart2,
     ReadingHeader,
     ReadingPayload,
     ReadingChecksum,
+}
+
+#[derive(Debug)]
+pub enum DecoderResult {
+    Success(ProtocolMessage),
+    InProgress(DecoderState),
+    Error(ParseError),
 }
 
 pub struct Decoder {
@@ -44,11 +44,13 @@ impl Decoder {
     }
 
     pub fn parse_byte(&mut self, byte: u8) -> DecoderResult {
-        match self.state {
+        debug!("Parsing byte: 0x{byte:02x} ({byte})");
+        let state = &self.state;
+        match state {
             DecoderState::AwaitingStart1 => {
                 if byte == HEADER[0] {
                     self.state = DecoderState::AwaitingStart2;
-                    return DecoderResult::InProgress;
+                    return DecoderResult::InProgress(self.state.clone());
                 }
                 return DecoderResult::Error(ParseError::InvalidStartByte);
             }
@@ -56,7 +58,7 @@ impl Decoder {
                 if byte == HEADER[1] {
                     self.state = DecoderState::ReadingHeader;
                     self.buffer.clear();
-                    return DecoderResult::InProgress;
+                    return DecoderResult::InProgress(self.state.clone());
                 }
                 self.state = DecoderState::AwaitingStart1;
                 return DecoderResult::Error(ParseError::InvalidStartByte);
@@ -78,7 +80,7 @@ impl Decoder {
                     }
                     self.buffer.clear();
                 }
-                return DecoderResult::InProgress;
+                return DecoderResult::InProgress(self.state.clone());
             }
             DecoderState::ReadingPayload => {
                 self.buffer.push(byte);
@@ -92,7 +94,7 @@ impl Decoder {
                     self.state = DecoderState::ReadingChecksum;
                     self.buffer.clear();
                 }
-                return DecoderResult::InProgress;
+                return DecoderResult::InProgress(self.state.clone());
             }
             DecoderState::ReadingChecksum => {
                 self.buffer.push(byte);
@@ -106,7 +108,7 @@ impl Decoder {
                     }
                     return DecoderResult::Success(message);
                 }
-                return DecoderResult::InProgress;
+                return DecoderResult::InProgress(self.state.clone());
             }
         }
     }
