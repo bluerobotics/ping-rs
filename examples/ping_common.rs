@@ -16,6 +16,7 @@ async fn main() -> Result<(), PingError> {
     let ping = match port {
         Port::Serial(port) => Device::new(port),
         Port::Udp(port) => Device::new(port),
+        Port::Tcp(port) => Device::new(port),
     };
 
     // Creating a subscription channel which will receive 2 Protocol Messages, we'll print the device id!
