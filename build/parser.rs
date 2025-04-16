@@ -420,7 +420,7 @@ impl MessageDefinition {
                                         payload[#b + #length_size..payload.len()]
                                             .chunks_exact(#data_size)
                                             .into_iter()
-                                            .map(|a| u16::from_le_bytes((*a).try_into().expect("Wrong slice length")))
+                                            .map(|a| #data_type::from_le_bytes((*a).try_into().expect("Wrong slice length")))
                                             .collect::<Vec<#data_type>>()
                                     },
                                     PayloadType::VECTOR(_) => unimplemented!("Vector of vectors are not supported"),
