@@ -447,6 +447,7 @@ impl MessageDefinition {
             .collect();
 
         let id = self.id;
+        let name = self.name.clone();
         quote! {
             #[derive(Debug, Clone, PartialEq, Default)]
             #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
@@ -474,6 +475,9 @@ impl MessageDefinition {
             impl MessageInfo for #struct_name {
                 fn id() -> u16 {
                     #id
+                }
+                fn name() -> &'static str {
+                    #name
                 }
             }
         }
