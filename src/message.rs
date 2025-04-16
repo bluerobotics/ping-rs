@@ -147,6 +147,7 @@ pub trait DeserializePayload {
 
 pub trait MessageInfo {
     fn id() -> u16;
+    fn name() -> &'static str;
 }
 
 pub trait DeserializeGenericMessage
