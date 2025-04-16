@@ -152,7 +152,17 @@ pub trait PingDevice {
                         };
                         let message = Messages::try_from(&answer)
                             .map_err(|_e| PingError::TryFromError(answer))?;
-                        return Ok(message.inner::<T>().unwrap().clone());
+                        match message.inner::<T>() {
+                            Some(message) => return Ok(message.clone()),
+                            None => {
+                                error!(
+                                    "Received message is not of type `{}` ({}), receiving: {:?}",
+                                    T::name(),
+                                    T::id(),
+                                    message,
+                                );
+                            }
+                        }
                     }
                     Err(broadcast::error::RecvError::Lagged(_)) => continue,
                     Err(e) => return Err(e.into()),
