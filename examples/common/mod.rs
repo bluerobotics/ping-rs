@@ -5,6 +5,7 @@ use std::{
     str::FromStr,
 };
 use tokio_serial::{SerialPort, SerialPortBuilderExt};
+use tracing_subscriber;
 use udp_stream::UdpStream;
 
 #[derive(Parser, Debug)]
@@ -23,6 +24,14 @@ pub struct Args {
 pub enum Port {
     Serial(tokio_serial::SerialStream),
     Udp(udp_stream::UdpStream),
+}
+
+pub fn configure_tracing() {
+    tracing_subscriber::fmt()
+        .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
+        .with_line_number(true)
+        .with_file(true)
+        .init();
 }
 
 pub async fn create_port() -> Port {
