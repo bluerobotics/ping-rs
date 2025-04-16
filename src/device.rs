@@ -13,7 +13,7 @@ use tokio::{
     task::JoinHandle,
 };
 use tokio_util::codec::{Decoder, Framed};
-use tracing::{error, info};
+use tracing::{error, info, trace};
 
 use crate::{
     codec::PingCodec,
@@ -90,7 +90,7 @@ impl Common {
                         };
                     }
                     Err(e) => {
-                        error!("{e:?}");
+                        trace!("{e:?}");
                     }
                 }
             }
