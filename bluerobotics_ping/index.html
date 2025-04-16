@@ -52,7 +52,12 @@ async fn main() -&gt; Result&lt;(), PingError&gt; {
 <li><a href="https://docs.bluerobotics.com/ping-rs/bluerobotics_ping/ping1d/struct.Device.html">Ping1D</a></li>
 <li><a href="https://docs.bluerobotics.com/ping-rs/bluerobotics_ping/ping360/struct.Device.html">Ping360</a></li>
 </ul>
-<h3 id="dolphin-to-run-examples-use"><a class="doc-anchor" href="#dolphin-to-run-examples-use">§</a>:dolphin: To run examples use:</h3><div class="example-wrap"><pre class="language-shell"><code>cargo run --example ping_1d -- --serial-port /dev/ttyUSB0</code></pre></div><details>
+<h3 id="dolphin-to-run-examples-use"><a class="doc-anchor" href="#dolphin-to-run-examples-use">§</a>:dolphin: To run examples use:</h3><div class="example-wrap"><pre class="language-shell"><code>cargo run --example ping_1d -- --serial-port /dev/ttyUSB0</code></pre></div>
+<blockquote>
+<p>:truck: It’s also possible to use <code>RUST_LOG</code> environment variable to change verbosity level
+<code>RUST_LOG=trace cargo run --example ping_common -- --serial-port /dev/ttyUSB0</code></p>
+</blockquote>
+<details>
   <summary>Result</summary>
 <h4 id="terminal-output"><a class="doc-anchor" href="#terminal-output">§</a>Terminal output:</h4><div class="example-wrap"><pre class="language-shell"><code>Parsing user provided values...
 Creating your Ping 1D device
