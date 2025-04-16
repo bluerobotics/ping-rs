@@ -27,6 +27,7 @@ enum PayloadType {
     I16,
     I32,
     F32,
+    F64,
     VECTOR(Box<VectorType>),
 }
 
@@ -41,6 +42,7 @@ impl PayloadType {
             "i16" | "int16_t" => PayloadType::I16,
             "i32" | "int32_t" => PayloadType::I32,
             "float" => PayloadType::F32,
+            "double" => PayloadType::F64,
             "vector" => panic!("Can't convert vector with from_string."),
             something => panic!("No available type: {:#?}", something),
         }
@@ -73,6 +75,7 @@ impl PayloadType {
             PayloadType::I16 => quote! {i16},
             PayloadType::I32 => quote! {i32},
             PayloadType::F32 => quote! {f32},
+            PayloadType::F64 => quote! {f64},
             PayloadType::VECTOR(_vector) => panic!("Can't convert vector to rust."),
         }
     }
@@ -82,6 +85,7 @@ impl PayloadType {
             PayloadType::CHAR | PayloadType::U8 | PayloadType::I8 => 1,
             PayloadType::U16 | PayloadType::I16 => 2,
             PayloadType::U32 | PayloadType::I32 | PayloadType::F32 => 4,
+            PayloadType::F64 => 8,
             PayloadType::VECTOR(_) => 0,
         }
     }
@@ -383,7 +387,7 @@ impl MessageDefinition {
                         b += field.typ.to_size();
                         value
                     }
-                    PayloadType::U16 | PayloadType::I16 | PayloadType::U32 | PayloadType::I32 | PayloadType::F32 => {
+                    PayloadType::U16 | PayloadType::I16 | PayloadType::U32 | PayloadType::I32 | PayloadType::F32 | PayloadType::F64 => {
                         let data_type = field.typ.to_rust();
                         let data_size = field.typ.to_size();
                         let field_token = quote! {
@@ -411,7 +415,8 @@ impl MessageDefinition {
                                     PayloadType::U32 |
                                     PayloadType::I16 |
                                     PayloadType::I32 |
-                                    PayloadType::F32 => quote! {
+                                    PayloadType::F32 |
+                                    PayloadType::F64=> quote! {
                                         payload[#b + #length_size..payload.len()]
                                             .chunks_exact(#data_size)
                                             .into_iter()
