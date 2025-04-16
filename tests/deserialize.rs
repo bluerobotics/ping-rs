@@ -3,7 +3,7 @@ use std::convert::TryFrom;
 use bluerobotics_ping::common::Messages as common_messages;
 use bluerobotics_ping::decoder::*;
 use bluerobotics_ping::{common, Messages};
-use tracing::info;
+use tracing::debug;
 use tracing_test::traced_test;
 
 #[traced_test]
@@ -27,7 +27,7 @@ fn test_simple_deserialization() {
     assert_eq!(general_request, parsed);
 
     for byte in &buffer[0..buffer.len() - 2] {
-        info!("byte : {byte}, {:?}", &decoder.state);
+        debug!("byte : {byte}, {:?}", &decoder.state);
         assert!(matches!(
             decoder.parse_byte(byte.clone()),
             DecoderResult::InProgress(_)
@@ -38,7 +38,7 @@ fn test_simple_deserialization() {
         DecoderResult::InProgress(_)
     ));
     let DecoderResult::Success(_message) = decoder.parse_byte(buffer[buffer.len() - 1]) else {
-        info!("Decoder state: {:?}", decoder.state);
+        debug!("Decoder state: {:?}", decoder.state);
         panic!("Failed to use decoder with valid message");
     };
 
