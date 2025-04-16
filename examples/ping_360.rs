@@ -17,6 +17,7 @@ async fn main() -> Result<(), PingError> {
     let ping360 = match port {
         Port::Serial(port) => Ping360::new(port),
         Port::Udp(port) => Ping360::new(port),
+        Port::Tcp(port) => Ping360::new(port),
     };
 
     println!("Reading transducer data:");

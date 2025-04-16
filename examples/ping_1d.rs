@@ -21,6 +21,7 @@ async fn main() -> Result<(), PingError> {
     let ping1d = match port {
         Port::Serial(port) => Ping1D::new(port),
         Port::Udp(port) => Ping1D::new(port),
+        Port::Tcp(port) => Ping1D::new(port),
     };
 
     // Creating a subscription channel which will receive 30 Profile measurements, we'll check this after the next methods!
