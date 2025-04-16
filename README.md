@@ -63,6 +63,9 @@ Check the complete set of methods:
 cargo run --example ping_1d -- --serial-port /dev/ttyUSB0
 ```
 
+> :truck: It's also possible to use `RUST_LOG` environment variable to change verbosity level
+> `RUST_LOG=trace cargo run --example ping_common -- --serial-port /dev/ttyUSB0`
+
 <details>
   <summary>Result</summary>
 
