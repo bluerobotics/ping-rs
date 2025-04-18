@@ -45,3 +45,7 @@ arbitrary = { version = "1.4.1", features = ["derive"] }
 local_runner = []
 arbitrary = ["dep:arbitrary"]
 default = ["serde"]
+
+[[bench]]
+name = "bench_codec"
+harness = false
