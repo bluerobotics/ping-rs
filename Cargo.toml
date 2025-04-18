@@ -30,6 +30,8 @@ tracing-test = "0.2.4"
 tracing-subscriber = "0.3.19"
 udp-stream = "0.0.12"
 arbitrary = { version = "1.4.1", features = ["derive"] }
+criterion = { version = "0.5.1", features = ["html_reports", "async_tokio"] }
+rand = "0.9.1"
 
 [build-dependencies]
 convert_case = "0.6.0"
