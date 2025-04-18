@@ -49,3 +49,7 @@ default = ["serde"]
 [[bench]]
 name = "bench_codec"
 harness = false
+
+[[bench]]
+name = "bench_parser"
+harness = false
