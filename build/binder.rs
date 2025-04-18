@@ -159,6 +159,7 @@ pub fn generate<W: Write>(modules: Vec<String>, out: &mut W) {
 
         #[derive(Debug, Clone)]
         #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+        #[cfg_attr(any(test, feature = "arbitrary"), derive(arbitrary::Arbitrary))]
         #enum_ident
 
         #try_from_ident
