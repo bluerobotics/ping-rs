@@ -12,12 +12,14 @@ macro_rules! ident {
 }
 
 #[derive(Debug)]
+#[cfg_attr(any(test, feature = "arbitrary"), derive(arbitrary::Arbitrary))]
 struct VectorType {
     size_type: Option<PayloadType>,
     data_type: PayloadType,
 }
 
 #[derive(Debug)]
+#[cfg_attr(any(test, feature = "arbitrary"), derive(arbitrary::Arbitrary))]
 enum PayloadType {
     CHAR,
     U8,
@@ -92,6 +94,7 @@ impl PayloadType {
 }
 
 #[derive(Debug)]
+#[cfg_attr(any(test, feature = "arbitrary"), derive(arbitrary::Arbitrary))]
 struct Payload {
     name: String,
     description: Option<String>,
@@ -141,6 +144,7 @@ impl Payload {
 }
 
 #[derive(Debug)]
+#[cfg_attr(any(test, feature = "arbitrary"), derive(arbitrary::Arbitrary))]
 struct MessageDefinition {
     name: String,
     id: u16,
@@ -151,6 +155,7 @@ struct MessageDefinition {
 }
 
 #[derive(Debug, PartialEq)]
+#[cfg_attr(any(test, feature = "arbitrary"), derive(arbitrary::Arbitrary))]
 enum MessageDefinitionCategory {
     Set,
     Get,
@@ -451,6 +456,7 @@ impl MessageDefinition {
         quote! {
             #[derive(Debug, Clone, PartialEq, Default)]
             #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+            #[cfg_attr(any(test, feature = "arbitrary"), derive(arbitrary::Arbitrary))]
             #[doc = #comment]
             pub struct #struct_name {
                 #(#variables)*
@@ -488,6 +494,7 @@ pub fn emit_protocol_wrapper() -> TokenStream {
     quote! {
         #[derive(Debug, Clone, PartialEq, Default)]
         #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+        #[cfg_attr(any(test, feature = "arbitrary"), derive(arbitrary::Arbitrary))]
         pub struct PingProtocolHead {
             pub source_device_id: u8,
             pub destiny_device_id: u8,
@@ -616,6 +623,7 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
     let message_enums = quote! {
         #[derive(Debug, Clone, PartialEq)]
         #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+        #[cfg_attr(any(test, feature = "arbitrary"), derive(arbitrary::Arbitrary))]
         pub enum Messages {
             #(#message_enums)*
         }
