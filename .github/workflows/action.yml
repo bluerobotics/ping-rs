@@ -14,9 +14,9 @@ jobs:
     - name: Check Type
       run: cargo fmt -- --check
     - name: Run internal tests
-      run: cargo test --verbose -- --nocapture
+      run: cargo test --locked --verbose -- --nocapture
     - name: Build
-      run: cargo build
+      run: cargo build --locked
 
   build:
     needs: quick-tests
@@ -45,7 +45,7 @@ jobs:
       uses: houseabsolute/actions-rust-cross@v0.0.14
       with:
         target: armv7-unknown-linux-gnueabihf
-        args: "--examples --release"
+        args: "--examples --release --locked"
     - name: Upload compiled examples
       uses: actions/upload-artifact@v4.4.3
       with:
