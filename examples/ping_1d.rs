@@ -65,7 +65,11 @@ async fn main() -> Result<(), PingError> {
         "Set gain to auto: {}",
         ping1d.set_mode_auto(1).await.is_ok()
     );
-    ping1d.set_speed_of_sound(343000).await?;
+
+    println!(
+        "Set speed of sound: {}",
+        ping1d.set_speed_of_sound(343000).await.is_ok()
+    );
     let mut speed_of_sound_struct = ping1d.speed_of_sound().await?;
     println!(
         "Test set & get with a new speed of sound: {:?} m/s",
