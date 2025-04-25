@@ -62,7 +62,7 @@ async fn main() -> Result<(), PingError> {
 
     // Testing set command, all set commands check for their Ack message, Error and NAck error are possible
     println!(
-        "Set gain to auto: {:?}",
+        "Set gain to auto: {}",
         ping1d.set_mode_auto(1).await.is_ok()
     );
     ping1d.set_speed_of_sound(343000).await?;
