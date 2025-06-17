@@ -118,6 +118,10 @@ impl Payload {
     }
     pub fn emit_struct_variable(&self) -> TokenStream {
         let name = ident!(self.name);
+        let comment = self
+            .description
+            .clone()
+            .unwrap_or("Not documented".to_string());
 
         if let PayloadType::VECTOR(vector) = &self.typ {
             let data_type = vector.data_type.to_rust();
@@ -125,19 +129,23 @@ impl Payload {
                 let length_name = quote::format_ident!("{}_length", self.name);
                 let length_type = size_type.to_rust();
                 return quote! {
+                    #[cfg_attr(feature = "schemars", schemars(description = #comment))]
                     pub #length_name: #length_type,
+                    #[cfg_attr(feature = "schemars", schemars(description = #comment))]
                     pub #name: Vec<#data_type>,
                 };
             }
 
             // There is no size_type, so it should be a string
             return quote! {
+                #[cfg_attr(feature = "schemars", schemars(description = #comment))]
                 pub #name: String,
             };
         }
 
         let typ = self.typ.to_rust();
         quote! {
+            #[cfg_attr(feature = "schemars", schemars(description = #comment))]
             pub #name: #typ,
         }
     }
@@ -456,6 +464,8 @@ impl MessageDefinition {
         quote! {
             #[derive(Debug, Clone, PartialEq, Default)]
             #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+            #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+            #[cfg_attr(feature = "schemars", schemars(description = #comment))]
             #[cfg_attr(any(test, feature = "arbitrary"), derive(arbitrary::Arbitrary))]
             #[doc = #comment]
             pub struct #struct_name {
@@ -494,6 +504,7 @@ pub fn emit_protocol_wrapper() -> TokenStream {
     quote! {
         #[derive(Debug, Clone, PartialEq, Default)]
         #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+        #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
         #[cfg_attr(any(test, feature = "arbitrary"), derive(arbitrary::Arbitrary))]
         pub struct PingProtocolHead {
             pub source_device_id: u8,
@@ -623,6 +634,7 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
     let message_enums = quote! {
         #[derive(Debug, Clone, PartialEq)]
         #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+        #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
         #[cfg_attr(any(test, feature = "arbitrary"), derive(arbitrary::Arbitrary))]
         pub enum Messages {
             #(#message_enums)*
