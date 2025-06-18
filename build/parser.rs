@@ -606,7 +606,7 @@ fn emit_ping_message(messages: HashMap<&String, &MessageDefinition>) -> TokenStr
 }
 
 /// Generate rust representation of ping-protocol message set with appropriate conversion methods
-pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
+pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W, module_name: &str) {
     let messages = parse_description(input);
     let messages = messages
         .iter()
@@ -631,10 +631,20 @@ pub fn generate<R: Read, W: Write>(input: &mut R, output_rust: &mut W) {
         })
         .collect::<Vec<TokenStream>>();
 
+    let schema_name = format!("{}Messages", &module_name.to_case(Case::Pascal));
+    let schemars_attr = if cfg!(feature = "schemars") {
+        quote! {
+            #[schemars(rename = #schema_name)]
+            #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+        }
+    } else {
+        quote! {}
+    };
+
     let message_enums = quote! {
         #[derive(Debug, Clone, PartialEq)]
         #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-        #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+        #schemars_attr
         #[cfg_attr(any(test, feature = "arbitrary"), derive(arbitrary::Arbitrary))]
         pub enum Messages {
             #(#message_enums)*
