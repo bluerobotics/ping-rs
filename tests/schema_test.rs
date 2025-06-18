@@ -9,8 +9,9 @@ mod schema_tests {
     use jsonschema::Validator;
     use schemars::schema_for;
     use serde_json::json;
-    use std::fs::File;
+    use std::fs::{create_dir_all, File};
     use std::io::{Read, Write};
+    use std::path::Path;
 
     fn generate_validator() -> Validator {
         let schema = schema_for!(Messages);
@@ -20,12 +21,16 @@ mod schema_tests {
     fn save_schema(filename: &str) {
         let schema = schema_for!(Messages);
         let schema_json = serde_json::to_string_pretty(&schema).unwrap();
-        let mut file = File::create(filename).unwrap();
+        let tmp_dir = Path::new("tests/tmp");
+        create_dir_all(tmp_dir).unwrap();
+        let file_path = tmp_dir.join(filename);
+        let mut file = File::create(&file_path).unwrap();
         writeln!(file, "{}", schema_json).unwrap();
     }
 
     fn load_schema(filename: &str) -> Validator {
-        let mut file = File::open(filename).unwrap();
+        let file_path = Path::new("tests/tmp").join(filename);
+        let mut file = File::open(&file_path).unwrap();
         let mut contents = String::new();
         file.read_to_string(&mut contents).unwrap();
         let schema: serde_json::Value = serde_json::from_str(&contents).unwrap();
@@ -76,7 +81,6 @@ mod schema_tests {
                 message
             );
         }
-        println!("Successfully validated all message types");
     }
 
     #[test]
@@ -109,7 +113,7 @@ mod schema_tests {
         let filename = "message_schema.json";
 
         save_schema(filename);
-        println!("Successfully saved schema to {}", filename);
+        println!("Successfully saved schema to tests/tmp/{}", filename);
 
         let validator = load_schema(filename);
 
