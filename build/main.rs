@@ -46,14 +46,14 @@ pub fn main() {
         let mut definition_rs = PathBuf::from(&module_name);
         definition_rs.set_extension("rs");
 
-        modules.push(
-            PathBuf::from(&module_name)
-                .file_stem()
-                .unwrap()
-                .to_str()
-                .unwrap()
-                .to_string(),
-        );
+        let module_name_without_ext = PathBuf::from(&module_name)
+            .file_stem()
+            .unwrap()
+            .to_str()
+            .unwrap()
+            .to_string();
+
+        modules.push(module_name_without_ext.clone());
 
         let in_path = Path::new(&definitions_dir).join(&definition_file);
         let mut in_file = File::open(&in_path).unwrap();
@@ -61,7 +61,7 @@ pub fn main() {
         let dest_path = Path::new(&out_dir).join(definition_rs);
         let mut out_file = File::create(&dest_path).unwrap();
 
-        parser::generate(&mut in_file, &mut out_file);
+        parser::generate(&mut in_file, &mut out_file, &module_name_without_ext);
         format_code(&out_dir, &dest_path);
 
         // Re-run build if definition file changes
