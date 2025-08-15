@@ -19,28 +19,36 @@ struct VectorType {
 
 #[derive(Debug)]
 enum PayloadType {
+    BOOL,
     CHAR,
     U8,
     U16,
     U32,
+    U64,
     I8,
     I16,
     I32,
+    I64,
     F32,
+    F64,
     VECTOR(Box<VectorType>),
 }
 
 impl PayloadType {
     pub fn from_string(name: &str) -> Self {
         match name {
+            "bool" | "boolean" => PayloadType::BOOL,
             "char" => PayloadType::CHAR,
             "u8" | "uint8_t" => PayloadType::U8,
             "u16" | "uint16_t" => PayloadType::U16,
             "u32" | "uint32_t" => PayloadType::U32,
+            "u64" | "uint64_t" => PayloadType::U64,
             "i8" | "int8_t" => PayloadType::I8,
             "i16" | "int16_t" => PayloadType::I16,
             "i32" | "int32_t" => PayloadType::I32,
+            "i64" | "int64_t" => PayloadType::I64,
             "float" => PayloadType::F32,
+            "double" => PayloadType::F64,
             "vector" => panic!("Can't convert vector with from_string."),
             something => panic!("No available type: {:#?}", something),
         }
@@ -65,23 +73,28 @@ impl PayloadType {
 
     pub fn to_rust(&self) -> TokenStream {
         match self {
+            PayloadType::BOOL => quote! {bool},
             PayloadType::CHAR => quote! {char},
             PayloadType::U8 => quote! {u8},
             PayloadType::U16 => quote! {u16},
             PayloadType::U32 => quote! {u32},
+            PayloadType::U64 => quote! {u64},
             PayloadType::I8 => quote! {i8},
             PayloadType::I16 => quote! {i16},
             PayloadType::I32 => quote! {i32},
+            PayloadType::I64 => quote! {i64},
             PayloadType::F32 => quote! {f32},
+            PayloadType::F64 => quote! {f64},
             PayloadType::VECTOR(_vector) => panic!("Can't convert vector to rust."),
         }
     }
 
     pub fn to_size(&self) -> usize {
         match self {
-            PayloadType::CHAR | PayloadType::U8 | PayloadType::I8 => 1,
+            PayloadType::BOOL | PayloadType::CHAR | PayloadType::U8 | PayloadType::I8 => 1,
             PayloadType::U16 | PayloadType::I16 => 2,
             PayloadType::U32 | PayloadType::I32 | PayloadType::F32 => 4,
+            PayloadType::U64 | PayloadType::I64 | PayloadType::F64 => 8,
             PayloadType::VECTOR(_) => 0,
         }
     }
@@ -146,10 +159,16 @@ struct MessageDefinition {
 
 impl MessageDefinition {
     pub fn from_json(name: &String, value: &serde_json::Value) -> Self {
+        // println!("name: {:#?}", name);
         MessageDefinition {
             name: name.clone(),
             id: value.get("id").unwrap().as_u64().unwrap() as u16,
-            description: value.get("description").unwrap().as_str().unwrap().into(),
+            description: value
+                .get("description")
+                .unwrap_or(&serde_json::Value::Null)
+                .as_str()
+                .unwrap_or("")
+                .into(),
             payload: value
                 .get("payload")
                 .unwrap()
@@ -225,14 +244,14 @@ impl MessageDefinition {
             .map(|field| {
                 let name = ident!(field.name);
                 match &field.typ {
-                    PayloadType::I8 | PayloadType::U8 | PayloadType::CHAR => {
+                    PayloadType::BOOL | PayloadType::I8 | PayloadType::U8 | PayloadType::CHAR => {
                         let value = quote! {
                             #name: payload[#b].into(),
                         };
                         b += field.typ.to_size();
                         value
                     }
-                    PayloadType::U16 | PayloadType::I16 | PayloadType::U32 | PayloadType::I32 | PayloadType::F32 => {
+                    PayloadType::U16 | PayloadType::I16 | PayloadType::U32 | PayloadType::I32 | PayloadType::U64 | PayloadType::I64 | PayloadType::F32 | PayloadType::F64 => {
                         let data_type = field.typ.to_rust();
                         let data_size = field.typ.to_size();
                         let field_token = quote! {
@@ -250,6 +269,7 @@ impl MessageDefinition {
                             let length = self.payload.len();
                             let field_token = {
                                 let value = match vector.data_type {
+                                    PayloadType::BOOL |
                                     PayloadType::CHAR |
                                     PayloadType::U8 |
                                     PayloadType::I8 => quote! {
@@ -257,9 +277,12 @@ impl MessageDefinition {
                                     },
                                     PayloadType::U16 |
                                     PayloadType::U32 |
+                                    PayloadType::U64 |
                                     PayloadType::I16 |
                                     PayloadType::I32 |
-                                    PayloadType::F32 => quote! {
+                                    PayloadType::I64 |
+                                    PayloadType::F32 |
+                                    PayloadType::F64 => quote! {
                                         payload[#b..payload.len()]
                                             .chunks_exact(#data_size)
                                             .into_iter()
