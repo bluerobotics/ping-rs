@@ -39,7 +39,10 @@ pub fn main() {
         let definition_file = entry.file_name();
         let module_name: String = definition_file.to_str().unwrap().into();
 
-        if module_name.contains("pinghf") || module_name.contains("surveyor240") {
+        if module_name.contains("pinghf")
+            || module_name.contains("surveyor240")
+            || module_name.contains("s500")
+        {
             continue;
         }
 
