@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["Messages"],"struct":["Device","OsMonoProfileStruct","OsPingParamsStruct","PingProtocolHead","SetSpeedOfSoundStruct"]};
+window.SIDEBAR_ITEMS = {"enum":["Messages"],"struct":["Device","JsonWrapperStruct","OsMonoProfileStruct","OsPingParamsStruct","PingProtocolHead","SetSpeedOfSoundStruct"]};
