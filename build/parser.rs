@@ -1,9 +1,9 @@
+use quote::quote;
 use std::collections::HashMap;
 use std::io::{Read, Write};
 
 use convert_case::{Case, Casing};
 use proc_macro2::TokenStream;
-use quote;
 
 macro_rules! ident {
     ($a:expr) => {{

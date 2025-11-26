@@ -1,0 +1,29 @@
+[package]
+name = "ping-protocol-validator"
+version = "0.1.0"
+edition = "2021"
+authors = ["Blue Robotics"]
+description = "A tool to validate ping-protocol submodule definitions"
+license = "MIT"
+repository = "https://github.com/bluerobotics/ping-rs"
+
+[[bin]]
+name = "ping-protocol-validator"
+path = "src/main.rs"
+
+[dependencies]
+convert_case = "0.8.0"
+quote = "1.0.4"
+proc-macro2 = "1.0.95"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0.140"
+arbitrary = { version = "1.4.1", features = ["derive"] }
+clap = { version = "4.5.37", features = ["derive"] }
+anyhow = "1.0"
+tracing = "0.1.41"
+tracing-subscriber = "0.3.19"
+tempfile = "3.8"
+schemars = { version = "0.9.0", optional = true }
+
+[features]
+json_schema = ["schemars"]
