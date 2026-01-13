@@ -57,3 +57,7 @@ harness = false
 [[bench]]
 name = "bench_parser"
 harness = false
+
+[[bench]]
+name = "bench_hil"
+harness = false
